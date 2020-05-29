@@ -18,6 +18,7 @@ COPY app/composer.json app/composer.lock app/symfony.lock ./
 COPY app/modules modules/
 COPY app/src src/
 
+#USER 33:33
 
 FROM nginx:${NGINX_VERSION}-alpine AS planb_nginx
 RUN rm /etc/nginx/conf.d/default.conf

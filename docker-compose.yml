@@ -17,15 +17,15 @@ services:
     # Comment out these volumes in production
     volumes:
       - ./app:/srv/app:rw
-#      - ./app/var:/srv/app/var:rw
+  #      - ./app/var:/srv/app/var:rw
 
-#  encore:
-#    image: node:10-alpine
-#    volumes:
-#      - ./api:/app
-#    ports:
-#      - "${DEV_SERVER_PORT:-8080}:8080"
-#    working_dir: /app
+  #  encore:
+  #    image: node:10-alpine
+  #    volumes:
+  #      - ./api:/app
+  #    ports:
+  #      - "${DEV_SERVER_PORT:-8080}:8080"
+  #    working_dir: /app
 
   api:
     image: ${CONTAINER_REGISTRY_BASE}/nginx
@@ -41,6 +41,7 @@ services:
     # Comment out this volume in production
     volumes:
       - ./app/modules/frontend/public:/srv/app/modules/frontend/public:rw
+      - ./logs:/var/log/nginx:rw
 
   cache-proxy:
     image: ${CONTAINER_REGISTRY_BASE}/varnish
@@ -59,7 +60,7 @@ services:
       - /usr/local/var/varnish:exec
 
   redis:
-    image: redis    
+    image: redis
     volumes:
       - ./data/redis:/data
     entrypoint: redis-server --appendonly yes
@@ -67,7 +68,7 @@ services:
 
   db:
     image: mysql:5.7
- #   command: --max_allowed_packet=32505856
+    #   command: --max_allowed_packet=32505856
     environment:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
