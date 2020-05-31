@@ -18,7 +18,18 @@ COPY app/composer.json app/composer.lock app/symfony.lock ./
 COPY app/modules modules/
 COPY app/src src/
 
-#USER 33:33
+FROM planb_php as planb_php_dev
+
+#Ver https://brunopaz.dev/blog/docker-phpstorm-and-xdebug-the-definitive-guide
+RUN pecl install xdebug; \
+	docker-php-ext-enable xdebug; \
+	echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; \
+	echo "xdebug.remote_port=9001" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; \
+	echo "xdebug.idekey=PHPSTORM" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; \
+	echo "xdebug.remote_autostart=0" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; \
+	echo "error_reporting=E_ALL" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; \
+	echo "display_startup_err=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini;
+
 
 FROM nginx:${NGINX_VERSION}-alpine AS planb_nginx
 RUN rm /etc/nginx/conf.d/default.conf

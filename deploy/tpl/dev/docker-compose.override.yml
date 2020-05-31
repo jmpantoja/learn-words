@@ -5,11 +5,14 @@ services:
     #      args:
     #        - WITH_XDEBUG=true
     #
+    build:
+      context: .
+      target: planb_php_dev    
     environment:
       - APP_ENV=dev
       - APP_DEBUG=true
-  #      - PHP_IDE_CONFIG=serverName=symfony-demo
-  #      - XDEBUG_CONFIG=remote_host=192.168.1.128
+      - PHP_IDE_CONFIG=serverName=symfony-demo
+      - XDEBUG_CONFIG=remote_host=192.168.1.128
 
   db:
     ports:

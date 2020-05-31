@@ -33,5 +33,15 @@ composer-install: check-env
 composer-update:
 	docker-compose run php composer update
 
+xdebug-off:
+	docker-compose exec php sed -i 's/remote_enable=1/remote_enable=0/g' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+	docker-compose restart php
+
+xdebug-on:
+	docker-compose exec php sed -i 's/remote_enable=0/remote_enable=1/g' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+	docker-compose restart php
+
 varnish-purge:
 	docker-compose exec cache-proxy varnishadm "ban req.url ~ /"
+
+
