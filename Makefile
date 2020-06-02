@@ -1,13 +1,6 @@
 .PHONY: build check-env up composer-install composer-update varnish-purge
 
-
-
-#COSAS QUE TENGO QUE HACER
-#==================================================================
-#- en lugar de pasar ENV_FILE voy a pasar solo ENV, y monto la ruta al fichero con vars desde el fichero create_file
-#- el source "env_vars.sh" tambien tengo que hacerlo desde el fichero create file
-#- ALGO ASI: make up ENV=dev
-#- completar con más acciones
+SHELL := /bin/bash
 
 check-env:
 #ifndef / endif no llevan identación
@@ -15,10 +8,12 @@ ifndef env
 	$(error env is undefined)
 endif
 
-build: check-env
-	touch docker/php/rclone.conf
-	./deploy/create_file.sh  $(env) ./deploy/tpl/.env > .env
-	./deploy/create_file.sh $(env) ./deploy/tpl/$(env)/docker-compose.override.yml > docker-compose.override.yml
+dump: check-env
+	touch build/docker/php/rclone.conf
+	./build/create_file.sh  $(env) ./build/tpl/.env > .env
+	./build/create_file.sh $(env) ./build/tpl/$(env)/docker-compose.override.yml > docker-compose.override.yml
+
+build: dump
 	docker-compose build
 
 up: composer-install
@@ -27,19 +22,29 @@ up: composer-install
 down:
 	docker-compose down
 
-composer-install: check-env
+composer-install: dump
 	docker-compose run php composer install
 	docker-compose run php modules/frontend/bin/console cache:clear --env=${env}
 composer-update:
 	docker-compose run php composer update
 
-xdebug-off:
+xdebug-disabled:
 	docker-compose exec php sed -i 's/remote_enable=1/remote_enable=0/g' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 	docker-compose restart php
 
-xdebug-on:
+xdebug-enabled:
 	docker-compose exec php sed -i 's/remote_enable=0/remote_enable=1/g' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 	docker-compose restart php
+
+terraform-plan: check-env
+	source ./build/vars/${env}.sh && cd build/terraform && terraform plan
+
+terraform-apply: check-env
+	source ./build/vars/${env}.sh && cd build/terraform && terraform apply
+
+terraform-destroy: check-env
+	source ./build/vars/${env}.sh && cd build/terraform && terraform destroy
+
 
 varnish-purge:
 	docker-compose exec cache-proxy varnishadm "ban req.url ~ /"

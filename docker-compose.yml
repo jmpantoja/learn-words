@@ -55,7 +55,7 @@ services:
     depends_on:
       - api
     volumes:
-      - ./docker/varnish/conf:/usr/local/etc/varnish:ro
+      - ./build/docker/varnish/conf:/usr/local/etc/varnish:ro
     tmpfs:
       - /usr/local/var/varnish:exec
 
@@ -88,4 +88,4 @@ services:
       - 443:443
     restart: always
     volumes:
-      - ./docker/proxy/ssl_certs:/var/lib/https-portal    
+      - ./build/docker/proxy/ssl_certs:/var/lib/https-portal    

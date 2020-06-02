@@ -2,5 +2,6 @@
 /docker-compose.override.yaml
 /docker-compose.override.yml
 /data
+/logs
 .idea/
 

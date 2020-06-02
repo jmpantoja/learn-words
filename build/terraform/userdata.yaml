@@ -1,0 +1,53 @@
+#cloud-config
+apt_sources:
+    -   source: "ppa:ansible/ansible" # Quote the string
+package_update: true
+packages:
+    - docker.io
+    - docker-compose
+    - make
+    - git
+    - ansible
+
+write_files:
+    -   path: /etc/ansible/hosts
+        content: |
+            [localhost]
+            ansible_connection=local
+
+    -   path: ${directory}/deploy.yml
+        content: |
+            ---
+            - name: Deploy the App
+              hosts: 127.0.0.1
+              connection: local
+
+              vars:
+                github_user: ${github_user}
+                github_password: ${github_password}
+                ansistrano_deploy_from: "{{ playbook_dir }}/" # Where my local project is (relative or absolute path)
+
+                ansistrano_deploy_from: "{{ playbook_dir }}/repo/" # Where my local project is (relative or absolute path)
+                ansistrano_deploy_to: "{{ playbook_dir }}/deploy/" # Base path to deploy to.
+                ansistrano_keep_releases: 3 # Releases to keep after a new deployment. See "Pruning old releases".
+
+              roles:
+                - { role: ansistrano.deploy }
+
+runcmd:
+    - git config --global user.name "jmpantoja"
+    - git config --global user.email "jmpantoja@gmail.com"
+    - ansible-galaxy install --force ansistrano.deploy ansistrano.rollback
+
+    - cd ${directory}
+    - git clone ${github_repository_url} repo
+    - cd ${directory}/repo
+    - git checkout ${github_branch}
+    - mv ${directory}/vars/* ${directory}/repo/build/vars/
+
+    - cd ${directory}
+    - ansible-playbook deploy.yml
+
+    - cd ${directory}/deploy/current
+    - make build env=${app_env}
+    - make up env=${app_env}

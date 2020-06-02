@@ -1,3 +1,0 @@
-* * * * * cd /srv/api && /usr/local/bin/php vendor/bin/crunz schedule:run
-
-
