@@ -27,7 +27,7 @@ services:
   #      - "${DEV_SERVER_PORT:-8080}:8080"
   #    working_dir: /app
 
-  api:
+  nginx:
     image: ${CONTAINER_REGISTRY_BASE}/nginx
     build:
       context: .
@@ -40,10 +40,13 @@ services:
       - php
     # Comment out this volume in production
     volumes:
-      - ./app/modules/frontend/public:/srv/app/modules/frontend/public:rw
+      - ./app/sites/frontend/public:/srv/app/sites/frontend/public:rw
+      - ./app/sites/api/public:/srv/app/sites/api/public:rw
+      - ./app/sites/admin/public:/srv/app/sites/admin/public:rw
+      - ./etc/nginx/conf.d:/etc/nginx/conf.d:rw
       - ./logs:/var/log/nginx:rw
 
-  cache-proxy:
+  varnish:
     image: ${CONTAINER_REGISTRY_BASE}/varnish
     build:
       context: .
@@ -53,9 +56,9 @@ services:
         - quay.io/api-platform/nginx
         - quay.io/api-platform/varnish
     depends_on:
-      - api
+      - nginx
     volumes:
-      - ./build/docker/varnish/conf:/usr/local/etc/varnish:ro
+      - ./etc/varnish/conf:/usr/local/etc/varnish:ro
     tmpfs:
       - /usr/local/var/varnish:exec
 
@@ -81,11 +84,11 @@ services:
   proxy:
     image: steveltn/https-portal:1
     depends_on:
-      - api
-      - cache-proxy
+      - nginx
+      - varnish
     ports:
       - 80:80
       - 443:443
-    restart: always
+#    restart: always
     volumes:
-      - ./build/docker/proxy/ssl_certs:/var/lib/https-portal    
+      - ./etc/proxy/ssl_certs:/var/lib/https-portal    

@@ -24,7 +24,9 @@
     "autoload": {
         "psr-4": {
             "LearnWords\\": "src/",
-            "LearnWords\\Module\\Frontend\\": "modules/frontend/src"
+            "LearnWords\\Site\\Frontend\\": "sites/frontend/src",
+            "LearnWords\\Site\\Admin\\": "sites/admin/src",
+            "LearnWords\\Site\\Api\\": "sites/api/src"
         }
     },
     "autoload-dev": {

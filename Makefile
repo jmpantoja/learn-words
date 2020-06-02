@@ -9,9 +9,10 @@ ifndef env
 endif
 
 dump: check-env
-	touch build/docker/php/rclone.conf
-	./build/create_file.sh  $(env) ./build/tpl/.env > .env
-	./build/create_file.sh $(env) ./build/tpl/$(env)/docker-compose.override.yml > docker-compose.override.yml
+	touch etc/php/rclone.conf
+	./build/template.py  $(env) .env > .env
+	./build/template.py $(env) $(env)/docker-compose.override.yml > docker-compose.override.yml
+	./build/sites.py $(env) ./etc/nginx/conf.d
 
 build: dump
 	docker-compose build
@@ -22,9 +23,14 @@ up: composer-install
 down:
 	docker-compose down
 
+restart: composer-install
+	docker-compose restart
+
 composer-install: dump
 	docker-compose run php composer install
-	docker-compose run php modules/frontend/bin/console cache:clear --env=${env}
+	docker-compose run php sites/frontend/bin/console cache:clear --env=${env}
+	docker-compose run php sites/admin/bin/console cache:clear --env=${env}
+	docker-compose run php sites/api/bin/console cache:clear --env=${env}
 composer-update:
 	docker-compose run php composer update
 
@@ -36,17 +42,26 @@ xdebug-enabled:
 	docker-compose exec php sed -i 's/remote_enable=0/remote_enable=1/g' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 	docker-compose restart php
 
+
 terraform-plan: check-env
-	source ./build/vars/${env}.sh && cd build/terraform && terraform plan
+	./build/template.py  $(env) .terraform > .terraform
+	source .terraform && cd build/terraform && terraform plan
+	@rm .terraform
 
 terraform-apply: check-env
-	source ./build/vars/${env}.sh && cd build/terraform && terraform apply
+	./build/template.py  $(env) .terraform > .terraform
+	source .terraform cd build/terraform && terraform apply
+	@rm .terraform
 
 terraform-destroy: check-env
-	source ./build/vars/${env}.sh && cd build/terraform && terraform destroy
-
+	./build/template.py  $(env) .terraform > .terraform
+	source .terraform cd build/terraform && terraform destroy
+	@rm .terraform
 
 varnish-purge:
-	docker-compose exec cache-proxy varnishadm "ban req.url ~ /"
+	docker-compose exec varnish varnishadm "ban req.url ~ /"
+
+nginx-reload: varnish-purge
+	docker-compose exec nginx nginx -s reload
 
 

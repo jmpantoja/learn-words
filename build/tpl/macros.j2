@@ -1,0 +1,8 @@
+{% macro domains(host, sites, mode) %}
+{%- set domains = ["{:s} -> http://varnish:80 #{:s}".format(host, mode)] -%}
+{%- for site, data in sites -%}
+  {%- set item = "{:s}.{:s} -> http://varnish:80 #{:s}".format(data.subdomain, host, mode)  -%}
+  {{ domains.append(item) | default('', True) }}
+{%- endfor %}
+    {{- domains | join(',\n ') -}}
+{% endmacro %}

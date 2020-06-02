@@ -8,6 +8,4 @@ services:
   proxy:
     environment:
       CLIENT_MAX_BODY_SIZE: 64M
-      DOMAINS: ${DOCKER_PROXY_DOMAINS}
-
-
+      DOMAINS: "{{ macros.domains(APP_DOMAIN, sites, 'production') }}"
