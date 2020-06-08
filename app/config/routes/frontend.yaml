@@ -1,0 +1,3 @@
+frontend_home:
+    path: /
+    controller: \LearnWords\Site\Frontend\Controller\HomeController

@@ -5,8 +5,6 @@ import yaml
 import sys
 import os
 
-
-
 args = sys.argv
 if len(args) != 3:
     raise Exception('Este script necesita dos parametros <env> <target>')
@@ -24,7 +22,7 @@ vars = yaml.full_load(open(vars_path, 'rb').read())
 sites_path = '{:s}/vars/sites.yaml'.format(dirname)
 sites = yaml.full_load(open(sites_path, 'rb').read())
 
-host = vars['APP_DOMAIN']
+host = vars['APP_HOST']
 
 target_dir = os.path.abspath(args[2])
 

@@ -1,4 +1,4 @@
-export TF_VAR_APP_DOMAIN={{APP_DOMAIN}}
+export TF_VAR_APP_HOST={{APP_HOST}}
 
 export TF_VAR_APP_NAME={{APP_NAME}}
 export TF_VAR_APP_ENV={{APP_ENV}}

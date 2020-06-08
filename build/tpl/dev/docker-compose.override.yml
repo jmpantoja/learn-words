@@ -16,4 +16,4 @@ services:
   proxy:
     environment:
       CLIENT_MAX_BODY_SIZE: 64M 
-      DOMAINS: "{{ macros.domains(APP_DOMAIN, sites, 'local') }}"
+      DOMAINS: "{{ macros.domains(APP_HOST, sites, 'local') }}"

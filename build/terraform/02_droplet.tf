@@ -6,7 +6,7 @@ variable "GITHUB_REPOSITORY_URL" {}
 variable "GITHUB_BRANCH" {}
 variable "APP_ENV" {}
 variable "APP_NAME" {}
-variable "APP_DOMAIN" {}
+variable "APP_HOST" {}
 
 
 data "template_file" "init" {

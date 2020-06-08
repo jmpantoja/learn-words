@@ -12,7 +12,9 @@ dump: check-env
 	touch etc/php/rclone.conf
 	./build/template.py  $(env) .env > .env
 	./build/template.py $(env) $(env)/docker-compose.override.yml > docker-compose.override.yml
-	./build/sites.py $(env) ./etc/nginx/conf.d
+	./build/template.py $(env) site.conf > ./etc/nginx/conf.d/default.conf
+
+#	./build/sites.py $(env) ./etc/nginx/conf.d
 
 build: dump
 	docker-compose build
@@ -28,9 +30,7 @@ restart: composer-install
 
 composer-install: dump
 	docker-compose run php composer install
-	docker-compose run php sites/frontend/bin/console cache:clear --env=${env}
-	docker-compose run php sites/admin/bin/console cache:clear --env=${env}
-	docker-compose run php sites/api/bin/console cache:clear --env=${env}
+	docker-compose run php bin/console cache:clear --env=${env}
 composer-update:
 	docker-compose run php composer update
 

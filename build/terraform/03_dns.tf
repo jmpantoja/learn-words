@@ -1,7 +1,7 @@
 # Creamos un dominio nuevo
 
 resource "digitalocean_domain" "main" {
-  name = "${var.APP_DOMAIN}"
+  name = "${var.APP_HOST}"
 }
 
 # Add a record to the domain

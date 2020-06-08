@@ -26,6 +26,4 @@ templateEnv = jinja2.Environment(loader=templateLoader)
 
 template = templateEnv.get_template(template_path)
 
-#template = jinja2.Template(open(template_path).read())
-
 print(template.render(vars))

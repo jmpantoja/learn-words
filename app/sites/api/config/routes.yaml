@@ -1,4 +1,0 @@
-health-check_get:
-    path: /
-    controller: LearnWords\Site\Api\Controller\HomeController
-    methods:  [GET]

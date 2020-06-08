@@ -2,9 +2,9 @@
 frontend:
     subdomain: www
     root: /srv/app/sites/frontend/public
-admin:
-    subdomain: admin
-    root: /srv/app/sites/admin/public
-api:
-    subdomain: api
-    root: /srv/app/sites/api/public
+#admin:
+#    subdomain: admin
+#    root: /srv/app/sites/admin/public
+#api:
+#    subdomain: api
+#    root: /srv/app/sites/api/public
