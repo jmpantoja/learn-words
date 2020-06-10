@@ -6,6 +6,9 @@ sonata_admin:
     options:
         legacy_twig_text_extension: false
 
+#    admin_services:
+#        admin.dummy:
+#            form_contractor:  sonata.admin.builder.doctrine_orm
 sonata_block:
     blocks:
         sonata.admin.block.admin_list:

@@ -1,0 +1,11 @@
+formatter.name: pretty
+suites:
+    PlanB:
+        namespace: PlanB
+        src_path: "%paths.config%/libs/src"
+        spec_path: "%paths.config%/libs"
+        
+    LearnWords:
+        namespace: LearnWords
+        src_path: "%paths.config%/libs"
+        spec_path: "%paths.config%"

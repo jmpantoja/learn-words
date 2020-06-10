@@ -11,6 +11,7 @@ endif
 dump: check-env
 	touch etc/php/rclone.conf
 	./build/template.py  $(env) .env > .env
+	./build/template.py  $(env) .env.local > app/.env.local
 	./build/template.py $(env) $(env)/docker-compose.override.yml > docker-compose.override.yml
 	./build/template.py $(env) site.conf > ./etc/nginx/conf.d/default.conf
 
@@ -33,6 +34,12 @@ composer-install: dump
 	docker-compose run php bin/console cache:clear --env=${env}
 composer-update:
 	docker-compose run php composer update
+
+schema-create: dump
+	docker-compose exec php bin/console doctrine:schema:create --env=${env}
+
+schema-update:
+	docker-compose exec php bin/console doctrine:schema:update --env=${env} --force
 
 xdebug-disabled:
 	docker-compose exec php sed -i 's/remote_enable=1/remote_enable=0/g' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini

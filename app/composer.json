@@ -32,19 +32,22 @@
     },
     "require-dev": {
         "symfony/debug-pack": "*",
+        "phpspec/phpspec": "^6.1",
         "symfony/maker-bundle": "^1.0",
-        "symfony/profiler-pack": "*",
-        "symfony/test-pack": "*"
+        "symfony/profiler-pack": "*"
     },
     "config": {
         "preferred-install": {
             "*": "dist"
         },
+        "bin-dir": "bin",
         "sort-packages": true
     },
     "autoload": {
         "psr-4": {
-            "LearnWords\\": "src/"
+            "PlanB\\": "libs/src/PlanB/",
+            "LearnWords\\": "src/LearnWords/",
+            "App\\": "src/"
         }
     },
     "autoload-dev": {

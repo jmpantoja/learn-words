@@ -15,7 +15,7 @@ RUN service cron start
 
 # prevent the reinstallation of vendors at every changes in the source code
 COPY app/composer.json app/composer.lock app/symfony.lock ./
-COPY app/sites sites/
+COPY app/public public/
 COPY app/src src/
 
 
@@ -23,9 +23,7 @@ FROM nginx:${NGINX_VERSION}-alpine AS planb_nginx
 RUN rm /etc/nginx/conf.d/default.conf
 COPY etc/nginx/conf.d/ /etc/nginx/conf.d/
 WORKDIR /srv/app
-COPY --from=planb_php /srv/app/sites/frontend/public sites/frontend/public
-COPY --from=planb_php /srv/app/sites/api/public sites/api/public
-COPY --from=planb_php /srv/app/sites/admin/public sites/admin/public
+COPY --from=planb_php /srv/app/public public
 
 FROM cooptilleuls/varnish:${VARNISH_VERSION}-alpine AS planb_varnish
 COPY etc/varnish/conf/default.vcl /usr/local/etc/varnish/default.vcl

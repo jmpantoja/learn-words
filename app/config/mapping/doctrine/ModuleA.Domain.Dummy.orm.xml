@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-<entity name="LearnWords\Question\Domain\Word" table="question_words">
-        <id name="id">  </id>
-
-        <field name="name" type="string" length="50"/>
-        <field name="active" column="is_active" type="boolean"/>
+    <entity name="LearnWords\ModuleA\Domain\Dummy" table="module_dummy">
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO"></generator>
+        </id>
+        <field name="name" column="name" type="string" length="50" nullable="true" unique="true"/>
     </entity>
 </doctrine-mapping>
+
