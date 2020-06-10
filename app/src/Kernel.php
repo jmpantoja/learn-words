@@ -2,7 +2,7 @@
 
 namespace App;
 
-use PlanB\IntegrationBundle\PlanBIntegrationBundle;
+use PlanB\EdgeBundle\PlanBEdgeBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Resource\FileResource;
@@ -19,7 +19,7 @@ class Kernel extends BaseKernel
     public function registerBundles(): iterable
     {
         $contents = require $this->getProjectDir() . '/config/bundles.php';
-        $contents[PlanBIntegrationBundle::class] = ['all' => true];
+        $contents[PlanBEdgeBundle::class] = ['all' => true];
 
         foreach ($contents as $class => $envs) {
             if ($envs[$this->environment] ?? $envs['all'] ?? false) {

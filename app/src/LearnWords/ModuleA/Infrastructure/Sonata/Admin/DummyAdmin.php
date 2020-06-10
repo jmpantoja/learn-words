@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace LearnWords\ModuleA\Infrastructure\Sonata\Admin;
 
-use Sonata\AdminBundle\Admin\AbstractAdmin;
+use PlanB\Edge\Infrastructure\Sonata\Admin\Admin;
+use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfiguratorInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-final class DummyAdmin extends AbstractAdmin
+final class DummyAdmin extends Admin
 {
     protected $baseRouteName = 'hola';
 
     protected $baseRoutePattern = 'hola';
-
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
     {
@@ -36,20 +36,6 @@ final class DummyAdmin extends AbstractAdmin
                     'delete' => [],
                 ],
             ]);
-    }
-
-    protected function configureFormFields(FormMapper $formMapper): void
-    {
-
-//        $formMapper->getFormBuilder()->setDataMapper($this);
-//        $formMapper->getFormBuilder()->addModelTransformer($this);
-//
-
-        $formMapper->add('name', null, [
-            'attr' => [
-                'style' => 'width:200px'
-            ]
-        ]);
     }
 
     protected function configureShowFields(ShowMapper $showMapper): void
