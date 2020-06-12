@@ -14,24 +14,22 @@ declare(strict_types=1);
 namespace LearnWords\ModuleA\Infrastructure\Sonata\Admin;
 
 use LearnWords\ModuleA\Domain\Dummy;
-use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfiguratorInterface;
-use Sonata\AdminBundle\Form\FormMapper;
+use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfigurator;
 
-final class DummyForm implements FormConfiguratorInterface
+final class DummyForm extends FormConfigurator
 {
-
     public function attachTo(): string
     {
         return DummyAdmin::class;
     }
 
-    public function configure(FormMapper $formMapper, Dummy $subject = null): void
+    public function configure(Dummy $subject = null): void
     {
-        $formMapper->add('name', null, [
+        $this->add('name', null, [
             'attr' => [
                 'style' => 'width:400px'
             ],
-            'help' => $subject->getName()
+            'help' => $subject instanceof Dummy ? $subject->getName() : 'nuevo'
         ]);
     }
 }
