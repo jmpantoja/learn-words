@@ -14,13 +14,17 @@ declare(strict_types=1);
 namespace PlanB\Edge\Infrastructure\Sonata\Admin;
 
 
+use PlanB\Edge\Infrastructure\Sonata\Configurator\DatagridConfiguratorInterface;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfiguratorInterface;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
+use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 
 abstract class Admin extends AbstractAdmin implements AdminInterface
 {
     private FormConfiguratorInterface $formConfigurator;
+
+    private DatagridConfiguratorInterface $datagridConfigurator;
 
     /**
      * @param FormConfiguratorInterface $formConfigurator
@@ -29,14 +33,26 @@ abstract class Admin extends AbstractAdmin implements AdminInterface
     public function setFormConfigurator(FormConfiguratorInterface $formConfigurator): self
     {
         $this->formConfigurator = $formConfigurator;
-
         return $this;
     }
 
     protected function configureFormFields(FormMapper $formMapper): void
     {
         $this->formConfigurator
-            ->run($formMapper, $this->getSubject());
+            ->handle($formMapper, $this->getSubject());
     }
+
+    public function setDatagridConfigurator(DatagridConfiguratorInterface $datagridConfigurator): AdminInterface
+    {
+        $this->datagridConfigurator = $datagridConfigurator;
+        return $this;
+    }
+
+    protected function configureListFields(ListMapper $listMapper)
+    {
+        $this->datagridConfigurator
+            ->handle($listMapper);
+    }
+
 
 }

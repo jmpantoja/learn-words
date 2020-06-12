@@ -89,6 +89,8 @@ final class SonataAdminCompiler implements CompilerPassInterface
             CallToSetter::form($container, $id)
                 ->apply();
 
+            CallToSetter::dataGrid($container, $id)
+                ->apply();
 
         }
     }

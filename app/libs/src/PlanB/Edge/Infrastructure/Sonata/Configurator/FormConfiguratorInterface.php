@@ -23,12 +23,7 @@ interface FormConfiguratorInterface extends ConfiguratorInterface
      * @param object|null $subject
      * @return void
      */
-    public function run(FormMapper $formMapper, ?object $subject): self;
+    public function handle(FormMapper $formMapper, ?object $subject): self;
 
-    /**
-     * @param object|null $subject
-     * @return void
-     */
-    public function configure();
 }
 

@@ -27,7 +27,7 @@ class FormConfiguratorSpec extends ObjectBehavior
     public function it_is_able_to_add_a_field_to_a_form_mapper(FormMapper $formMapper)
     {
         $formMapper->hasOpenTab()->willReturn(false);
-        $this->run($formMapper, null);
+        $this->handle($formMapper, null);
 
         $formMapper->with('tab', Argument::any())
             ->shouldHaveBeenCalledOnce();

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace PlanB\EdgeBundle\DependencyInjection\Compiler;
 
 
+use PlanB\Edge\Infrastructure\Sonata\Configurator\DatagridConfiguratorInterface;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfigurator;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfiguratorInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -26,16 +27,21 @@ final class CallToSetter
     private Definition $definition;
     private string $type;
 
-    public static function form(ContainerBuilder $container, string $id): self
-    {
-        return new self($container, $id, FormConfigurator::TYPE);
-    }
-
     private function __construct(ContainerBuilder $container, string $id, string $type)
     {
         $this->container = $container;
         $this->definition = $container->getDefinition($id);
         $this->type = $type;
+    }
+
+    public static function form(ContainerBuilder $container, string $id): self
+    {
+        return new self($container, $id, FormConfigurator::TYPE);
+    }
+
+    public static function dataGrid(ContainerBuilder $container, string $id): self
+    {
+        return new self($container, $id, DatagridConfiguratorInterface::TYPE);
     }
 
     /**
@@ -72,6 +78,8 @@ final class CallToSetter
             case FormConfiguratorInterface::TYPE:
                 return 'setFormConfigurator';
 
+            case DatagridConfiguratorInterface::TYPE:
+                return 'setDatagridConfigurator';
         }
     }
 

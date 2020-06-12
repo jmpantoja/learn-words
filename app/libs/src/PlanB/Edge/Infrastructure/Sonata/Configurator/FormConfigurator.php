@@ -19,7 +19,7 @@ abstract class FormConfigurator implements FormConfiguratorInterface
     private FormMapper $formMapper;
     private bool $isOpened = false;
 
-    public function run(FormMapper $formMapper, ?object $subject): self
+    public function handle(FormMapper $formMapper, ?object $subject): self
     {
         $this->formMapper = $formMapper;
 

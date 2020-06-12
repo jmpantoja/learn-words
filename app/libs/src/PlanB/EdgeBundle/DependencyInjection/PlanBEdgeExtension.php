@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace PlanB\EdgeBundle\DependencyInjection;
 
 use PlanB\Edge\Infrastructure\Sonata\Admin\AdminInterface;
+use PlanB\Edge\Infrastructure\Sonata\Configurator\DatagridConfigurator;
+use PlanB\Edge\Infrastructure\Sonata\Configurator\DatagridConfiguratorInterface;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfiguratorInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -33,6 +35,9 @@ class PlanBEdgeExtension extends Extension
 
         $container->registerForAutoconfiguration(FormConfiguratorInterface::class)
             ->addTag('planb.admin.configurator', ['type' => FormConfiguratorInterface::TYPE]);
+
+        $container->registerForAutoconfiguration(DatagridConfiguratorInterface::class)
+            ->addTag('planb.admin.configurator', ['type' => DatagridConfiguratorInterface::TYPE]);
 
         $container->registerForAutoconfiguration(AdminInterface::class)
             ->addTag('planb.admin');
