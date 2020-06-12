@@ -14,11 +14,9 @@ declare(strict_types=1);
 namespace PlanB\EdgeBundle\DependencyInjection\Compiler;
 
 use PlanB\Edge\Infrastructure\Sonata\Configurator\ConfiguratorFactory;
-use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfiguratorInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
-use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * Configura la injección de dependencias para las clases Admin de Sonata
@@ -78,7 +76,7 @@ final class SonataAdminCompiler implements CompilerPassInterface
         }
 
         $admin = forward_static_call([$class, 'attachTo']);
-        return $this->configuratorServiceName($type, $admin);
+        return CallToSetter::configuratorServiceName($type, $admin);
 
     }
 
@@ -88,33 +86,12 @@ final class SonataAdminCompiler implements CompilerPassInterface
     private function addToConfiguratorSetters(ContainerBuilder $container): void
     {
         foreach ($container->findTaggedServiceIds('planb.admin') as $id => $tags) {
-            $definition = $container->getDefinition($id);
-            $this->addToFormConfiguratorSetter($definition);
+            CallToSetter::form($container, $id)
+                ->apply();
+
+
         }
     }
 
-    /**
-     * @param Definition $definition
-     */
-    private function addToFormConfiguratorSetter(Definition $definition): void
-    {
-        $type = FormConfiguratorInterface::TYPE;
-        $admin = $definition->getClass();
 
-        $service = $this->configuratorServiceName($type, $admin);
-        $definition->addMethodCall('setFormConfigurator', [new Reference($service)]);
-    }
-
-    /**
-     * @param string $type
-     * @param string $admin
-     * @return string
-     */
-    private function configuratorServiceName(string $type, string $admin): string
-    {
-        $admin = strtolower($admin);
-        $admin = str_replace('\\', '.', $admin);
-
-        return sprintf('planb.sonata.%s.configurator.%s', $type, $admin);
-    }
 }

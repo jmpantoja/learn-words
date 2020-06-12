@@ -3,6 +3,7 @@
 namespace spec\PlanB\Edge\Infrastructure\Sonata\Configurator;
 
 use PhpSpec\ObjectBehavior;
+use PlanB\Edge\Infrastructure\Sonata\Configurator\ConfiguratorInterface;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfigurator;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfiguratorInterface;
 use Prophecy\Argument;
@@ -20,6 +21,7 @@ class FormConfiguratorSpec extends ObjectBehavior
     {
         $this->shouldHaveType(FormConfigurator::class);
         $this->shouldHaveType(FormConfiguratorInterface::class);
+        $this->shouldHaveType(ConfiguratorInterface::class);
     }
 
     public function it_is_able_to_add_a_field_to_a_form_mapper(FormMapper $formMapper)
