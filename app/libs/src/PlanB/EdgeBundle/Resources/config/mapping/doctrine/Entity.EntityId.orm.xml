@@ -3,11 +3,18 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity name="LearnWords\ModuleA\Domain\Dummy" table="module_dummy">
+    <embeddable name="PlanB\Edge\Domain\Entity\EntityId">
+        <id name="id" column="id" type="integer">
+            <generator strategy="AUTO"/>
+            <options>
+                <option name="unsigned">true</option>
+            </options>
+        </id>
 
-        <embedded name="id" class="PlanB\Edge\Domain\Entity\EntityId" use-column-prefix="false" />
+        <field name="uuid" column="uuid" type="uuid" unique="true">
 
-        <field name="name" column="name" type="string" length="50" nullable="true" unique="true"/>
-    </entity>
+        </field>
+    </embeddable>
+
 </doctrine-mapping>
 

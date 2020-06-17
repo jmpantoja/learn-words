@@ -40,9 +40,6 @@ services:
       - php
     # Comment out this volume in production
     volumes:
-      - ./app/sites/frontend/public:/srv/app/sites/frontend/public:rw
-      - ./app/sites/api/public:/srv/app/sites/api/public:rw
-      - ./app/sites/admin/public:/srv/app/sites/admin/public:rw
       - ./etc/nginx/conf.d:/etc/nginx/conf.d:rw
       - ./logs:/var/log/nginx:rw
 

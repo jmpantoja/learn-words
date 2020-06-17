@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace PlanB\Edge\Infrastructure\Sonata\Configurator;
 
+use PlanB\Edge\Domain\Entity\EntityInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 
 interface FormConfiguratorInterface extends ConfiguratorInterface

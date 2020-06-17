@@ -6,6 +6,8 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "league/tactician-bundle": "^1.2",
+        "ramsey/uuid": "^4.0",
+        "ramsey/uuid-doctrine": "^1.6",
         "sensio/framework-extra-bundle": "^5.1",
         "sonata-project/admin-bundle": "^3.68",
         "sonata-project/doctrine-orm-admin-bundle": "^3.18",
@@ -48,7 +50,6 @@
             "App\\": "src/",
             "PlanB\\": "libs/src/PlanB/",
             "LearnWords\\": "src/LearnWords/"
-
         }
     },
     "autoload-dev": {

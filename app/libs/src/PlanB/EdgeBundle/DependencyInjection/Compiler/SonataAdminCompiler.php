@@ -14,9 +14,11 @@ declare(strict_types=1);
 namespace PlanB\EdgeBundle\DependencyInjection\Compiler;
 
 use PlanB\Edge\Infrastructure\Sonata\Configurator\ConfiguratorFactory;
+use PlanB\Edge\Infrastructure\Sonata\Doctrine\ModelManager;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * Configura la injección de dependencias para las clases Admin de Sonata
@@ -94,6 +96,5 @@ final class SonataAdminCompiler implements CompilerPassInterface
 
         }
     }
-
 
 }

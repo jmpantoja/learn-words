@@ -9,3 +9,10 @@ services:
     PlanB\Edge\:
         resource: '../../../Edge'
         exclude: '../../../Edge/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    PlanB\Edge\Infrastructure\Sonata\Doctrine\ModelManager:
+        alias: sonata.admin.manager.orm
+
+    sonata.admin.manager.orm:
+        class: PlanB\Edge\Infrastructure\Sonata\Doctrine\ModelManager
+        
