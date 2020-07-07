@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace PlanB\EdgeBundle\DependencyInjection;
 
+use Doctrine\DBAL\Types\Type;
 use PlanB\Edge\Application\UseCase\UseCaseInterface;
 use PlanB\Edge\Infrastructure\Sonata\Admin\AdminInterface;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\DatagridConfiguratorInterface;
@@ -53,6 +54,7 @@ class PlanBEdgeExtension extends Extension implements PrependExtensionInterface
             $container,
             new FileLocator(dirname(__DIR__) . '/Resources/config')
         );
+
         $loader->load('services.yaml');
     }
 

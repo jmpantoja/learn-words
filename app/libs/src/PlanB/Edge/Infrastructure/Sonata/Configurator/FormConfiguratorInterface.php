@@ -12,12 +12,17 @@ declare(strict_types=1);
 
 namespace PlanB\Edge\Infrastructure\Sonata\Configurator;
 
-use PlanB\Edge\Domain\Entity\EntityInterface;
+use PlanB\Edge\Infrastructure\Sonata\Doctrine\ManagerCommandFactoryInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 
 interface FormConfiguratorInterface extends ConfiguratorInterface
 {
     public const TYPE = 'form';
+
+    /**
+     * @param ManagerCommandFactoryInterface $commandFactory
+     */
+    public function setCommandFactory(ManagerCommandFactoryInterface $commandFactory): self;
 
     /**
      * @param FormMapper $formMapper

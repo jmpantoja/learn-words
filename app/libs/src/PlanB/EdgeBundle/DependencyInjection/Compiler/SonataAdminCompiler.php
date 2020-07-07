@@ -79,7 +79,6 @@ final class SonataAdminCompiler implements CompilerPassInterface
 
         $admin = forward_static_call([$class, 'attachTo']);
         return CallToSetter::configuratorServiceName($type, $admin);
-
     }
 
     /**

@@ -1,0 +1,10 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="LearnWords\Term\Domain\Model\Term" table="term_term">
+        <embedded name="id" class="PlanB\Edge\Domain\Entity\EntityId" use-column-prefix="false"/>
+        <embedded name="word" class="LearnWords\Term\Domain\Model\Word" use-column-prefix="true"/>
+    </entity>
+</doctrine-mapping>

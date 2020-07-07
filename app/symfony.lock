@@ -165,11 +165,17 @@
     "league/tactician-container": {
         "version": "2.0.0"
     },
+    "league/tactician-doctrine": {
+        "version": "v1.1.1"
+    },
     "league/tactician-logger": {
         "version": "v0.10.0"
     },
     "monolog/monolog": {
         "version": "1.25.4"
+    },
+    "myclabs/php-enum": {
+        "version": "1.7.6"
     },
     "nikic/php-parser": {
         "version": "v4.5.0"

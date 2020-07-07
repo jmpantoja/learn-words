@@ -36,9 +36,11 @@ class EntityId
         $this->uuid = Uuid::fromString($uuid);
     }
 
+
+
     public static function fromString(string $id): self
     {
-        return new self($id);
+        return new static($id);
     }
 
     /**

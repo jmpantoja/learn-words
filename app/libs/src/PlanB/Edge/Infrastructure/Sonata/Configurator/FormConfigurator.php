@@ -12,41 +12,46 @@ declare(strict_types=1);
 
 namespace PlanB\Edge\Infrastructure\Sonata\Configurator;
 
+use PlanB\Edge\Application\UseCase\PersistenceCommand;
 use PlanB\Edge\Domain\Entity\EntityBuilder;
-use PlanB\Edge\Domain\Entity\EntityInterface;
+use PlanB\Edge\Infrastructure\Sonata\Doctrine\ManagerCommandFactoryInterface;
+use PlanB\Edge\Infrastructure\Symfony\Form\CompoundDataMapper;
+use PlanB\Edge\Infrastructure\Symfony\Form\CompoundToObjectMapperInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\CustomDataMapper;
-use ReflectionProperty;
+use PlanB\Edge\Infrastructure\Symfony\Validator\CompoundBuilder;
+use PlanB\Edge\Infrastructure\Symfony\Validator\ConstraintBuilderFactory;
 use Sonata\AdminBundle\Form\FormMapper;
-use Symfony\Component\Form\DataMapperInterface;
-use Symfony\Component\Form\Exception\UnexpectedTypeException;
-use Symfony\Component\PropertyAccess\PropertyAccess;
-use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
-abstract class FormConfigurator implements FormConfiguratorInterface
+abstract class FormConfigurator implements FormConfiguratorInterface, CompoundToObjectMapperInterface
 {
+    private ManagerCommandFactoryInterface $commandFactory;
 
     private FormMapper $formMapper;
 
     private bool $isOpened = false;
-    /**
-     * @var EntityBuilder
-     */
-    private EntityBuilder $builder;
 
-    public function __construct(EntityBuilder $builder)
+
+    /**
+     * @param ManagerCommandFactoryInterface $commandFactory
+     */
+    public function setCommandFactory(ManagerCommandFactoryInterface $commandFactory): self
     {
-        $this->builder = $builder;
+        $this->commandFactory = $commandFactory;
+        return $this;
     }
+
 
     public function handle(FormMapper $formMapper, ?object $subject): self
     {
-        $this->formMapper = $formMapper;
+        $this->setCommandFactory($formMapper->getAdmin());
 
-        $dataMapper = new DataMapper($this->builder);
+        $this->formMapper = $formMapper;
+        $options = $this->formMapper->getFormBuilder()->getOptions();
+
+        $dataMapper = new CompoundDataMapper($this, $options);
         $this->formMapper->getFormBuilder()->setDataMapper($dataMapper);
 
         $this->configure($subject);
-
         return $this;
     }
 
@@ -75,6 +80,7 @@ abstract class FormConfigurator implements FormConfiguratorInterface
 
     protected function add($name, $type = null, array $options = [], array $fieldDescriptionOptions = []): self
     {
+
         $this->formMapper->add($name, $type, $options, $fieldDescriptionOptions);
         return $this;
     }
@@ -93,6 +99,15 @@ abstract class FormConfigurator implements FormConfiguratorInterface
             $this->formMapper->end();
         }
         $this->isOpened = true;
+    }
+
+    final public function mapDataToObject(array $data, $entity = null): PersistenceCommand
+    {
+        return $this->commandFactory->saveCommand($data, $entity);
+    }
+
+    public function buildConstraints(CompoundBuilder $builder, array $options): void
+    {
     }
 
 }

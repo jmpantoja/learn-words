@@ -13,9 +13,6 @@ declare(strict_types=1);
 
 namespace PlanB\Edge\Domain\Entity;
 
-
-use LearnWords\ModuleA\Domain\Borrame;
-
 interface EntityInterface
 {
     public function id(): ?EntityId;

@@ -14,8 +14,6 @@ declare(strict_types=1);
 namespace PlanB\Edge\Infrastructure\Sonata\Admin;
 
 
-use PlanB\Edge\Application\UseCase\EntityCommandInterface;
-use PlanB\Edge\Domain\Entity\EntityInterface;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\DatagridConfiguratorInterface;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfiguratorInterface;
 use PlanB\Edge\Infrastructure\Sonata\Doctrine\ManagerCommandFactoryInterface;
@@ -33,20 +31,28 @@ abstract class Admin extends AbstractAdmin implements AdminInterface, ManagerCom
 
     public function setModelManager(ModelManagerInterface $modelManager)
     {
-        if($modelManager instanceof ModelManager){
+        if ($modelManager instanceof ModelManager) {
             $modelManager->setCommandFactory($this);
         }
         parent::setModelManager($modelManager);
     }
 
-
-    public function checkAccess($action, $object = null)
+    /**
+     * @inheritDoc
+     */
+    public function getBaseRouteName()
     {
-        if ($object instanceof EntityCommandInterface) {
-            $object = $object->entity();
-        }
+        return RouteBaseUtils::fromClassName($this->getClass())
+            ->baseRouteName();
+    }
 
-        parent::checkAccess($action, $object);
+    /**
+     * @inheritDoc
+     */
+    public function getBaseRoutePattern()
+    {
+        return RouteBaseUtils::fromClassName($this->getClass())
+            ->baseRoutePattern();
     }
 
     /**
@@ -78,3 +84,5 @@ abstract class Admin extends AbstractAdmin implements AdminInterface, ManagerCom
             ->handle($listMapper);
     }
 }
+
+
