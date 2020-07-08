@@ -11,10 +11,11 @@
 
 declare(strict_types=1);
 
-namespace LearnWords\Term\Domain\Model;
+namespace PlanB\Edge\Domain\Event;
 
-use PlanB\Edge\Domain\Entity\EntityId;
+use DateTimeInterface;
 
-final class TermId extends EntityId
+interface DomainEvent
 {
+    public function occurredAt(): DateTimeInterface;
 }

@@ -18,9 +18,8 @@ use Ramsey\Uuid\UuidInterface;
 
 class EntityId
 {
-
-    private int $id;
-    private Uuid $uuid;
+    protected int $id;
+    protected Uuid $uuid;
 
     /**
      * @param string $uuid
@@ -36,7 +35,14 @@ class EntityId
         $this->uuid = Uuid::fromString($uuid);
     }
 
+    public static function fromId(?EntityId $id): ?EntityId
+    {
+        if (null === $id) {
+            return null;
+        }
 
+        return new static((string)$id);
+    }
 
     public static function fromString(string $id): self
     {

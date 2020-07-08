@@ -14,19 +14,35 @@ declare(strict_types=1);
 namespace LearnWords\Term\Application\Save;
 
 use LearnWords\Term\Domain\Model\Term;
+use LearnWords\Term\Domain\Model\TermId;
 use LearnWords\Term\Domain\Model\Word;
-use PlanB\Edge\Application\UseCase\PersistenceCommand;
-use PlanB\Edge\Domain\Entity\EntityId;
-use PlanB\Edge\Domain\Entity\EntityInterface;
+use PlanB\Edge\Application\UseCase\SaveCommand;
 
-final class SaveTerm extends PersistenceCommand
+final class SaveTerm extends SaveCommand
 {
-    public ?EntityId $id = null;
     public ?Word $word = null;
 
-
-    protected function newInstance(): Term
+    protected function build(Term $term = null): Term
     {
-        return new Term($this->word);
+        if (is_null($term)) {
+            $term = $this->create();
+        }
+
+        return $this->update($term);
     }
+
+    private function create(): Term
+    {
+        return new Term(...[
+            new TermId(),
+            $this->word
+        ]);
+    }
+
+    private function update(Term $term): Term
+    {
+        return $term->setWord($this->word);
+    }
+
+
 }

@@ -17,7 +17,7 @@ namespace PlanB\Edge\Application\UseCase;
 use PlanB\Edge\Domain\Entity\EntityInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 
-abstract class PersistenceCommand implements PersistenceCommandInterface
+abstract class SaveCommand implements PersistenceCommandInterface
 {
     private ?EntityInterface $entity;
 
@@ -37,9 +37,9 @@ abstract class PersistenceCommand implements PersistenceCommandInterface
 
     public function entity(): EntityInterface
     {
-        return $this->entity ?? $this->newInstance();
+        return $this->build($this->entity);
     }
 
-    abstract protected function newInstance(): EntityInterface;
+    abstract protected function build(): EntityInterface;
 }
 

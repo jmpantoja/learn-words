@@ -177,6 +177,9 @@
     "myclabs/php-enum": {
         "version": "1.7.6"
     },
+    "nesbot/carbon": {
+        "version": "2.36.1"
+    },
     "nikic/php-parser": {
         "version": "v4.5.0"
     },

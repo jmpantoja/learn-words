@@ -38,8 +38,17 @@ final class ModelManager extends SonataModelManager
                 'id.uuid' => $id
             ]);
         }
-
         return parent::find($class, $id);
+    }
+
+    public function getModelIdentifier($class)
+    {
+        if (is_a($class, PersistenceCommandInterface::class, true)) {
+            return [
+                'id.id'
+            ];
+        }
+        return $this->getMetadata($class)->identifier;
     }
 
     public function getNormalizedIdentifier($entity)

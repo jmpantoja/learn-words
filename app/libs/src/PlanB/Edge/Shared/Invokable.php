@@ -11,10 +11,10 @@
 
 declare(strict_types=1);
 
-namespace LearnWords\Term\Domain\Model;
+namespace PlanB\Edge\Shared;
 
-use PlanB\Edge\Domain\Entity\EntityId;
 
-final class TermId extends EntityId
+interface Invokable
 {
+    public function __invoke();
 }

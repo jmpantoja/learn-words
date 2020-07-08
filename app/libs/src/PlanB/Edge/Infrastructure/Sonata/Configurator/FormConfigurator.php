@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace PlanB\Edge\Infrastructure\Sonata\Configurator;
 
-use PlanB\Edge\Application\UseCase\PersistenceCommand;
+use PlanB\Edge\Application\UseCase\SaveCommand;
 use PlanB\Edge\Domain\Entity\EntityBuilder;
 use PlanB\Edge\Infrastructure\Sonata\Doctrine\ManagerCommandFactoryInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\CompoundDataMapper;
@@ -101,7 +101,7 @@ abstract class FormConfigurator implements FormConfiguratorInterface, CompoundTo
         $this->isOpened = true;
     }
 
-    final public function mapDataToObject(array $data, $entity = null): PersistenceCommand
+    final public function mapDataToObject(array $data, $entity = null): SaveCommand
     {
         return $this->commandFactory->saveCommand($data, $entity);
     }

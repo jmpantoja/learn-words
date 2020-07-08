@@ -10,10 +10,7 @@
                 <option name="unsigned">true</option>
             </options>
         </id>
-
-        <field name="uuid" column="uuid" type="uuid" unique="true">
-
-        </field>
+        <field name="uuid" column="uuid" type="uuid" unique="true"/>
     </embeddable>
 
 </doctrine-mapping>

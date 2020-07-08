@@ -3,21 +3,21 @@
 namespace spec\PlanB\Edge\Application\UseCase;
 
 use PhpSpec\ObjectBehavior;
-use PlanB\Edge\Application\UseCase\PersistenceCommand;
+use PlanB\Edge\Application\UseCase\SaveCommand;
 use PlanB\Edge\Domain\Entity\EntityId;
 use PlanB\Edge\Domain\Entity\EntityInterface;
 
-class PersistenceCommandSpec extends ObjectBehavior
+class SaveCommandSpec extends ObjectBehavior
 {
     public function let(EntityInterface $entity)
     {
-        $this->beAnInstanceOf(ConcretePersistenceCommand::class);
+        $this->beAnInstanceOf(ConcreteSaveCommand::class);
         $this->beConstructedThrough('make', [[], $entity]);
     }
 
     public function it_is_initializable()
     {
-        $this->shouldHaveType(PersistenceCommand::class);
+        $this->shouldHaveType(SaveCommand::class);
     }
 
     public function it_return_entity(EntityInterface $entity)
@@ -43,7 +43,7 @@ class PersistenceCommandSpec extends ObjectBehavior
     }
 }
 
-class ConcretePersistenceCommand extends PersistenceCommand
+class ConcreteSaveCommand extends SaveCommand
 {
 
     public ?string $name = null;
@@ -66,9 +66,14 @@ class ConcretePersistenceCommand extends PersistenceCommand
         return $this->lastName;
     }
 
-    protected function newInstance(): EntityInterface
+
+    protected function build($entity = null): EntityInterface
     {
-        return new ConcreteEntity();
+        if (is_null($entity)) {
+            return new ConcreteEntity();
+        }
+
+        return $entity;
     }
 }
 
