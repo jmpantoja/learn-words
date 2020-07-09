@@ -14,36 +14,22 @@ declare(strict_types=1);
 namespace LearnWords\Term\Domain\Model;
 
 
-use Carbon\CarbonImmutable;
-use DateTimeInterface;
 use PlanB\Edge\Domain\Event\DomainEvent;
 
-final class TermHasBeenCreated implements DomainEvent
+final class TermHasBeenCreated extends DomainEvent
 {
-    /**
-     * @var TermId
-     */
-    private TermId $termId;
 
-    public function __construct(TermId $termId)
-    {
-        $this->termId = $termId;
-        $this->occurredAt = CarbonImmutable::now();
-    }
+    private Term $term;
 
     /**
-     * @return DateTimeInterface
+     * @var string[]
      */
-    public function occurredAt(): DateTimeInterface
+    private array $pepe;
+
+    public function __construct(Term $term)
     {
-        return $this->occurredAt;
+        $this->term = $term;
+        parent::__construct();
     }
 
-    /**
-     * @return TermId
-     */
-    public function termId(): TermId
-    {
-        return $this->termId;
-    }
 }

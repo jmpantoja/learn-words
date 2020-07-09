@@ -9,18 +9,18 @@ use LearnWords\Term\Domain\Model\TermHasBeenCreated;
 use LearnWords\Term\Domain\Model\Word;
 use LearnWords\Term\Domain\Repository\TermRepositoryInterface;
 use PhpSpec\ObjectBehavior;
-use PlanB\Edge\Domain\Event\EventDispatcherForTesting;
-use PlanB\Edge\Shared\Invokable;
+use PlanB\Edge\Domain\Event\DomainEventsCollector;
+use PlanB\Edge\Domain\Event\DomainEventDispatcher;
 use Prophecy\Argument;
 
 class SaveTermUseCaseSpec extends ObjectBehavior
 {
-    public function let(TermRepositoryInterface $termRepository, Invokable $listener)
+    public function let(TermRepositoryInterface $termRepository, DomainEventsCollector $eventsCollector)
     {
         $this->beConstructedWith($termRepository);
 
-        EventDispatcherForTesting::getInstance()
-            ->addGlobalListener($listener->getWrappedObject());
+        DomainEventDispatcher::getInstance()
+            ->setDomainEventsCollector($eventsCollector->getWrappedObject());
     }
 
     public function it_is_initializable()
@@ -28,7 +28,7 @@ class SaveTermUseCaseSpec extends ObjectBehavior
         $this->shouldHaveType(SaveTermUseCase::class);
     }
 
-    public function it_is_able_to_save_a_term(TermRepositoryInterface $termRepository, Invokable $listener)
+    public function it_is_able_to_save_a_term(TermRepositoryInterface $termRepository, DomainEventsCollector $eventsCollector)
     {
         $command = SaveTerm::make([
             'word' => Word::spanish('hola')
@@ -37,13 +37,9 @@ class SaveTermUseCaseSpec extends ObjectBehavior
         $this->handle($command);
         $termRepository->persist(Argument::type(Term::class))->shouldHaveBeenCalled();
 
-        $listener->__invoke(Argument::type(TermHasBeenCreated::class), Argument::any(), Argument::any())
+        $eventsCollector->handle(Argument::type(TermHasBeenCreated::class), TermHasBeenCreated::class)
             ->shouldHaveBeenCalledOnce();
-
-        $listener->__invoke(Argument::any(), Argument::any(), Argument::any())
-            ->shouldHaveBeenCalledTimes(1);
     }
-
 }
 
 

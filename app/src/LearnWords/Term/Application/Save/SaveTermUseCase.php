@@ -14,13 +14,11 @@ declare(strict_types=1);
 namespace LearnWords\Term\Application\Save;
 
 
-use LearnWords\Term\Application\Save\SaveTerm;
 use LearnWords\Term\Domain\Repository\TermRepositoryInterface;
 use PlanB\Edge\Application\UseCase\UseCaseInterface;
 
 final class SaveTermUseCase implements UseCaseInterface
 {
-
     private TermRepositoryInterface $termRepository;
 
     public function __construct(TermRepositoryInterface $termRepository)

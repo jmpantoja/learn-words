@@ -29,7 +29,7 @@ final class Term implements EntityInterface
         $this->id = $termId;
         $this->update($word);
 
-        $this->notify(new TermHasBeenCreated($this->id));
+        $this->notify(new TermHasBeenCreated($this));
     }
 
     public function update(Word $word): self

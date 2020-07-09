@@ -11,17 +11,12 @@
 
 declare(strict_types=1);
 
-namespace PlanB\Edge\Domain\Entity\Traits;
+namespace PlanB\Edge\Domain\Repository;
 
 
 use PlanB\Edge\Domain\Event\DomainEventInterface;
-use PlanB\Edge\Domain\Event\DomainEventDispatcher;
 
-trait NotifyEvents
+interface EventStoreInterface
 {
-    final public function notify(DomainEventInterface $domainEvent): void
-    {
-        DomainEventDispatcher::getInstance()
-            ->dispatch($domainEvent);
-    }
+    public function persist(DomainEventInterface $event);
 }

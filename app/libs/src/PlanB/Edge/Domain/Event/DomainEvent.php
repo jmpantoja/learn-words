@@ -13,9 +13,24 @@ declare(strict_types=1);
 
 namespace PlanB\Edge\Domain\Event;
 
+
+use Carbon\CarbonImmutable;
 use DateTimeInterface;
 
-interface DomainEvent
+abstract class DomainEvent implements DomainEventInterface
 {
-    public function occurredAt(): DateTimeInterface;
+    private DateTimeInterface $when;
+
+    protected function __construct(DateTimeInterface $when = null)
+    {
+        $this->when = $when ?? CarbonImmutable::now();
+    }
+
+    /**
+     * @return DateTimeInterface
+     */
+    public function when(): DateTimeInterface
+    {
+        return $this->when;
+    }
 }
