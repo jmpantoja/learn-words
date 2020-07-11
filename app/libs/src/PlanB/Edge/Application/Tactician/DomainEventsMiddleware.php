@@ -15,7 +15,6 @@ namespace PlanB\Edge\Application\Tactician;
 
 
 use League\Tactician\Middleware;
-use PlanB\Edge\Domain\Event\DomainEventsCollector;
 use PlanB\Edge\Domain\Event\DomainEventDispatcher;
 use PlanB\Edge\Domain\Repository\EventStoreInterface;
 
@@ -35,14 +34,12 @@ final class DomainEventsMiddleware implements Middleware
     public function execute($command, callable $next)
     {
         $eventDispatcher = DomainEventDispatcher::getInstance();
-        $eventsCollector = new DomainEventsCollector();
-
-        $eventDispatcher->setDomainEventsCollector($eventsCollector);
+        $eventsCollector = $eventDispatcher->eventsCollector();
 
         $response = $next($command);
         $events = $eventsCollector->events();
 
-        foreach ($events as $event){
+        foreach ($events as $event) {
             $this->repository->persist($event);
         }
 

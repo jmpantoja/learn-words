@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace PlanB\Edge\Infrastructure\Doctrine\DBAL\Type\Exception;
+namespace PlanB\Edge\Shared\Exception;
 
 use InvalidArgumentException;
 

@@ -35,6 +35,8 @@ final class Term implements EntityInterface
     public function update(Word $word): self
     {
         $this->setWord($word);
+
+        $this->notify(new TermHasBeenUpdated($this));
         return $this;
     }
 
@@ -43,7 +45,7 @@ final class Term implements EntityInterface
      */
     public function id(): ?TermId
     {
-        return TermId::fromId($this->id);
+        return TermId::fromEntityId($this->id);
     }
 
     /**
@@ -54,7 +56,7 @@ final class Term implements EntityInterface
         return $this->word;
     }
 
-    public function setWord(Word $word): self
+    private function setWord(Word $word): self
     {
         $this->word = $word;
         return $this;

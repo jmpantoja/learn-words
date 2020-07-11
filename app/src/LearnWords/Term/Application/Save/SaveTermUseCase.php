@@ -30,7 +30,5 @@ final class SaveTermUseCase implements UseCaseInterface
     {
         $term = $command->entity();
         $this->termRepository->persist($term);
-
-        return $term;
     }
 }

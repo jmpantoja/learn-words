@@ -20,7 +20,7 @@ abstract class EnumType extends Type
         }
 
         if (!($value instanceof Enum)) {
-            throw new Exception\InvalidTypeException($value, Enum::class);
+            throw new \PlanB\Edge\Shared\Exception\InvalidTypeException($value, Enum::class);
         }
 
         return $value->getKey();

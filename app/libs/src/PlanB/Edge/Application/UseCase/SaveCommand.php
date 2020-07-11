@@ -15,9 +15,9 @@ namespace PlanB\Edge\Application\UseCase;
 
 
 use PlanB\Edge\Domain\Entity\EntityInterface;
-use Symfony\Component\PropertyAccess\PropertyAccessor;
+use Throwable;
 
-abstract class SaveCommand implements PersistenceCommandInterface
+abstract class SaveCommand implements WriteCommandInterface
 {
     private ?EntityInterface $entity;
 
@@ -28,18 +28,42 @@ abstract class SaveCommand implements PersistenceCommandInterface
 
     protected function __construct(array $input, EntityInterface $entity = null)
     {
-        $this->entity = $entity;
-        $propertyAccessor = new PropertyAccessor();
-        foreach ($input as $name => $value) {
-            $propertyAccessor->setValue($this, $name, $value);
+        try {
+            $this->entity = $this->build($input, $entity);
+        } catch (Throwable $exception) {
+            $this->entity = $entity;
         }
+    }
+
+    protected function build($input, $entity): EntityInterface
+    {
+        $data = $this->resolve($input);
+
+        if (is_null($entity)) {
+            return $this->create($data);
+        }
+        return $this->update($data, $entity);
+    }
+
+    /**
+     * Se puede heredar este método para aplicar un OptionResolver, si es necesario
+     *
+     * @param array $input
+     * @return array
+     */
+    protected function resolve(array $input): array
+    {
+        return $input;
     }
 
     public function entity(): EntityInterface
     {
-        return $this->build($this->entity);
+        return $this->entity;
     }
 
-    abstract protected function build(): EntityInterface;
+    abstract protected function create(array $data): EntityInterface;
+
+    abstract protected function update(array $data): EntityInterface;
+
 }
 

@@ -11,10 +11,12 @@
 
 declare(strict_types=1);
 
-namespace PlanB\Edge\Shared;
+namespace PlanB\Edge\Application\UseCase;
 
 
-interface Invokable
+use PlanB\Edge\Domain\Entity\EntityInterface;
+
+interface WriteCommandInterface
 {
-    public function __invoke();
+    public function entity(): EntityInterface;
 }

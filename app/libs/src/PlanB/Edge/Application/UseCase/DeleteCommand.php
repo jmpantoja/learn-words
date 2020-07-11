@@ -16,7 +16,7 @@ namespace PlanB\Edge\Application\UseCase;
 
 use PlanB\Edge\Domain\Entity\EntityInterface;
 
-abstract class DeleteCommand implements PersistenceCommandInterface
+abstract class DeleteCommand implements WriteCommandInterface
 {
     private ?EntityInterface $entity;
 

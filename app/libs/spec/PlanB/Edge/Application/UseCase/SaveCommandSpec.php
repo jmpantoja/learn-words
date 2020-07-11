@@ -12,7 +12,9 @@ class SaveCommandSpec extends ObjectBehavior
     public function let(EntityInterface $entity)
     {
         $this->beAnInstanceOf(ConcreteSaveCommand::class);
-        $this->beConstructedThrough('make', [[], $entity]);
+        $this->beConstructedThrough('make', [[
+            'name' => 'pepe'
+        ], $entity]);
     }
 
     public function it_is_initializable()
@@ -35,11 +37,9 @@ class SaveCommandSpec extends ObjectBehavior
     {
         $this->beConstructedThrough('make', [[
             'name' => 'pepe',
-            'lastName' => 'lopez',
         ]]);
 
-        $this->name->shouldReturn('pepe');
-        $this->lastName()->shouldReturn('lopez');
+        $this->entity()->name()->shouldReturn('pepe');
     }
 }
 
@@ -66,22 +66,50 @@ class ConcreteSaveCommand extends SaveCommand
         return $this->lastName;
     }
 
-
-    protected function build($entity = null): EntityInterface
+    protected function create(array $data): EntityInterface
     {
-        if (is_null($entity)) {
-            return new ConcreteEntity();
-        }
+        return new ConcreteEntity(...[
+            $data['name'] ?? ''
+        ]);
+    }
 
-        return $entity;
+    protected function update(array $data, $entity = null): EntityInterface
+    {
+        return $entity->setName($data['name']);
     }
 }
 
 class ConcreteEntity implements EntityInterface
 {
 
+    private string $name;
+
+    public function __construct(string $name)
+    {
+        $this->name = $name;
+    }
+
     public function id(): ?EntityId
     {
         return null;
     }
+
+    /**
+     * @return string
+     */
+    public function name(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     * @return ConcreteEntity
+     */
+    public function setName(string $name): ConcreteEntity
+    {
+        $this->name = $name;
+        return $this;
+    }
+
 }

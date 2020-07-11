@@ -5,7 +5,7 @@ namespace spec\PlanB\Edge\Infrastructure\Sonata\Admin;
 use PhpSpec\ObjectBehavior;
 use PlanB\Edge\Application\UseCase\DeleteCommand;
 use PlanB\Edge\Application\UseCase\SaveCommand;
-use PlanB\Edge\Application\UseCase\PersistenceCommandInterface;
+use PlanB\Edge\Application\UseCase\WriteCommandInterface;
 use PlanB\Edge\Domain\Entity\EntityInterface;
 use PlanB\Edge\Infrastructure\Sonata\Admin\Admin;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfiguratorInterface;

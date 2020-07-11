@@ -15,34 +15,33 @@ namespace LearnWords\Term\Application\Save;
 
 use LearnWords\Term\Domain\Model\Term;
 use LearnWords\Term\Domain\Model\TermId;
-use LearnWords\Term\Domain\Model\Word;
 use PlanB\Edge\Application\UseCase\SaveCommand;
+use PlanB\Edge\Shared\Exception\InvalidTypeException;
 
 final class SaveTerm extends SaveCommand
 {
-    public ?Word $word = null;
-
-    protected function build(Term $term = null): Term
-    {
-        if (is_null($term)) {
-            $term = $this->create();
-        }
-
-        return $this->update($term);
-    }
-
-    private function create(): Term
+    protected function create(array $data): Term
     {
         return new Term(...[
             new TermId(),
-            $this->word
+            $data['word']
         ]);
     }
 
-    private function update(Term $term): Term
+    protected function update(array $data, Term $term = null): Term
     {
-        return $term->setWord($this->word);
+        $term = $this->ensureEntityType($term);
+
+        return $term->update(...[
+            $data['word']
+        ]);
     }
 
-
+    protected function ensureEntityType(?Term $term): Term
+    {
+        if (null === $term) {
+            throw new InvalidTypeException($term, Term::class);
+        }
+        return $term;
+    }
 }

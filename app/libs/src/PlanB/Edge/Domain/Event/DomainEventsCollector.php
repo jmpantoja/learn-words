@@ -21,6 +21,7 @@ class DomainEventsCollector
     public function handle(DomainEventInterface $event)
     {
         $this->events[] = $event;
+
         return $this;
     }
 

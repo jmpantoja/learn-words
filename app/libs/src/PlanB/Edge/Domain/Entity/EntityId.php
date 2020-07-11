@@ -19,7 +19,7 @@ use Ramsey\Uuid\UuidInterface;
 class EntityId
 {
     protected int $id;
-    protected Uuid $uuid;
+    protected string $uuid;
 
     /**
      * @param string $uuid
@@ -28,14 +28,14 @@ class EntityId
     public function __construct(string $uuid = null)
     {
         if (is_null($uuid)) {
-            $this->uuid = Uuid::uuid4();
+            $this->uuid = (string)Uuid::uuid4();
             return;
         }
 
-        $this->uuid = Uuid::fromString($uuid);
+        $this->uuid = (string)Uuid::fromString($uuid);
     }
 
-    public static function fromId(?EntityId $id): ?EntityId
+    public static function fromEntityId(?EntityId $id): ?EntityId
     {
         if (null === $id) {
             return null;
@@ -59,7 +59,7 @@ class EntityId
 
     public function uuid(): UuidInterface
     {
-        return $this->uuid;
+        return Uuid::fromString($this->uuid);
     }
 
     /**

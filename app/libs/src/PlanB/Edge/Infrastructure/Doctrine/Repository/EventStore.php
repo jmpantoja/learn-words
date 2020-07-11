@@ -16,13 +16,9 @@ namespace PlanB\Edge\Infrastructure\Doctrine\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use PlanB\Edge\Domain\Entity\EntityId;
 use PlanB\Edge\Domain\Entity\Event;
 use PlanB\Edge\Domain\Event\DomainEventInterface;
 use PlanB\Edge\Domain\Repository\EventStoreInterface;
-use PlanB\Edge\Infrastructure\Symfony\Serializer\Normalizer\DomainEventNormalizer;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Serializer;
 
 final class EventStore extends ServiceEntityRepository implements EventStoreInterface
 {
@@ -36,27 +32,11 @@ final class EventStore extends ServiceEntityRepository implements EventStoreInte
     }
 
 
-    public function persist(DomainEventInterface $event)
+    public function persist(DomainEventInterface $domainEvent)
     {
-        $event = new Event(...[
-            get_class($event),
-            $this->serialize($event),
-            $event->when()
-        ]);
-
+        $event = new Event($domainEvent);
         $this->getEntityManager()->persist($event);
     }
 
-    /**
-     * @param DomainEventInterface $event
-     * @return string
-     */
-    private function serialize(DomainEventInterface $event): string
-    {
-        $encoder = [new JsonEncoder()];
-        $normalizer = [new DomainEventNormalizer()];
 
-        $serializer = new Serializer($normalizer, $encoder);
-        return $serializer->serialize($event, 'json');
-    }
 }

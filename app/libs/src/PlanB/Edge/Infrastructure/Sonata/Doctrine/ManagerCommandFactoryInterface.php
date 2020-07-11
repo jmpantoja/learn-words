@@ -14,12 +14,12 @@ declare(strict_types=1);
 namespace PlanB\Edge\Infrastructure\Sonata\Doctrine;
 
 
-use PlanB\Edge\Application\UseCase\PersistenceCommandInterface;
+use PlanB\Edge\Application\UseCase\WriteCommandInterface;
 use PlanB\Edge\Domain\Entity\EntityInterface;
 
 interface ManagerCommandFactoryInterface
 {
-    public function saveCommand(array $input, ?EntityInterface $entity): PersistenceCommandInterface;
+    public function saveCommand(array $input, ?EntityInterface $entity): WriteCommandInterface;
 
-    public function deleteCommand(EntityInterface $entity): PersistenceCommandInterface;
+    public function deleteCommand(EntityInterface $entity): WriteCommandInterface;
 }

@@ -42,11 +42,3 @@ class SaveTermUseCaseSpec extends ObjectBehavior
     }
 }
 
-
-class Callback
-{
-    public function __invoke()
-    {
-        dump('hola');
-    }
-}

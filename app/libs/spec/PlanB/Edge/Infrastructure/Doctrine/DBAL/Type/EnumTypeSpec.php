@@ -6,7 +6,7 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use PhpSpec\ObjectBehavior;
 use PlanB\Edge\Domain\Enum\Enum;
 use PlanB\Edge\Infrastructure\Doctrine\DBAL\Type\EnumType;
-use PlanB\Edge\Infrastructure\Doctrine\DBAL\Type\Exception\InvalidTypeException;
+use PlanB\Edge\Shared\Exception\InvalidTypeException;
 
 class EnumTypeSpec extends ObjectBehavior
 {

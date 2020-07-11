@@ -47,7 +47,6 @@ final class CompoundDataMapper implements DataMapperInterface
      */
     public function mapDataToForms($data, $forms)
     {
-
         $empty = null === $data || [] === $data;
         if ($empty) {
             return;

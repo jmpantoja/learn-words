@@ -16,8 +16,9 @@ namespace PlanB\Edge\Infrastructure\Sonata\Doctrine;
 
 use Doctrine\Persistence\ManagerRegistry;
 use League\Tactician\CommandBus;
-use PlanB\Edge\Application\UseCase\PersistenceCommandInterface;
+use PlanB\Edge\Application\UseCase\WriteCommandInterface;
 use PlanB\Edge\Domain\Entity\EntityInterface;
+use Ramsey\Uuid\Uuid;
 use Sonata\DoctrineORMAdminBundle\Model\ModelManager as SonataModelManager;
 
 final class ModelManager extends SonataModelManager
@@ -35,7 +36,7 @@ final class ModelManager extends SonataModelManager
     {
         if (is_a($class, EntityInterface::class, true)) {
             return $this->getEntityManager($class)->getRepository($class)->findOneBy([
-                'id.uuid' => $id
+                'id.uuid' => Uuid::fromString($id)
             ]);
         }
         return parent::find($class, $id);
@@ -43,7 +44,7 @@ final class ModelManager extends SonataModelManager
 
     public function getModelIdentifier($class)
     {
-        if (is_a($class, PersistenceCommandInterface::class, true)) {
+        if (is_a($class, WriteCommandInterface::class, true)) {
             return [
                 'id.id'
             ];
@@ -53,7 +54,7 @@ final class ModelManager extends SonataModelManager
 
     public function getNormalizedIdentifier($entity)
     {
-        if ($entity instanceof PersistenceCommandInterface) {
+        if ($entity instanceof WriteCommandInterface) {
             $entity = $entity->entity();
         }
 
@@ -85,12 +86,18 @@ final class ModelManager extends SonataModelManager
 
     public function create($command)
     {
-        return $this->commandBus->handle($command);
+        return $this->write($command);
     }
 
     public function update($command)
     {
-        return $this->commandBus->handle($command);
+        return $this->write($command);
+    }
+
+    private function write(WriteCommandInterface $command): EntityInterface
+    {
+        $this->commandBus->handle($command);
+        return $command->entity();
     }
 
     public function delete($entity)

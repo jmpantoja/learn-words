@@ -105,6 +105,12 @@
     "laminas/laminas-eventmanager": {
         "version": "3.2.1"
     },
+    "laminas/laminas-filter": {
+        "version": "2.9.4"
+    },
+    "laminas/laminas-stdlib": {
+        "version": "3.2.1"
+    },
     "laminas/laminas-zendframework-bridge": {
         "version": "1.0.4"
     },
@@ -146,6 +152,9 @@
     },
     "ocramius/proxy-manager": {
         "version": "2.8.0"
+    },
+    "php": {
+        "version": "7.4"
     },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
