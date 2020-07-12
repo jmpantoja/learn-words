@@ -15,7 +15,6 @@ namespace PlanB\Edge\Infrastructure\Symfony\Form;
 
 
 use PlanB\Edge\Domain\Entity\EntityInterface;
-use PlanB\Edge\Infrastructure\Symfony\Validator\CompoundBuilder;
 use PlanB\Edge\Infrastructure\Symfony\Validator\ConstraintBuilderFactory;
 use Symfony\Component\Form\DataMapperInterface;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
@@ -24,22 +23,21 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Component\Validator\ValidatorBuilder;
 
 
-final class CompoundDataMapper implements DataMapperInterface
+final class CompositeDataMapper implements DataMapperInterface
 {
-    private CompoundToObjectMapperInterface $objectMapper;
+    private CompositeToObjectMapperInterface $objectMapper;
     private array $options = [];
     private PropertyAccessorInterface $propertyAccessor;
     private ValidatorInterface $validator;
 
-    public function __construct(CompoundToObjectMapperInterface $objectMapper, array $options = [], PropertyAccessorInterface $propertyAccessor = null)
+    public function __construct(CompositeToObjectMapperInterface $objectMapper, array $options = [], PropertyAccessorInterface $propertyAccessor = null)
     {
         $this->objectMapper = $objectMapper;
         $this->options = $options;
         $this->propertyAccessor = $propertyAccessor ?? PropertyAccess::createPropertyAccessor();
-        $this->validator = (new ValidatorBuilder())->getValidator();
+//        $this->validator = (new ValidatorBuilder())->getValidator();
     }
 
     /**
@@ -123,11 +121,7 @@ final class CompoundDataMapper implements DataMapperInterface
      */
     private function validate(array $data, array $forms): bool
     {
-        $builder = new CompoundBuilder();
-        $this->objectMapper->buildConstraints($builder, $this->options);
-        $constraints = $builder->build();
-
-        $violations = $this->validator->validate($data, $constraints);
+        $violations = $this->objectMapper->validate($data);
 
         foreach ($violations as $name => $violation) {
             $field = $this->propertyAccessor->getValue($forms, $violation->getPropertyPath());
@@ -153,5 +147,4 @@ final class CompoundDataMapper implements DataMapperInterface
 
         return $entity;
     }
-
 }

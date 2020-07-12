@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace PlanB\Edge\Infrastructure\Symfony\Validator\Constraints;
+namespace PlanB\Edge\Domain\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\TypeValidator;

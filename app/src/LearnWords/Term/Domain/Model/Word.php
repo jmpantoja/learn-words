@@ -14,8 +14,17 @@ declare(strict_types=1);
 namespace LearnWords\Term\Domain\Model;
 
 
-final class Word
+use PlanB\Edge\Domain\Validator\Constraints\DataType;
+use PlanB\Edge\Domain\Validator\ConstraintsFactory;
+use PlanB\Edge\Domain\Validator\Traits\ValidableTrait;
+use PlanB\Edge\Domain\Validator\Validable;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+
+final class Word implements Validable
 {
+    use ValidableTrait;
+
     private Lang $lang;
     private string $word;
 
@@ -31,8 +40,29 @@ final class Word
 
     public function __construct(string $word, Lang $lang)
     {
+        $this->ensureIsValid([
+            'word' => $word,
+            'lang' => $lang
+        ]);
+
         $this->word = $word;
         $this->lang = $lang;
+    }
+
+    public static function configureValidator(ConstraintsFactory $factory):void
+    {
+        $factory->composite()
+            ->required('word', [
+                new NotBlank(),
+                new Length([
+                    'min' => 3
+                ])
+            ])
+            ->required('lang', [
+                new DataType([
+                    'type' => Lang::class
+                ])
+            ]);
     }
 
     /**
@@ -56,4 +86,5 @@ final class Word
     {
         return $this->word();
     }
+
 }

@@ -11,14 +11,14 @@
 
 declare(strict_types=1);
 
-namespace PlanB\Edge\Infrastructure\Symfony\Validator\Constraints;
+namespace PlanB\Edge\Domain\Validator;
 
+use Symfony\Component\Validator\Constraint;
 
-use Symfony\Component\Validator\Constraints\Type;
-
-final class DataType extends Type
+interface ConstraintsDefinition
 {
-    public $message = 'This value is not of the correct type.';
-    public $allowNull = false;
-
+    /**
+     * @return Constraint[]
+     */
+    public function constraints(): array ;
 }

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace PlanB\Edge\Infrastructure\Symfony\Form\Type;
 
 
+use App\LearnWords\Term\Domain\Model\Borrame;
 use PlanB\Edge\Infrastructure\Symfony\Form\ArrayDataMapper2;
 use PlanB\Edge\Infrastructure\Symfony\Form\SingleDataMapper;
 use PlanB\Edge\Infrastructure\Symfony\Form\SingleToObjectMapperInterface;
@@ -21,6 +22,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\ConstraintViolationList;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 abstract class SingleType extends AbstractType implements SingleToObjectMapperInterface
 {
@@ -46,4 +49,8 @@ abstract class SingleType extends AbstractType implements SingleToObjectMapperIn
 
     abstract public function customOptions(OptionsResolver $resolver);
 
+    public function validate($data): ConstraintViolationListInterface
+    {
+        return new ConstraintViolationList();
+    }
 }

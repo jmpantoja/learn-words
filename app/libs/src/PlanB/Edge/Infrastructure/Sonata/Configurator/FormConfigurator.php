@@ -15,14 +15,15 @@ namespace PlanB\Edge\Infrastructure\Sonata\Configurator;
 use PlanB\Edge\Application\UseCase\SaveCommand;
 use PlanB\Edge\Domain\Entity\EntityBuilder;
 use PlanB\Edge\Infrastructure\Sonata\Doctrine\ManagerCommandFactoryInterface;
-use PlanB\Edge\Infrastructure\Symfony\Form\CompoundDataMapper;
-use PlanB\Edge\Infrastructure\Symfony\Form\CompoundToObjectMapperInterface;
+use PlanB\Edge\Infrastructure\Symfony\Form\CompositeDataMapper;
+use PlanB\Edge\Infrastructure\Symfony\Form\CompositeToObjectMapperInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\CustomDataMapper;
-use PlanB\Edge\Infrastructure\Symfony\Validator\CompoundBuilder;
 use PlanB\Edge\Infrastructure\Symfony\Validator\ConstraintBuilderFactory;
 use Sonata\AdminBundle\Form\FormMapper;
+use Symfony\Component\Validator\ConstraintViolationList;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 
-abstract class FormConfigurator implements FormConfiguratorInterface, CompoundToObjectMapperInterface
+abstract class FormConfigurator implements FormConfiguratorInterface, CompositeToObjectMapperInterface
 {
     private ManagerCommandFactoryInterface $commandFactory;
 
@@ -48,7 +49,7 @@ abstract class FormConfigurator implements FormConfiguratorInterface, CompoundTo
         $this->formMapper = $formMapper;
         $options = $this->formMapper->getFormBuilder()->getOptions();
 
-        $dataMapper = new CompoundDataMapper($this, $options);
+        $dataMapper = new CompositeDataMapper($this, $options);
         $this->formMapper->getFormBuilder()->setDataMapper($dataMapper);
 
         $this->configure($subject);
@@ -106,8 +107,8 @@ abstract class FormConfigurator implements FormConfiguratorInterface, CompoundTo
         return $this->commandFactory->saveCommand($data, $entity);
     }
 
-    public function buildConstraints(CompoundBuilder $builder, array $options): void
+    public function validate(array $data): ConstraintViolationListInterface
     {
+        return new ConstraintViolationList();
     }
-
 }

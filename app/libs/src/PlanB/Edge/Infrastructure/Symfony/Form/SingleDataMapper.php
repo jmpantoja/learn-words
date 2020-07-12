@@ -15,7 +15,6 @@ namespace PlanB\Edge\Infrastructure\Symfony\Form;
 
 
 use PlanB\Edge\Infrastructure\Symfony\Form\Exception\SingleMappingFailedException;
-use PlanB\Edge\Infrastructure\Symfony\Validator\SingleBuilder;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -59,11 +58,13 @@ final class SingleDataMapper implements DataTransformerInterface
      */
     private function validate($data): bool
     {
-        $builder = new SingleBuilder();
-        $this->objectMapper->buildConstraints($builder, $this->options);
-        $constraints = $builder->build();
-
-        $violations = $this->validator->validate($data, $constraints);
+//        $builder = new SingleConstraints();
+//        $this->objectMapper->buildConstraints($builder, $this->options);
+//        $constraints = $builder->build();
+//
+//
+//
+        $violations = $this->objectMapper->validate($data);
 
         if (0 === $violations->count()) {
             return true;

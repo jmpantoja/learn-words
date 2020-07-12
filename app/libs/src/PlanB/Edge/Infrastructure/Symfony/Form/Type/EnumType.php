@@ -15,11 +15,11 @@ namespace PlanB\Edge\Infrastructure\Symfony\Form\Type;
 
 
 use PlanB\Edge\Domain\Enum\Enum;
-use PlanB\Edge\Infrastructure\Symfony\Validator\SingleBuilder;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Choice;
-use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
+use Symfony\Component\Validator\ValidatorBuilder;
 
 abstract class EnumType extends SingleType
 {
@@ -46,15 +46,16 @@ abstract class EnumType extends SingleType
         });
     }
 
-
-    public function buildConstraints(SingleBuilder $builder, array $options): void
+    public function validate($data): ConstraintViolationListInterface
     {
+        $validator = (new ValidatorBuilder())->getValidator();
+
         $choices = $options['choices'] ?? [];
-
-        $builder
-            ->add(new Choice([
+        $constraints = [
+            new Choice([
                 'choices' => array_values($choices)
-            ]));
+            ])
+        ];
+        return $validator->validate($data, $constraints);
     }
-
 }

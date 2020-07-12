@@ -14,17 +14,17 @@ declare(strict_types=1);
 namespace PlanB\Edge\Infrastructure\Symfony\Form\Type;
 
 
-use PlanB\Edge\Infrastructure\Symfony\Form\CompoundDataMapper;
-use PlanB\Edge\Infrastructure\Symfony\Form\CompoundToObjectMapperInterface;
+use PlanB\Edge\Infrastructure\Symfony\Form\CompositeDataMapper;
+use PlanB\Edge\Infrastructure\Symfony\Form\CompositeToObjectMapperInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-abstract class CompoundType extends AbstractType implements CompoundToObjectMapperInterface
+abstract class CompositeType extends AbstractType implements CompositeToObjectMapperInterface
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->setDataMapper(new CompoundDataMapper($this, $options));
+        $builder->setDataMapper(new CompositeDataMapper($this, $options));
 
         $this->customForm($builder, $options);
 

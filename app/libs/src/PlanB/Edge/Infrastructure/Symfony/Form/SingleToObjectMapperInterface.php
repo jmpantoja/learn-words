@@ -15,13 +15,11 @@ namespace PlanB\Edge\Infrastructure\Symfony\Form;
 
 
 use PlanB\Edge\Infrastructure\Symfony\Validator\ConstraintBuilderFactory;
-use PlanB\Edge\Infrastructure\Symfony\Validator\ConstraintBuilderInterface;
-use PlanB\Edge\Infrastructure\Symfony\Validator\SingleBuilder;
-use Symfony\Component\Validator\Constraints\Collection;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 interface SingleToObjectMapperInterface
 {
     public function mapValueToObject($data): object;
 
-    public function buildConstraints(SingleBuilder $builder, array $options): void;
+    public function validate($data): ConstraintViolationListInterface;
 }

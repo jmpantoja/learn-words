@@ -4,25 +4,25 @@ namespace spec\PlanB\Edge\Infrastructure\Symfony\Form;
 
 use PhpSpec\ObjectBehavior;
 use PhpSpec\Wrapper\Collaborator;
-use PlanB\Edge\Infrastructure\Symfony\Form\CompoundDataMapper;
-use PlanB\Edge\Infrastructure\Symfony\Form\CompoundToObjectMapperInterface;
-use PlanB\Edge\Infrastructure\Symfony\Validator\CompoundBuilder;
+use PlanB\Edge\Infrastructure\Symfony\Form\CompositeDataMapper;
+use PlanB\Edge\Infrastructure\Symfony\Form\CompositeToObjectMapperInterface;
 use Prophecy\Argument;
 use stdClass;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\FormConfigInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Validator\ConstraintViolationList;
 
-class CompoundDataMapperSpec extends ObjectBehavior
+class CompositeDataMapperSpec extends ObjectBehavior
 {
-    public function let(CompoundToObjectMapperInterface $objectMapper)
+    public function let(CompositeToObjectMapperInterface $objectMapper)
     {
         $this->beConstructedWith($objectMapper);
     }
 
     public function it_is_initializable()
     {
-        $this->shouldHaveType(CompoundDataMapper::class);
+        $this->shouldHaveType(CompositeDataMapper::class);
     }
 
     public function it_is_able_to_map_an_array_to_forms(FormInterface $name,
@@ -97,14 +97,19 @@ class CompoundDataMapperSpec extends ObjectBehavior
             ]);
     }
 
-    public function it_is_able_to_convert_a_forms_array_to_data(CompoundToObjectMapperInterface $objectMapper,
+    public function it_is_able_to_convert_a_forms_array_to_data(CompositeToObjectMapperInterface $objectMapper,
                                                                 FormInterface $name,
                                                                 FormInterface $lastName,
                                                                 FormConfigInterface $config)
     {
         $response = new stdClass();
-        $objectMapper->mapDataToObject(Argument::any(), Argument::any())
+        $objectMapper
+            ->mapDataToObject(Argument::any(), Argument::any())
             ->willReturn($response);
+
+        $objectMapper
+            ->validate(Argument::any())
+            ->willReturn(new ConstraintViolationList());
 
         $forms = [
             'name' => $this->configureForm($name, $config, 'nombre'),
@@ -120,7 +125,7 @@ class CompoundDataMapperSpec extends ObjectBehavior
             ->shouldHaveBeenCalled();
 
         $objectMapper
-            ->buildConstraints(Argument::type(CompoundBuilder::class), [])
+            ->validate(Argument::type('array'))
             ->shouldHaveBeenCalled();
     }
 

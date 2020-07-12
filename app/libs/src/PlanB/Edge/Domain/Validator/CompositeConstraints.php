@@ -11,15 +11,15 @@
 
 declare(strict_types=1);
 
-namespace PlanB\Edge\Infrastructure\Symfony\Validator;
+namespace PlanB\Edge\Domain\Validator;
 
-use PlanB\Edge\Infrastructure\Symfony\Validator\Exception\NonExistentFieldException;
+use PlanB\Edge\Domain\Validator\Exception\NonExistentFieldException;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\Constraints\Existence;
 use Symfony\Component\Validator\Constraints\Optional;
 use Symfony\Component\Validator\Constraints\Required;
 
-final class CompoundBuilder implements ConstraintBuilderInterface
+final class CompositeConstraints implements ConstraintsDefinition
 {
     private array $options = [
         'allowExtraFields' => true,
@@ -79,7 +79,7 @@ final class CompoundBuilder implements ConstraintBuilderInterface
         return $this->options['fields'][$name];
     }
 
-    public function build(): array
+    public function constraints(): array
     {
         return [new Collection($this->options)];
     }

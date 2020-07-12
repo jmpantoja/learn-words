@@ -18,6 +18,8 @@ use LearnWords\Term\Domain\Model\Lang;
 use PlanB\Edge\Infrastructure\Symfony\Form\Type\EnumType;
 use PlanB\Edge\Infrastructure\Symfony\Validator\ConstraintBuilderFactory;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\ConstraintViolationList;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 final class LangType extends EnumType
 {
@@ -31,5 +33,10 @@ final class LangType extends EnumType
     public function mapValueToObject($data): object
     {
         return Lang::byKey($data);
+    }
+
+    public function validate($data): ConstraintViolationListInterface
+    {
+        return new ConstraintViolationList();
     }
 }

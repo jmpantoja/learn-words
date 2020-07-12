@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace PlanB\Edge\Infrastructure\Symfony\Validator\Exception;
+namespace PlanB\Edge\Domain\Validator\Exception;
 
 
 use InvalidArgumentException;

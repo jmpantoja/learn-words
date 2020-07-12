@@ -1,22 +1,22 @@
 <?php
 
-namespace spec\PlanB\Edge\Infrastructure\Symfony\Validator;
+namespace spec\PlanB\Edge\Domain\Validator;
 
 use PhpSpec\ObjectBehavior;
-use PlanB\Edge\Infrastructure\Symfony\Validator\CompoundBuilder;
-use PlanB\Edge\Infrastructure\Symfony\Validator\ConstraintBuilderInterface;
-use PlanB\Edge\Infrastructure\Symfony\Validator\Exception\NonExistentFieldException;
+use PlanB\Edge\Domain\Validator\CompositeConstraints;
+use PlanB\Edge\Domain\Validator\ConstraintsDefinition;
+use PlanB\Edge\Domain\Validator\Exception\NonExistentFieldException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\Constraints\Optional;
 use Symfony\Component\Validator\Constraints\Required;
 
-class CompoundBuilderSpec extends ObjectBehavior
+class CompositeConstraintsSpec extends ObjectBehavior
 {
     public function it_is_initializable()
     {
-        $this->shouldHaveType(CompoundBuilder::class);
-        $this->shouldHaveType(ConstraintBuilderInterface::class);
+        $this->shouldHaveType(CompositeConstraints::class);
+        $this->shouldHaveType(ConstraintsDefinition::class);
     }
 
     public function it_option_allow_extra_fields_is_true_by_default()
@@ -112,7 +112,7 @@ class CompoundBuilderSpec extends ObjectBehavior
     {
         $this->required('field');
 
-        $collection = $this->build()[0];
+        $collection = $this->constraints()[0];
 
         $collection->shouldBeAnInstanceOf(Collection::class);
         $collection->fields->shouldHaveKey('field');

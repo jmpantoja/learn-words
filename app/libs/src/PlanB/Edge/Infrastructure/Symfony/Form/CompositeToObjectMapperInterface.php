@@ -14,13 +14,13 @@ declare(strict_types=1);
 namespace PlanB\Edge\Infrastructure\Symfony\Form;
 
 
-use PlanB\Edge\Infrastructure\Symfony\Validator\CompoundBuilder;
 use PlanB\Edge\Infrastructure\Symfony\Validator\ConstraintBuilderFactory;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 
-interface CompoundToObjectMapperInterface
+interface CompositeToObjectMapperInterface
 {
     public function mapDataToObject(array $data): object;
 
-    public function buildConstraints(CompoundBuilder $builder, array $options): void;
+    public function validate(array $data): ConstraintViolationListInterface;
 
 }

@@ -10,11 +10,11 @@
  */
 declare(strict_types=1);
 
-namespace PlanB\Edge\Infrastructure\Symfony\Validator;
+namespace PlanB\Edge\Domain\Validator;
 
 use Symfony\Component\Validator\Constraint;
 
-final class SingleBuilder implements ConstraintBuilderInterface
+final class SingleConstraints implements ConstraintsDefinition
 {
     /**
      * @var Constraint[]
@@ -37,10 +37,8 @@ final class SingleBuilder implements ConstraintBuilderInterface
         return $this;
     }
 
-    public function build(): array
+    public function constraints(): array
     {
         return $this->constraints;
     }
-
-
 }

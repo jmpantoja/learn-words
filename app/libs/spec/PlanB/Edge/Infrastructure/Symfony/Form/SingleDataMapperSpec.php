@@ -6,8 +6,8 @@ use ArrayObject;
 use PhpSpec\ObjectBehavior;
 use PlanB\Edge\Infrastructure\Symfony\Form\SingleDataMapper;
 use PlanB\Edge\Infrastructure\Symfony\Form\SingleToObjectMapperInterface;
-use PlanB\Edge\Infrastructure\Symfony\Validator\SingleBuilder;
 use Prophecy\Argument;
+use Symfony\Component\Validator\ConstraintViolationList;
 
 class SingleDataMapperSpec extends ObjectBehavior
 {
@@ -32,11 +32,16 @@ class SingleDataMapperSpec extends ObjectBehavior
             'value' => 'hola'
         ]);
 
-        $objectMapper->mapValueToObject('hola')->willReturn($response);
+        $objectMapper->mapValueToObject('hola')
+            ->willReturn($response);
+
+        $objectMapper->validate(Argument::any())
+            ->willReturn(new ConstraintViolationList());
+
+
         $this->reverseTransform('hola')->shouldReturn($response);
 
-        $objectMapper
-            ->buildConstraints(Argument::type(SingleBuilder::class), Argument::type('array'))
+        $objectMapper->validate(Argument::type('string'))
             ->shouldHaveBeenCalled();
     }
 }

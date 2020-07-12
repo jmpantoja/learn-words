@@ -8,7 +8,7 @@ use PlanB\Edge\Infrastructure\Sonata\Configurator\ConfiguratorInterface;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfigurator;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfiguratorInterface;
 use PlanB\Edge\Infrastructure\Sonata\Doctrine\ManagerCommandFactoryInterface;
-use PlanB\Edge\Infrastructure\Symfony\Form\CompoundDataMapper;
+use PlanB\Edge\Infrastructure\Symfony\Form\CompositeDataMapper;
 use Prophecy\Argument;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -39,7 +39,7 @@ class FormConfiguratorSpec extends ObjectBehavior
 
         $this->handle($formMapper, null);
 
-        $formBuilder->setDataMapper(Argument::type(CompoundDataMapper::class))
+        $formBuilder->setDataMapper(Argument::type(CompositeDataMapper::class))
             ->shouldHaveBeenCalledOnce();
 
         $formMapper->with('tab', Argument::any())
