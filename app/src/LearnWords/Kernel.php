@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace LearnWords;
 
 use PlanB\EdgeBundle\PlanBEdgeBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
@@ -30,7 +30,7 @@ class Kernel extends BaseKernel
 
     public function getProjectDir(): string
     {
-        return \dirname(__DIR__);
+        return realpath(\dirname(__DIR__) . '/..');
     }
 
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void

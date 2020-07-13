@@ -14,8 +14,6 @@ declare(strict_types=1);
 namespace PlanB\Edge\Infrastructure\Symfony\Form\Type;
 
 
-use App\LearnWords\Term\Domain\Model\Borrame;
-use PlanB\Edge\Infrastructure\Symfony\Form\ArrayDataMapper2;
 use PlanB\Edge\Infrastructure\Symfony\Form\SingleDataMapper;
 use PlanB\Edge\Infrastructure\Symfony\Form\SingleToObjectMapperInterface;
 use Symfony\Component\Form\AbstractType;

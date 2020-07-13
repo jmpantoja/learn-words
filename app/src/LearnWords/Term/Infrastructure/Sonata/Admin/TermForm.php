@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace LearnWords\Term\Infrastructure\Sonata\Admin;
 
-
-use App\LearnWords\Term\Infrastructure\Symfony\Form\Type\BorrameType;
 use LearnWords\Term\Domain\Model\Term;
 use LearnWords\Term\Domain\TermBuilder;
 use LearnWords\Term\Infrastructure\Symfony\Form\Type\WordType;
