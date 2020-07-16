@@ -1,0 +1,22 @@
+default:
+    suites:
+        default:
+            contexts:
+                - FeatureContext:
+                    kernel: '@kernel'
+                - Behat\MinkExtension\Context\MinkContext
+                - behatch:context:json
+                - behatch:context:rest
+    extensions:
+        Behat\Symfony2Extension:
+            kernel:
+                bootstrap: features/bootstrap/bootstrap.php
+                class: LearnWords\Kernel
+
+        Behat\MinkExtension:
+          base_url: "https://www.learn-words.local"
+          sessions:
+            default:
+              symfony2: ~
+
+        Behatch\Extension: ~

@@ -16,11 +16,59 @@
             "src/Entity/.gitignore"
         ]
     },
+    "behat/behat": {
+        "version": "v3.7.0"
+    },
+    "behat/gherkin": {
+        "version": "v4.6.2"
+    },
+    "behat/mink": {
+        "version": "v1.8.1"
+    },
+    "behat/mink-browserkit-driver": {
+        "version": "v1.3.4"
+    },
+    "behat/mink-extension": {
+        "version": "2.3.1"
+    },
+    "behat/symfony2-extension": {
+        "version": "2.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "2.1",
+            "ref": "af4f8fa93b1fee9e6f15d1e208ce743bb31cb2b2"
+        },
+        "files": [
+            "behat.yml.dist",
+            "features/bootstrap/FeatureContext.php",
+            "features/bootstrap/bootstrap.php",
+            "features/demo.feature"
+        ]
+    },
+    "behat/transliterator": {
+        "version": "v1.3.0"
+    },
+    "behatch/contexts": {
+        "version": "3.3.0"
+    },
     "brick/math": {
         "version": "0.8.15"
     },
     "cocur/slugify": {
         "version": "v4.0.0"
+    },
+    "dama/doctrine-test-bundle": {
+        "version": "4.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "4.0",
+            "ref": "56eaa387b5e48ebcc7c95a893b47dfa1ad51449c"
+        },
+        "files": [
+            "config/packages/test/dama_doctrine_test_bundle.yaml"
+        ]
     },
     "doctrine/annotations": {
         "version": "1.0",
@@ -107,6 +155,9 @@
     "fig/link-util": {
         "version": "1.1.1"
     },
+    "friends-of-behat/mink-extension": {
+        "version": "2.3.1"
+    },
     "friends-of-phpspec/phpspec-code-coverage": {
         "version": "v4.3.2"
     },
@@ -115,6 +166,9 @@
     },
     "jms/serializer": {
         "version": "3.8.0"
+    },
+    "justinrainbow/json-schema": {
+        "version": "5.2.10"
     },
     "knplabs/knp-menu": {
         "version": "2.6.0"
@@ -334,6 +388,9 @@
     "symfony/asset": {
         "version": "v4.4.10"
     },
+    "symfony/browser-kit": {
+        "version": "v4.4.10"
+    },
     "symfony/cache": {
         "version": "v4.4.10"
     },
@@ -355,6 +412,9 @@
             "bin/console",
             "config/bootstrap.php"
         ]
+    },
+    "symfony/css-selector": {
+        "version": "v4.4.10"
     },
     "symfony/debug": {
         "version": "v4.4.10"
@@ -378,6 +438,9 @@
         "version": "v4.4.10"
     },
     "symfony/doctrine-bridge": {
+        "version": "v4.4.10"
+    },
+    "symfony/dom-crawler": {
         "version": "v4.4.10"
     },
     "symfony/dotenv": {
