@@ -16,11 +16,11 @@ namespace LearnWords\Term\Domain\Model;
 use PlanB\Edge\Domain\Entity\EntityInterface;
 use PlanB\Edge\Domain\Entity\Traits\NotifyEvents;
 
-final class Term implements EntityInterface
+class Term implements EntityInterface
 {
     use NotifyEvents;
 
-    private ?TermId $id = null;
+    private TermId $id;
     private Word $word;
 
     public function __construct(TermId $termId, Word $word)
@@ -42,7 +42,7 @@ final class Term implements EntityInterface
     /**
      * @return TermId
      */
-    public function getId(): ?TermId
+    public function getId(): TermId
     {
         return $this->id;
     }

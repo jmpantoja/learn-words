@@ -14,6 +14,9 @@ declare(strict_types=1);
 namespace PlanB\Edge\Infrastructure\Symfony\Form;
 
 
+use LearnWords\Term\Domain\Model\Term;
+use LearnWords\Term\Domain\Model\TermId;
+use LearnWords\Term\Domain\Model\Word;
 use LogicException;
 use PlanB\Edge\Domain\Entity\EntityInterface;
 use PlanB\Edge\Infrastructure\Symfony\Validator\ConstraintBuilderFactory;
@@ -172,12 +175,19 @@ final class CompositeDataMapper implements CompositeDataMapperInterface
             return null;
         }
 
-        if (null === $entity->getId()) {
+        $properties = (array)$entity;
+
+        $idValue = null;
+        foreach ($properties as $key => $value) {
+            if (substr($key, -3, 3) === "\x00id") {
+                $idValue = $value;
+            }
+        }
+
+        if (null === $idValue) {
             return null;
         }
 
         return $entity;
     }
-
-
 }
