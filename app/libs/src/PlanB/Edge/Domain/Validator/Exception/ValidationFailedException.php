@@ -42,7 +42,7 @@ final class ValidationFailedException extends \Exception
     /**
      * @return ConstraintViolationListInterface
      */
-    public function violationList(): ConstraintViolationListInterface
+    public function getViolationList(): ConstraintViolationListInterface
     {
         return $this->violationList;
     }
@@ -50,7 +50,7 @@ final class ValidationFailedException extends \Exception
     /**
      * @return array
      */
-    public function errors(): array
+    public function getErrors(): array
     {
         return $this->errors;
     }

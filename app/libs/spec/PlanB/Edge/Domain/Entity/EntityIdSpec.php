@@ -9,6 +9,9 @@ use Ramsey\Uuid\UuidInterface;
 
 class EntityIdSpec extends ObjectBehavior
 {
+    const UUID = '3fb70c94-54da-485f-8bcf-12924876704e';
+
+
     public function it_is_initializable()
     {
         $this->shouldHaveType(EntityId::class);
@@ -16,16 +19,9 @@ class EntityIdSpec extends ObjectBehavior
 
     public function it_returns_an_uuid_by_default()
     {
-        $this->uuid()->shouldBeAnInstanceOf(UuidInterface::class);
+        $this->getUuid()->shouldBeString();
     }
 
-    public function it_can_be_initialized_with_an_custom_uuid()
-    {
-        $uuid = Uuid::uuid4();
-        $this->beConstructedWith($uuid->toString());
-
-        $this->uuid()->equals($uuid)->shouldBe(true);
-    }
 
     public function it_is_able_to_determine_if_two_entity_id_are_equal()
     {

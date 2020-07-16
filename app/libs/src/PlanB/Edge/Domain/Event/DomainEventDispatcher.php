@@ -45,7 +45,7 @@ class DomainEventDispatcher extends BaseEventDispatcher
     /**
      * @return DomainEventsCollector
      */
-    public function eventsCollector(): DomainEventsCollector
+    public function getEventsCollector(): DomainEventsCollector
     {
         return $this->eventsCollector;
     }

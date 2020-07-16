@@ -112,7 +112,7 @@ class CompositeConstraintsSpec extends ObjectBehavior
     {
         $this->required('field');
 
-        $collection = $this->constraints()[0];
+        $collection = $this->getConstraints()[0];
 
         $collection->shouldBeAnInstanceOf(Collection::class);
         $collection->fields->shouldHaveKey('field');

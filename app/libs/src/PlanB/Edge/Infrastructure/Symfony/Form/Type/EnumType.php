@@ -33,6 +33,10 @@ abstract class EnumType extends SingleType
     {
         parent::configureOptions($resolver);
 
+        $resolver->setDefaults([
+            'enum_class' => $this->getClass()
+        ]);
+
         $resolver->setRequired('enum_class');
         $resolver->setAllowedTypes('enum_class', ['string']);
         $resolver->setAllowedValues('enum_class', function (string $enumClass) {
@@ -46,16 +50,24 @@ abstract class EnumType extends SingleType
         });
     }
 
+    public function customOptions(OptionsResolver $resolver)
+    {
+
+    }
+
     public function validate($data): ConstraintViolationListInterface
     {
         $validator = (new ValidatorBuilder())->getValidator();
 
-        $choices = $options['choices'] ?? [];
+        $enumClass = $this->getClass();
+        $choices = forward_static_call([$enumClass, 'toArray']);
+
         $constraints = [
             new Choice([
-                'choices' => array_values($choices)
+                'choices' => array_keys($choices)
             ])
         ];
+
         return $validator->validate($data, $constraints);
     }
 }

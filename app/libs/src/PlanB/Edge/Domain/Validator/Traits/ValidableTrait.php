@@ -46,16 +46,16 @@ trait ValidableTrait
     public static function validate($input): ConstraintViolationListInterface
     {
         $validator = (new ValidatorBuilder())->getValidator();
-        $constraints = self::constraints();
+        $constraints = self::getConstraints();
 
         return $validator->validate($input, $constraints);
     }
 
-    public static function constraints(): array
+    public static function getConstraints(): array
     {
         $factory = new ConstraintsFactory();
         static::configureValidator($factory);
-        return $factory->constraints();
+        return $factory->getConstraints();
     }
 
     abstract public static function configureValidator(ConstraintsFactory $factory): void;

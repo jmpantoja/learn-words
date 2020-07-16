@@ -17,26 +17,17 @@ namespace LearnWords\Term\Infrastructure\Symfony\Form\Type;
 use LearnWords\Term\Domain\Model\Lang;
 use PlanB\Edge\Infrastructure\Symfony\Form\Type\EnumType;
 use PlanB\Edge\Infrastructure\Symfony\Validator\ConstraintBuilderFactory;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\ConstraintViolationList;
-use Symfony\Component\Validator\ConstraintViolationListInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 final class LangType extends EnumType
 {
-    public function customOptions(OptionsResolver $resolver)
+
+    /**
+     * @return string
+     */
+    public function getClass(): string
     {
-        $resolver->setDefaults([
-            'enum_class' =>  Lang::class
-        ]);
+        return Lang::class;
     }
 
-    public function mapValueToObject($data): object
-    {
-        return Lang::byKey($data);
-    }
-
-    public function validate($data): ConstraintViolationListInterface
-    {
-        return new ConstraintViolationList();
-    }
 }

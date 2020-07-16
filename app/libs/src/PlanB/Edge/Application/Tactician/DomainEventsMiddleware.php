@@ -34,10 +34,10 @@ final class DomainEventsMiddleware implements Middleware
     public function execute($command, callable $next)
     {
         $eventDispatcher = DomainEventDispatcher::getInstance();
-        $eventsCollector = $eventDispatcher->eventsCollector();
+        $eventsCollector = $eventDispatcher->getEventsCollector();
 
         $response = $next($command);
-        $events = $eventsCollector->events();
+        $events = $eventsCollector->getEvents();
 
         foreach ($events as $event) {
             $this->repository->persist($event);

@@ -15,12 +15,14 @@ namespace PlanB\Edge\Infrastructure\Symfony\Form;
 
 
 use PlanB\Edge\Infrastructure\Symfony\Validator\ConstraintBuilderFactory;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
-interface CompositeToObjectMapperInterface
+interface SingleFormTypeInterface
 {
-    public function mapDataToObject(array $data): object;
+    public function setDataMapper(SingleDataMapperInterface $dataMapper): self;
 
-    public function validate(array $data): ConstraintViolationListInterface;
+    public function denormalize(DenormalizerInterface $serializer, $data, array $context): ?object;
 
+    public function validate($data): ConstraintViolationListInterface;
 }

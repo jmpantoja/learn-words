@@ -21,15 +21,18 @@ final class TermHasBeenCreated extends DomainEvent
 
     private Term $term;
 
-    /**
-     * @var string[]
-     */
-    private array $pepe;
-
     public function __construct(Term $term)
     {
         $this->term = $term;
         parent::__construct();
+    }
+
+    /**
+     * @return Term
+     */
+    public function getTerm(): Term
+    {
+        return $this->term;
     }
 
 }

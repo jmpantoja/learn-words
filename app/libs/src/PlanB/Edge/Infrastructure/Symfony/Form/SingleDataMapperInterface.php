@@ -11,12 +11,12 @@
 
 declare(strict_types=1);
 
-namespace PlanB\Edge\Application\UseCase;
+namespace PlanB\Edge\Infrastructure\Symfony\Form;
 
 
-use PlanB\Edge\Domain\Entity\EntityInterface;
+use Symfony\Component\Form\DataTransformerInterface;
 
-interface WriteCommandInterface
+interface SingleDataMapperInterface extends DataTransformerInterface
 {
-    public function entity(): EntityInterface;
+    public function attach(SingleFormTypeInterface $objectMapper): self;
 }

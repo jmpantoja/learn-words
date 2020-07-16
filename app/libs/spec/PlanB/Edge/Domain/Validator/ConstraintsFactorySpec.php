@@ -35,7 +35,7 @@ class ConstraintsFactorySpec extends ObjectBehavior
             ->required('A', [$constraintA])
             ->optional('B', [$constraintB]);
 
-        $fields = $this->constraints()[0]->getFromWrappedObject('fields');
+        $fields = $this->getConstraints()[0]->getFromWrappedObject('fields');
 
         $fields['A']->shouldBeAnInstanceOf(Required::class);
         $fields['B']->shouldBeAnInstanceOf(Optional::class);
@@ -47,7 +47,7 @@ class ConstraintsFactorySpec extends ObjectBehavior
             ->add($constraintA)
             ->add($constraintB);
 
-        $this->constraints()
+        $this->getConstraints()
             ->shouldIterateLike([
                 $constraintA,
                 $constraintB

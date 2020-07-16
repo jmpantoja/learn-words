@@ -15,5 +15,5 @@ namespace PlanB\Edge\Domain\Entity;
 
 interface EntityInterface
 {
-    public function id(): ?EntityId;
+    public function getId(): ?EntityId;
 }

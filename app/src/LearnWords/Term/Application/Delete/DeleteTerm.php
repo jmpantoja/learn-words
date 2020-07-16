@@ -13,9 +13,16 @@ declare(strict_types=1);
 
 namespace LearnWords\Term\Application\Delete;
 
-use PlanB\Edge\Application\UseCase\DeleteCommand;
 
-final class DeleteTerm extends DeleteCommand
+use LearnWords\Term\Domain\Model\Term;
+use PlanB\Edge\Application\UseCase\EntityCommand;
+
+final class DeleteTerm extends EntityCommand
 {
+
+    public static function make(Term $term)
+    {
+        return new self($term);
+    }
 
 }

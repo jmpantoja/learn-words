@@ -12,56 +12,43 @@ declare(strict_types=1);
 
 namespace PlanB\Edge\Infrastructure\Sonata\Configurator;
 
-use PlanB\Edge\Application\UseCase\SaveCommand;
 use PlanB\Edge\Domain\Entity\EntityBuilder;
 use PlanB\Edge\Infrastructure\Sonata\Doctrine\ManagerCommandFactoryInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\CompositeDataMapper;
-use PlanB\Edge\Infrastructure\Symfony\Form\CompositeToObjectMapperInterface;
+use PlanB\Edge\Infrastructure\Symfony\Form\CompositeDataMapperInterface;
+use PlanB\Edge\Infrastructure\Symfony\Form\CompositeFormTypeInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\CustomDataMapper;
 use PlanB\Edge\Infrastructure\Symfony\Validator\ConstraintBuilderFactory;
 use Sonata\AdminBundle\Form\FormMapper;
+use Symfony\Component\Form\Exception\TransformationFailedException;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
+use Throwable;
 
-abstract class FormConfigurator implements FormConfiguratorInterface, CompositeToObjectMapperInterface
+abstract class FormConfigurator implements FormConfiguratorInterface, CompositeFormTypeInterface
 {
-    private ManagerCommandFactoryInterface $commandFactory;
+
+    private CompositeDataMapperInterface $dataMapper;
 
     private FormMapper $formMapper;
 
     private bool $isOpened = false;
 
-
-    /**
-     * @param ManagerCommandFactoryInterface $commandFactory
-     */
-    public function setCommandFactory(ManagerCommandFactoryInterface $commandFactory): self
+    public function setDataMapper(CompositeDataMapperInterface $dataMapper): self
     {
-        $this->commandFactory = $commandFactory;
+        $this->dataMapper = $dataMapper->attach($this);
         return $this;
     }
 
 
     public function handle(FormMapper $formMapper, ?object $subject): self
     {
-        $this->setCommandFactory($formMapper->getAdmin());
-
         $this->formMapper = $formMapper;
-        $options = $this->formMapper->getFormBuilder()->getOptions();
-
-        $dataMapper = new CompositeDataMapper($this, $options);
-        $this->formMapper->getFormBuilder()->setDataMapper($dataMapper);
+        $this->formMapper->getFormBuilder()->setDataMapper($this->dataMapper);
 
         $this->configure($subject);
         return $this;
-    }
-
-    /**
-     * @return FormMapper
-     */
-    public function formMapper(): FormMapper
-    {
-        return $this->formMapper;
     }
 
     protected function tab(string $name): self
@@ -102,13 +89,20 @@ abstract class FormConfigurator implements FormConfiguratorInterface, CompositeT
         $this->isOpened = true;
     }
 
-    final public function mapDataToObject(array $data, $entity = null): SaveCommand
+    public function denormalize(DenormalizerInterface $serializer, $data, array $context): ?object
     {
-        return $this->commandFactory->saveCommand($data, $entity);
+        try {
+            return $serializer->denormalize($data, $this->getClass(), null, $context);
+        } catch (Throwable $throwable) {
+            throw new TransformationFailedException($throwable->getMessage());
+        }
     }
+
+    abstract public function getClass(): string;
 
     public function validate(array $data): ConstraintViolationListInterface
     {
         return new ConstraintViolationList();
     }
+
 }

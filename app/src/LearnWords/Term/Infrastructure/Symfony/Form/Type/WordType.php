@@ -39,11 +39,8 @@ final class WordType extends CompositeType
         return Word::validate($data);
     }
 
-    public function mapDataToObject(array $data): object
+    public function getClass(): string
     {
-        $word = (string)$data['word'];
-        $lang = $data['lang'];
-
-        return new Word($word, $lang);
+        return Word::class;
     }
 }

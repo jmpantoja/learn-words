@@ -14,30 +14,53 @@ declare(strict_types=1);
 namespace PlanB\Edge\Infrastructure\Symfony\Form;
 
 
+use LogicException;
 use PlanB\Edge\Domain\Entity\EntityInterface;
 use PlanB\Edge\Infrastructure\Symfony\Validator\ConstraintBuilderFactory;
-use Symfony\Component\Form\DataMapperInterface;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\SerializerInterface;
 
 
-final class CompositeDataMapper implements DataMapperInterface
+final class CompositeDataMapper implements CompositeDataMapperInterface
 {
-    private CompositeToObjectMapperInterface $objectMapper;
-    private array $options = [];
+    private CompositeFormTypeInterface $objectMapper;
     private PropertyAccessorInterface $propertyAccessor;
-    private ValidatorInterface $validator;
+    /**
+     * @var DenormalizerInterface|SerializerInterface
+     */
+    private SerializerInterface $serializer;
 
-    public function __construct(CompositeToObjectMapperInterface $objectMapper, array $options = [], PropertyAccessorInterface $propertyAccessor = null)
+    public function __construct(SerializerInterface $serializer, PropertyAccessorInterface $propertyAccessor = null)
+    {
+        $this->setSerializer($serializer);
+        $this->propertyAccessor = $propertyAccessor ?? PropertyAccess::createPropertyAccessor();
+    }
+
+    /**
+     * @param SerializerInterface $serializer
+     * @return CompositeDataMapper
+     */
+    private function setSerializer(SerializerInterface $serializer): CompositeDataMapper
+    {
+        if (!$serializer instanceof DenormalizerInterface) {
+            throw new LogicException('Expected a serializer that also implements DenormalizerInterface.');
+        }
+
+        $this->serializer = $serializer;
+        return $this;
+    }
+
+
+    public function attach(CompositeFormTypeInterface $objectMapper): self
     {
         $this->objectMapper = $objectMapper;
-        $this->options = $options;
-        $this->propertyAccessor = $propertyAccessor ?? PropertyAccess::createPropertyAccessor();
-//        $this->validator = (new ValidatorBuilder())->getValidator();
+        return $this;
     }
 
     /**
@@ -75,26 +98,24 @@ final class CompositeDataMapper implements DataMapperInterface
             return;
         }
 
-        $forms = iterator_to_array($forms);
-        $entity = $this->process($forms, $entity);
+        $entity = $this->mapFormsToObject($forms, $entity);
     }
 
     /**
-     * @param array $forms
-     * @param mixed $entity
-     * @return object|null
+     * @param $forms
+     * @param $entity
+     * @return object|void|null
      */
-    public function process(array $forms, $entity = null)
+    public function mapFormsToObject(iterable $forms, $entity = null): ?object
     {
+        $forms = iterator_to_array($forms);
         $data = $this->extractData($forms);
 
         if (!$this->validate($data, $forms)) {
             return null;
         }
 
-        $subject = $this->computeSubject($entity);
-
-        return $this->objectMapper->mapDataToObject($data, $subject);
+        return $this->denormalize($data, $entity);
     }
 
     /**
@@ -103,14 +124,12 @@ final class CompositeDataMapper implements DataMapperInterface
      */
     private function extractData(array $forms): array
     {
-        $data = array_map(function (FormInterface $form) {
+        return array_map(function (FormInterface $form) {
             $config = $form->getConfig();
             if ($config->getMapped() && $form->isSubmitted() && $form->isSynchronized() && !$form->isDisabled()) {
                 return $form->getData();
             }
         }, $forms);
-
-        return $data;
     }
 
 
@@ -132,6 +151,18 @@ final class CompositeDataMapper implements DataMapperInterface
     }
 
     /**
+     * @param array $data
+     * @param null $entity
+     * @return object|null
+     */
+    private function denormalize(array $data, $entity = null)
+    {
+        return $this->objectMapper->denormalize($this->serializer, $data, [
+            ObjectNormalizer::OBJECT_TO_POPULATE => $this->computeSubject($entity)
+        ]);
+    }
+
+    /**
      * @param null $entity
      * @return object|null
      */
@@ -141,10 +172,12 @@ final class CompositeDataMapper implements DataMapperInterface
             return null;
         }
 
-        if (null === $entity->id()) {
+        if (null === $entity->getId()) {
             return null;
         }
 
         return $entity;
     }
+
+
 }

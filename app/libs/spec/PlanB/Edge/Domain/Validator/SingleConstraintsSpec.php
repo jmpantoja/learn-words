@@ -22,14 +22,14 @@ class SingleConstraintsSpec extends ObjectBehavior
 
     public function it_is_able_to_set_a_constraint(Constraint $constraint)
     {
-        $this->constraints()->shouldReturn([$constraint]);
+        $this->getConstraints()->shouldReturn([$constraint]);
     }
 
     public function it_is_able_to_set_two_constraints(Constraint $constraint, Constraint $otherConstraint)
     {
         $this->add($otherConstraint);
 
-        $this->constraints()->shouldReturn([
+        $this->getConstraints()->shouldReturn([
             $constraint,
             $otherConstraint
         ]);

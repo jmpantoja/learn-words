@@ -17,6 +17,7 @@ use LearnWords\Term\Domain\Model\Term;
 use LearnWords\Term\Domain\TermBuilder;
 use LearnWords\Term\Infrastructure\Symfony\Form\Type\WordType;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfigurator;
+use PlanB\Edge\Infrastructure\Sonata\Doctrine\ManagerCommandFactoryInterface;
 use PlanB\Edge\Infrastructure\Symfony\Validator\ConstraintBuilderFactory;
 
 final class TermForm extends FormConfigurator
@@ -29,5 +30,10 @@ final class TermForm extends FormConfigurator
     public function configure(Term $term = null)
     {
         $this->add('word', WordType::class);
+    }
+
+    public function getClass(): string
+    {
+        return Term::class;
     }
 }

@@ -28,7 +28,7 @@ class DomainEventsCollector
     /**
      * @return array
      */
-    public function events(): array
+    public function getEvents(): array
     {
         return $this->events;
     }

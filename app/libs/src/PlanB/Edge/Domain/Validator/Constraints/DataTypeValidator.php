@@ -34,7 +34,6 @@ class DataTypeValidator extends TypeValidator
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ value }}', $this->formatValue($value))
                 ->setParameter('{{ type }}', implode('|', $types))
-//                ->setCode(Type::INVALID_TYPE_ERROR)
                 ->addViolation();
 
             return;

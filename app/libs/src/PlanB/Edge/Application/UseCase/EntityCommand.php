@@ -16,23 +16,25 @@ namespace PlanB\Edge\Application\UseCase;
 
 use PlanB\Edge\Domain\Entity\EntityInterface;
 
-abstract class DeleteCommand implements WriteCommandInterface
+abstract class EntityCommand
 {
-    private ?EntityInterface $entity;
+    /**
+     * @var EntityInterface
+     */
+    private EntityInterface $entity;
 
     protected function __construct(EntityInterface $entity)
     {
         $this->entity = $entity;
     }
 
-    public static function make(EntityInterface $entity = null): self
-    {
-        return new static($entity);
-    }
-
-    public function entity(): EntityInterface
+    /**
+     * @return EntityInterface
+     */
+    public function getEntity(): EntityInterface
     {
         return $this->entity;
     }
-}
 
+
+}

@@ -17,5 +17,5 @@ use DateTimeInterface;
 
 interface DomainEventInterface
 {
-    public function when(): DateTimeInterface;
+    public function getWhen(): DateTimeInterface;
 }

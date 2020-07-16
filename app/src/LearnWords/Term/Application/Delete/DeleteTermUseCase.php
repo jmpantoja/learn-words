@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace LearnWords\Term\Application\Delete;
 
 
-
 use LearnWords\Term\Domain\Repository\TermRepositoryInterface;
 use PlanB\Edge\Application\UseCase\UseCaseInterface;
 
@@ -30,7 +29,7 @@ final class DeleteTermUseCase implements UseCaseInterface
 
     public function handle(DeleteTerm $command)
     {
-        $term = $command->entity();
+        $term = $command->getEntity();
         return $this->termRepository->delete($term);
     }
 }

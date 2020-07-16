@@ -3,6 +3,7 @@
 namespace spec\PlanB\Edge\Domain\Entity;
 
 use ArrayObject;
+use DateTimeImmutable;
 use DateTimeInterface;
 use PhpSpec\ObjectBehavior;
 use PlanB\Edge\Domain\Entity\EntityId;
@@ -14,12 +15,9 @@ class EventSpec extends ObjectBehavior
 {
     const UUID = '3fb70c94-54da-485f-8bcf-12924876704e';
 
-    public function let(Uuid $uuid)
+    public function let(DateTimeImmutable $date)
     {
-        $uuid->__toString()->willReturn(self::UUID);
-
-        $domainEvent = new DomainEventExample(new EntityId($uuid->getWrappedObject()));
-        $this->beConstructedWith($domainEvent);
+        $this->beConstructedWith(DomainEvent::class, 'eventData', $date);
     }
 
     public function it_is_initializable()
@@ -29,37 +27,17 @@ class EventSpec extends ObjectBehavior
 
     public function it_has_the_right_name()
     {
-        $this->name()->shouldReturn('PlanB.Domain_Event_Example');
+        $this->getName()->shouldReturn('PlanB.Domain_Event');
     }
 
     public function it_has_the_right_event_data()
     {
-        $this->eventAsArray()->shouldIterateAs([
-            'id' => [
-                'uuid' => self::UUID
-            ],
-            'entity' => [
-                'name' => 'pepe',
-                'lastName' => 'lopez',
-            ]
-        ]);
+        $this->getEvent()->shouldReturn('eventData');
     }
-}
 
-class DomainEventExample extends DomainEvent
-{
-    private $id;
-    private $entity;
-
-    public function __construct(EntityId $id, DateTimeInterface $when = null)
+    public function it_has_the_right_date(DateTimeImmutable $date)
     {
-        $this->id = $id;
-        $this->entity = new ArrayObject([
-            'name' => 'pepe',
-            'lastName' => 'lopez'
-        ]);
-
-        parent::__construct($when);
+        $this->getDate()->shouldReturn($date);
     }
 }
 

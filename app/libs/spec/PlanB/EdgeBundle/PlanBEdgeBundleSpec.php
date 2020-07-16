@@ -3,6 +3,7 @@
 namespace spec\PlanB\EdgeBundle;
 
 use PhpSpec\ObjectBehavior;
+use PlanB\EdgeBundle\DependencyInjection\Compiler\FormDataMapperCompiler;
 use PlanB\EdgeBundle\DependencyInjection\Compiler\SonataAdminCompiler;
 use PlanB\EdgeBundle\PlanBEdgeBundle;
 use Prophecy\Argument;
@@ -21,6 +22,10 @@ class PlanBEdgeBundleSpec extends ObjectBehavior
         $this->build($container);
         $container
             ->addCompilerPass(Argument::type(SonataAdminCompiler::class), PassConfig::TYPE_BEFORE_OPTIMIZATION, 10)
+            ->shouldBeCalled();
+
+        $container
+            ->addCompilerPass(Argument::type(FormDataMapperCompiler::class), PassConfig::TYPE_BEFORE_OPTIMIZATION, 10)
             ->shouldBeCalled();
     }
 }

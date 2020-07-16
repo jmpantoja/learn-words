@@ -14,12 +14,9 @@ declare(strict_types=1);
 namespace PlanB\Edge\Infrastructure\Symfony\Form;
 
 
-use PlanB\Edge\Infrastructure\Symfony\Validator\ConstraintBuilderFactory;
-use Symfony\Component\Validator\ConstraintViolationListInterface;
+use Symfony\Component\Form\DataMapperInterface;
 
-interface SingleToObjectMapperInterface
+interface CompositeDataMapperInterface extends DataMapperInterface
 {
-    public function mapValueToObject($data): object;
-
-    public function validate($data): ConstraintViolationListInterface;
+    public function attach(CompositeFormTypeInterface $objectMapper): self;
 }

@@ -21,8 +21,8 @@ class WordSpec extends ObjectBehavior
         $this->beConstructedThrough('spanish', ['palabra']);
 
         $this->shouldHaveType(Word::class);
-        $this->lang()->shouldBeLike(Lang::SPANISH());
-        $this->word()->shouldReturn('palabra');
+        $this->getLang()->shouldBeLike(Lang::SPANISH());
+        $this->getWord()->shouldReturn('palabra');
     }
 
     public function it_is_initializable_with_english_lang()
@@ -30,8 +30,8 @@ class WordSpec extends ObjectBehavior
         $this->beConstructedThrough('english', ['word']);
 
         $this->shouldHaveType(Word::class);
-        $this->lang()->shouldBeLike(Lang::ENGLISH());
-        $this->word()->shouldReturn('word');
+        $this->getLang()->shouldBeLike(Lang::ENGLISH());
+        $this->getWord()->shouldReturn('word');
     }
 
     public function it_throws_an_exception_when_the_word_is_too_short()

@@ -14,19 +14,26 @@ declare(strict_types=1);
 namespace PlanB\Edge\Domain\Enum;
 
 
+use LogicException;
+
 abstract class Enum extends \MyCLabs\Enum\Enum
 {
-    public static function create(string $name): ?self
+    public static function make($value): ?self
     {
-        if (static::hasKey($name)) {
-            return static::byKey($name);
+        if ($value instanceof static) {
+            return $value;
         }
 
-        if (static::isValid($name)) {
-            $name = static::search($name);
-            return static::byKey($name);
+        if (static::hasKey($value)) {
+            return static::byKey($value);
         }
-        return null;
+
+        if (static::hasValue($value)) {
+            return self::byValue($value);
+        }
+
+        $message = sprintf('No se puede crear un objeto "%s" a partir del valor "%s"', static::class, $value);
+        throw new LogicException($message);
     }
 
 
@@ -35,14 +42,25 @@ abstract class Enum extends \MyCLabs\Enum\Enum
         return static::__callStatic($value, []);
     }
 
-    public static function keys(): array
+    /**
+     * @param $value
+     * @return Enum
+     */
+    public static function byValue($value): Enum
     {
-        return static::toArray();
+        $value = static::search($value);
+        return static::byKey($value);
     }
 
-    public static function hasKey(string $value)
+
+    public static function hasKey(string $key): bool
     {
-        return static::isValidKey($value);
+        return static::isValidKey($key);
+    }
+
+    public static function hasValue(string $value): bool
+    {
+        return static::isValid($value);
     }
 
     /**
@@ -51,7 +69,7 @@ abstract class Enum extends \MyCLabs\Enum\Enum
      * @param Enum|null|bool|int|float|string|array $enumerator An enumerator object or value
      * @return bool
      */
-    final public function is($enumerator)
+    final public function is($enumerator): bool
     {
         return $this->equals($enumerator);
     }

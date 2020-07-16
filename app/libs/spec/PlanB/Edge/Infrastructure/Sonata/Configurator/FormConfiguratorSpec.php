@@ -8,17 +8,21 @@ use PlanB\Edge\Infrastructure\Sonata\Configurator\ConfiguratorInterface;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfigurator;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfiguratorInterface;
 use PlanB\Edge\Infrastructure\Sonata\Doctrine\ManagerCommandFactoryInterface;
-use PlanB\Edge\Infrastructure\Symfony\Form\CompositeDataMapper;
+use PlanB\Edge\Infrastructure\Symfony\Form\CompositeDataMapperInterface;
 use Prophecy\Argument;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 class FormConfiguratorSpec extends ObjectBehavior
 {
-    public function let()
+    public function let(CompositeDataMapperInterface $dataMapper)
     {
+        $dataMapper->attach(Argument::any())->willReturn($dataMapper);
+
         $this->beAnInstanceOf(ConcreteFormConfigurator::class);
+        $this->setDataMapper($dataMapper);
     }
 
     public function it_is_initializable()
@@ -28,18 +32,18 @@ class FormConfiguratorSpec extends ObjectBehavior
         $this->shouldHaveType(ConfiguratorInterface::class);
     }
 
-    public function it_is_able_to_add_a_field_to_a_form_mapper(FormMapper $formMapper, FormBuilder $formBuilder, ManagerCommandFactoryInterface $commandFactory)
+    public function it_is_able_to_add_a_field_to_a_form_mapper(FormMapper $formMapper,
+                                                               FormBuilder $formBuilder)
     {
         $formBuilder->getOptions()->willReturn([]);
 
         $formMapper->getFormBuilder()->willReturn($formBuilder);
-        $formMapper->getAdmin()->willReturn($commandFactory);
 
         $formMapper->hasOpenTab()->willReturn(false);
 
         $this->handle($formMapper, null);
 
-        $formBuilder->setDataMapper(Argument::type(CompositeDataMapper::class))
+        $formBuilder->setDataMapper(Argument::type(CompositeDataMapperInterface::class))
             ->shouldHaveBeenCalledOnce();
 
         $formMapper->with('tab', Argument::any())
@@ -50,6 +54,14 @@ class FormConfiguratorSpec extends ObjectBehavior
 
         $formMapper->add('name', TextType::class, Argument::type('array'), Argument::type('array'))
             ->shouldHaveBeenCalledOnce();
+    }
+
+    public function it_is_able_to_denormalize_data(DenormalizerInterface $denormalizer)
+    {
+        $data = [];
+        $context = [];
+        $this->denormalize($denormalizer, $data, $context);
+        $denormalizer->denormalize($data, 'x', null, $context)->shouldBeCalled();
     }
 }
 
@@ -68,5 +80,10 @@ class ConcreteFormConfigurator extends FormConfigurator
             ->add('name', TextType::class, [
                 'label' => 'Nombre'
             ]);
+    }
+
+    public function getClass(): string
+    {
+        return 'x';
     }
 }

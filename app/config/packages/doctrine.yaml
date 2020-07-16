@@ -7,9 +7,11 @@ doctrine:
 
         types:
             lang: LearnWords\Term\Infrastructure\Doctrine\DBAL\Type\LangType
+            TermId: LearnWords\Term\Infrastructure\Doctrine\DBAL\Type\TermIdType
 
         mapping_types:
             lang: string
+            TermId: string
             
     orm:
         auto_generate_proxy_classes: true

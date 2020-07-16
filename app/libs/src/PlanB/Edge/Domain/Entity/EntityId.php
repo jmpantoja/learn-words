@@ -14,11 +14,9 @@ declare(strict_types=1);
 namespace PlanB\Edge\Domain\Entity;
 
 use Ramsey\Uuid\Uuid;
-use Ramsey\Uuid\UuidInterface;
 
 class EntityId
 {
-    protected int $id;
     protected string $uuid;
 
     /**
@@ -28,38 +26,24 @@ class EntityId
     public function __construct(string $uuid = null)
     {
         if (is_null($uuid)) {
-            $this->uuid = (string)Uuid::uuid4();
+            $this->uuid = (string)Uuid::uuid1();
             return;
         }
 
         $this->uuid = (string)Uuid::fromString($uuid);
     }
 
-    public static function fromEntityId(?EntityId $id): ?EntityId
+    public static function fromString(string $uuid): self
     {
-        if (null === $id) {
-            return null;
-        }
-
-        return new static((string)$id);
-    }
-
-    public static function fromString(string $id): self
-    {
-        return new static($id);
+        return new static($uuid);
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function id(): int
+    public function getUuid(): string
     {
-        return $this->id;
-    }
-
-    public function uuid(): UuidInterface
-    {
-        return Uuid::fromString($this->uuid);
+        return $this->uuid;
     }
 
     /**
@@ -69,14 +53,15 @@ class EntityId
      */
     public function equals(EntityId $otherId)
     {
-        return $this->uuid()->equals($otherId->uuid());
+        return (string)$this === (string)$otherId;
     }
+
 
     /**
      * @return string
      */
     public function __toString()
     {
-        return (string)$this->uuid();
+        return $this->uuid;
     }
 }

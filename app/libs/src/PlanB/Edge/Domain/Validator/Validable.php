@@ -24,7 +24,7 @@ interface Validable
 
     public static function isValid($data): bool;
 
-    public static function constraints(): array;
+    public static function getConstraints(): array;
 
     public static function configureValidator(ConstraintsFactory $factory): void;
 

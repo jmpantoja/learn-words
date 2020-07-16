@@ -20,5 +20,5 @@ interface ConstraintsDefinition
     /**
      * @return Constraint[]
      */
-    public function constraints(): array ;
+    public function getConstraints(): array ;
 }

@@ -21,13 +21,5 @@ use PlanB\Edge\Infrastructure\Sonata\Admin\Admin;
 
 final class TermAdmin extends Admin
 {
-    public function saveCommand(array $input, ?EntityInterface $entity): SaveTerm
-    {
-        return SaveTerm::make($input, $entity);
-    }
 
-    public function deleteCommand(EntityInterface $entity): DeleteTerm
-    {
-        return DeleteTerm::make($entity);
-    }
 }

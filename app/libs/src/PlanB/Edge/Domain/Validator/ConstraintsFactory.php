@@ -41,8 +41,8 @@ final class ConstraintsFactory
     /**
      * @return Constraint[]
      */
-    public function constraints(): array
+    public function getConstraints(): array
     {
-        return $this->definition->constraints();
+        return $this->definition->getConstraints();
     }
 }

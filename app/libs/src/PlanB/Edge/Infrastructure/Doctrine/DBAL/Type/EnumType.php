@@ -8,6 +8,7 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Types\Types;
 use PlanB\Edge\Domain\Enum\Enum;
+use PlanB\Edge\Shared\Exception\InvalidTypeException;
 
 
 abstract class EnumType extends Type
@@ -20,7 +21,7 @@ abstract class EnumType extends Type
         }
 
         if (!($value instanceof Enum)) {
-            throw new \PlanB\Edge\Shared\Exception\InvalidTypeException($value, Enum::class);
+            throw new InvalidTypeException($value, Enum::class);
         }
 
         return $value->getKey();

@@ -49,7 +49,7 @@ final class Word implements Validable
         $this->lang = $lang;
     }
 
-    public static function configureValidator(ConstraintsFactory $factory):void
+    public static function configureValidator(ConstraintsFactory $factory): void
     {
         $factory->composite()
             ->required('word', [
@@ -68,7 +68,7 @@ final class Word implements Validable
     /**
      * @return Lang
      */
-    public function lang(): Lang
+    public function getLang(): Lang
     {
         return $this->lang;
     }
@@ -76,7 +76,7 @@ final class Word implements Validable
     /**
      * @return string
      */
-    public function word(): string
+    public function getWord(): string
     {
         return $this->word;
     }
@@ -84,7 +84,7 @@ final class Word implements Validable
 
     public function __toString()
     {
-        return $this->word();
+        return $this->getWord();
     }
 
 }

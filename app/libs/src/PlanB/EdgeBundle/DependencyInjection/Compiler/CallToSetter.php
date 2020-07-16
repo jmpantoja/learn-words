@@ -55,7 +55,7 @@ final class CallToSetter
             return;
         }
 
-        $methodName = $this->methodName();
+        $methodName = $this->getMethodName();
 
         $this->definition->addMethodCall($methodName, [$reference]);
     }
@@ -72,7 +72,7 @@ final class CallToSetter
         return new Reference($service);
     }
 
-    private function methodName()
+    private function getMethodName()
     {
         switch ($this->type) {
             case FormConfiguratorInterface::TYPE:

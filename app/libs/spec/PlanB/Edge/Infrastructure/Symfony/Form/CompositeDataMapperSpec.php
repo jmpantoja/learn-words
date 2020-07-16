@@ -2,22 +2,36 @@
 
 namespace spec\PlanB\Edge\Infrastructure\Symfony\Form;
 
+use ArrayIterator;
+use ArrayObject;
 use PhpSpec\ObjectBehavior;
-use PhpSpec\Wrapper\Collaborator;
 use PlanB\Edge\Infrastructure\Symfony\Form\CompositeDataMapper;
-use PlanB\Edge\Infrastructure\Symfony\Form\CompositeToObjectMapperInterface;
+use PlanB\Edge\Infrastructure\Symfony\Form\CompositeFormTypeInterface;
 use Prophecy\Argument;
 use stdClass;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\FormConfigInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\ConstraintViolationList;
 
 class CompositeDataMapperSpec extends ObjectBehavior
 {
-    public function let(CompositeToObjectMapperInterface $objectMapper)
+    public function let(SerializerInterface $serializer,
+                        ConstraintViolationList $constraintViolationList,
+                        CompositeFormTypeInterface $objectMapper
+    )
     {
-        $this->beConstructedWith($objectMapper);
+        $serializer->implement(DenormalizerInterface::class);
+
+        $constraintViolationList->count()->willReturn(0);
+        $constraintViolationList->getIterator()->willReturn(new ArrayIterator([]));
+
+
+        $this->beConstructedWith($serializer);
+        $this->attach($objectMapper);
     }
 
     public function it_is_initializable()
@@ -97,36 +111,66 @@ class CompositeDataMapperSpec extends ObjectBehavior
             ]);
     }
 
-    public function it_is_able_to_convert_a_forms_array_to_data(CompositeToObjectMapperInterface $objectMapper,
+    public function it_is_able_to_convert_a_forms_array_to_data(SerializerInterface $serializer,
+                                                                ConstraintViolationList $constraintViolationList,
+                                                                CompositeFormTypeInterface $objectMapper,
                                                                 FormInterface $name,
                                                                 FormInterface $lastName,
                                                                 FormConfigInterface $config)
     {
         $response = new stdClass();
-        $objectMapper
-            ->mapDataToObject(Argument::any(), Argument::any())
-            ->willReturn($response);
 
-        $objectMapper
-            ->validate(Argument::any())
-            ->willReturn(new ConstraintViolationList());
+        $validateCall = $objectMapper
+            ->validate([
+                'name' => 'nombre',
+                'lastName' => 'apellido',
+            ]);
 
-        $forms = [
+        $denormalizeCall = $objectMapper->denormalize(
+            $serializer,
+            [
+                'name' => 'nombre',
+                'lastName' => 'apellido'
+            ],
+            [
+                ObjectNormalizer::OBJECT_TO_POPULATE => null
+            ]);
+
+
+        $validateCall->willReturn($constraintViolationList);
+        $denormalizeCall->willReturn($response);
+
+        $forms = new ArrayObject([
             'name' => $this->configureForm($name, $config, 'nombre'),
             'lastName' => $this->configureForm($lastName, $config, 'apellido')
-        ];
+        ]);
 
-        $this->process($forms)->shouldReturn($response);
+        $this->mapFormsToObject($forms)->shouldReturn($response);
 
-        $objectMapper
-            ->mapDataToObject([
-                'name' => 'nombre',
-                'lastName' => 'apellido'], null)
-            ->shouldHaveBeenCalled();
+        $denormalizeCall->shouldHaveBeenCalled();
+        $validateCall->shouldHaveBeenCalled();
+    }
 
-        $objectMapper
-            ->validate(Argument::type('array'))
-            ->shouldHaveBeenCalled();
+
+    public function it_returns_null_when_validation_fails(ConstraintViolationList $constraintViolationList,
+                                                          CompositeFormTypeInterface $objectMapper,
+                                                          FormInterface $name,
+                                                          FormInterface $lastName,
+                                                          FormConfigInterface $config)
+    {
+
+        $constraintViolationList->count()->willReturn(1);
+
+        $validateCall = $objectMapper->validate(Argument::any());
+        $denormalizeCall = $objectMapper->denormalize(Argument::any(), Argument::any(), Argument::any());
+
+        $validateCall->willReturn($constraintViolationList);
+
+        $forms = new ArrayObject([]);
+        $this->mapFormsToObject($forms)->shouldReturn(null);
+
+        $validateCall->shouldHaveBeenCalled();
+        $denormalizeCall->shouldNotBeCalled();
     }
 
     /**
@@ -134,7 +178,7 @@ class CompositeDataMapperSpec extends ObjectBehavior
      * @param $config
      * @param string $value
      */
-    private function configureForm($form, $config, string $value): Collaborator
+    private function configureForm($form, $config, string $value): FormInterface
     {
         $config->getMapped()->willReturn(true);
 
@@ -144,7 +188,7 @@ class CompositeDataMapperSpec extends ObjectBehavior
         $form->isDisabled()->willReturn(false);
         $form->getConfig()->willReturn($config);
 
-        return $form;
+        return $form->getWrappedObject();
     }
 
 }

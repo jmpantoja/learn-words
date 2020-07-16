@@ -1,0 +1,23 @@
+LearnWords\Term\Domain\Model\Term:
+    attributes:
+        id:
+            groups: ['read']
+        word:
+            groups: ['read', 'write']
+
+LearnWords\Term\Domain\Model\Lang:
+    attributes:
+        value:
+            groups: ['read', 'write']
+
+LearnWords\Term\Domain\Model\Word:
+    attributes:
+        lang:
+            groups: ['read', 'write']
+        word:
+            groups: ['read', 'write']
+
+LearnWords\Term\Domain\Model\TermId:
+    attributes:
+        uuid:
+            groups: ['read']

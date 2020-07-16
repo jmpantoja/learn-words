@@ -37,7 +37,7 @@ final class SingleConstraints implements ConstraintsDefinition
         return $this;
     }
 
-    public function constraints(): array
+    public function getConstraints(): array
     {
         return $this->constraints;
     }

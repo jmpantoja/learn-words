@@ -6,6 +6,7 @@ use LearnWords\Term\Application\Save\SaveTerm;
 use LearnWords\Term\Application\Save\SaveTermUseCase;
 use LearnWords\Term\Domain\Model\Term;
 use LearnWords\Term\Domain\Model\TermHasBeenCreated;
+use LearnWords\Term\Domain\Model\TermId;
 use LearnWords\Term\Domain\Model\Word;
 use LearnWords\Term\Domain\Repository\TermRepositoryInterface;
 use PhpSpec\ObjectBehavior;
@@ -28,14 +29,13 @@ class SaveTermUseCaseSpec extends ObjectBehavior
         $this->shouldHaveType(SaveTermUseCase::class);
     }
 
-    public function it_is_able_to_save_a_term(TermRepositoryInterface $termRepository, DomainEventsCollector $eventsCollector)
+    public function it_is_able_to_save_a_term( TermRepositoryInterface $termRepository, DomainEventsCollector $eventsCollector)
     {
-        $command = SaveTerm::make([
-            'word' => Word::spanish('hola')
-        ]);
+        $term = new Term(new TermId(), Word::spanish('hola'));
 
+        $command = SaveTerm::make($term);
         $this->handle($command);
-        $termRepository->persist(Argument::type(Term::class))->shouldHaveBeenCalled();
+        $termRepository->persist($term)->shouldHaveBeenCalled();
 
         $eventsCollector->handle(Argument::type(TermHasBeenCreated::class), TermHasBeenCreated::class)
             ->shouldHaveBeenCalledOnce();

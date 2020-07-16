@@ -40,7 +40,7 @@ final class SingleMappingFailedException extends TransformationFailedException
     {
         $template = $violation->getMessageTemplate();
         $pieces = explode('|', $template);
-        
+
         return array_shift($pieces);
     }
 

@@ -29,7 +29,7 @@ abstract class DomainEvent implements DomainEventInterface
     /**
      * @return DateTimeInterface
      */
-    public function when(): DateTimeInterface
+    public function getWhen(): DateTimeInterface
     {
         return $this->when;
     }

@@ -15,24 +15,24 @@ class DomainEventsCollectorSpec extends ObjectBehavior
 
     public function it_collects_domain_events(DomainEventInterface $event){
 
-        $this->events()->shouldHaveCount(0);
+        $this->getEvents()->shouldHaveCount(0);
 
         $this->handle($event);
-        $this->events()->shouldHaveCount(1);
+        $this->getEvents()->shouldHaveCount(1);
 
         $this->handle($event);
-        $this->events()->shouldHaveCount(2);
+        $this->getEvents()->shouldHaveCount(2);
     }
 
     public function it_is_able_to_clear_domain_events(DomainEventInterface $event){
 
-        $this->events()->shouldHaveCount(0);
+        $this->getEvents()->shouldHaveCount(0);
 
         $this->handle($event);
-        $this->events()->shouldHaveCount(1);
+        $this->getEvents()->shouldHaveCount(1);
 
         $this->handle($event);
         $this->clear();
-        $this->events()->shouldHaveCount(0);
+        $this->getEvents()->shouldHaveCount(0);
     }
 }

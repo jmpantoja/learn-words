@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace LearnWords\Term\Domain\Model;
 
-use PlanB\Edge\Domain\Entity\EntityId;
 use PlanB\Edge\Domain\Entity\EntityInterface;
 use PlanB\Edge\Domain\Entity\Traits\NotifyEvents;
 
@@ -21,7 +20,7 @@ final class Term implements EntityInterface
 {
     use NotifyEvents;
 
-    private ?EntityId $id = null;
+    private ?TermId $id = null;
     private Word $word;
 
     public function __construct(TermId $termId, Word $word)
@@ -43,19 +42,23 @@ final class Term implements EntityInterface
     /**
      * @return TermId
      */
-    public function id(): ?TermId
+    public function getId(): ?TermId
     {
-        return TermId::fromEntityId($this->id);
+        return $this->id;
     }
 
     /**
      * @return Word
      */
-    public function word(): Word
+    public function getWord(): Word
     {
         return $this->word;
     }
 
+    /**
+     * @param Word $word
+     * @return Term
+     */
     private function setWord(Word $word): self
     {
         $this->word = $word;

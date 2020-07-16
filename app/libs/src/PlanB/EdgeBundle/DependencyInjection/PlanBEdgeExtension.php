@@ -13,11 +13,13 @@ declare(strict_types=1);
 
 namespace PlanB\EdgeBundle\DependencyInjection;
 
-use Doctrine\DBAL\Types\Type;
 use PlanB\Edge\Application\UseCase\UseCaseInterface;
 use PlanB\Edge\Infrastructure\Sonata\Admin\AdminInterface;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\DatagridConfiguratorInterface;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfiguratorInterface;
+use PlanB\Edge\Infrastructure\Symfony\Form\CompositeFormTypeInterface;
+use PlanB\Edge\Infrastructure\Symfony\Form\SingleDataMapperInterface;
+use PlanB\Edge\Infrastructure\Symfony\Form\SingleFormTypeInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
@@ -37,9 +39,16 @@ class PlanBEdgeExtension extends Extension implements PrependExtensionInterface
     public function load(array $configs, ContainerBuilder $container)
     {
 
-        $container->registerForAutoconfiguration(UseCaseInterface::class)->addTag('tactician.handler', [
-            'typehints' => true
-        ]);
+        $container->registerForAutoconfiguration(UseCaseInterface::class)
+            ->addTag('tactician.handler', [
+                'typehints' => true
+            ]);
+
+        $container->registerForAutoconfiguration(CompositeFormTypeInterface::class)
+            ->addTag('planb.composite_form_type');
+
+        $container->registerForAutoconfiguration(SingleFormTypeInterface::class)
+            ->addTag('planb.single_form_type');
 
         $container->registerForAutoconfiguration(FormConfiguratorInterface::class)
             ->addTag('planb.admin.configurator', ['type' => FormConfiguratorInterface::TYPE]);

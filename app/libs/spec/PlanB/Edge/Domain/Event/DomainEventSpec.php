@@ -22,7 +22,7 @@ class DomainEventSpec extends ObjectBehavior
     public function it_has_current_datetime_by_default()
     {
 
-        $this->when()->getTimestamp()
+        $this->getWhen()->getTimestamp()
             ->shouldReturn(CarbonImmutable::now()->getTimestamp());
     }
 
@@ -32,7 +32,7 @@ class DomainEventSpec extends ObjectBehavior
         $date = CarbonImmutable::create(2020, 07, 9, 12, 40, 30);
         $this->beConstructedWith($date);
 
-        $this->when()->getTimestamp()
+        $this->getWhen()->getTimestamp()
             ->shouldReturn($date->getTimestamp());
     }
 }

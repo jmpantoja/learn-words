@@ -3,10 +3,12 @@
 namespace spec\PlanB\Edge\Infrastructure\Doctrine\DBAL\Type;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Doctrine\DBAL\Types\Types;
 use PhpSpec\ObjectBehavior;
 use PlanB\Edge\Domain\Enum\Enum;
 use PlanB\Edge\Infrastructure\Doctrine\DBAL\Type\EnumType;
 use PlanB\Edge\Shared\Exception\InvalidTypeException;
+use Prophecy\Argument;
 
 class EnumTypeSpec extends ObjectBehavior
 {
@@ -49,6 +51,10 @@ class EnumTypeSpec extends ObjectBehavior
             ->shouldBeNull();
     }
 
+    public function it_returns_sql_declaration(AbstractPlatform $abstractPlatform){
+        $this->getSQLDeclaration([], $abstractPlatform)
+            ->shouldReturn(Types::TEXT);
+    }
 }
 
 class ConcreteEnumType extends EnumType

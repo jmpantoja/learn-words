@@ -17,26 +17,16 @@ namespace PlanB\Edge\Infrastructure\Sonata\Admin;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\DatagridConfiguratorInterface;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfiguratorInterface;
 use PlanB\Edge\Infrastructure\Sonata\Doctrine\ManagerCommandFactoryInterface;
-use PlanB\Edge\Infrastructure\Sonata\Doctrine\ModelManager;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Model\ModelManagerInterface;
 
 
-abstract class Admin extends AbstractAdmin implements AdminInterface, ManagerCommandFactoryInterface
+abstract class Admin extends AbstractAdmin implements AdminInterface
 {
     private FormConfiguratorInterface $formConfigurator;
 
     private DatagridConfiguratorInterface $datagridConfigurator;
-
-    public function setModelManager(ModelManagerInterface $modelManager)
-    {
-        if ($modelManager instanceof ModelManager) {
-            $modelManager->setCommandFactory($this);
-        }
-        parent::setModelManager($modelManager);
-    }
 
     /**
      * @inheritDoc
@@ -44,7 +34,7 @@ abstract class Admin extends AbstractAdmin implements AdminInterface, ManagerCom
     public function getBaseRouteName()
     {
         return RouteBaseUtils::fromClassName($this->getClass())
-            ->baseRouteName();
+            ->getBaseRouteName();
     }
 
     /**
@@ -53,7 +43,7 @@ abstract class Admin extends AbstractAdmin implements AdminInterface, ManagerCom
     public function getBaseRoutePattern()
     {
         return RouteBaseUtils::fromClassName($this->getClass())
-            ->baseRoutePattern();
+            ->getBaseRoutePattern();
     }
 
     /**
@@ -68,7 +58,6 @@ abstract class Admin extends AbstractAdmin implements AdminInterface, ManagerCom
 
     protected function configureFormFields(FormMapper $formMapper): void
     {
-
         $this->formConfigurator
             ->handle($formMapper, $this->getSubject());
     }

@@ -14,25 +14,43 @@ declare(strict_types=1);
 namespace PlanB\Edge\Infrastructure\Symfony\Form;
 
 
+use LogicException;
 use PlanB\Edge\Infrastructure\Symfony\Form\Exception\SingleMappingFailedException;
-use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Component\Validator\ValidatorBuilder;
 
-final class SingleDataMapper implements DataTransformerInterface
+final class SingleDataMapper implements SingleDataMapperInterface
 {
+    private SerializerInterface $serializer;
 
-    private SingleToObjectMapperInterface $objectMapper;
-    private array $options = [];
+    private SingleFormTypeInterface $objectMapper;
 
-    private ValidatorInterface $validator;
+    public function __construct(SerializerInterface $serializer)
+    {
+        $this->serializer = $serializer;
+    }
 
-    public function __construct(SingleToObjectMapperInterface $objectMapper, array $options = [])
+    /**
+     * @param SerializerInterface $serializer
+     * @return CompositeDataMapper
+     */
+    private function setSerializer(SerializerInterface $serializer): CompositeDataMapper
+    {
+        if (!$serializer instanceof DenormalizerInterface) {
+            throw new LogicException('Expected a serializer that also implements DenormalizerInterface.');
+        }
+
+        $this->serializer = $serializer;
+        return $this;
+    }
+
+
+    public function attach(SingleFormTypeInterface $objectMapper): self
     {
         $this->objectMapper = $objectMapper;
-        $this->options = $options;
-        $this->validator = (new ValidatorBuilder())->getValidator();
+        return $this;
     }
 
     /**
@@ -40,7 +58,7 @@ final class SingleDataMapper implements DataTransformerInterface
      */
     public function transform($value)
     {
-        return (string)$value;
+        return $value;
     }
 
     /**
@@ -49,7 +67,10 @@ final class SingleDataMapper implements DataTransformerInterface
     public function reverseTransform($value)
     {
         $this->validate($value);
-        return $this->objectMapper->mapValueToObject($value);
+
+        return $this->objectMapper->denormalize($this->serializer, $value, [
+            ObjectNormalizer::OBJECT_TO_POPULATE => null
+        ]);
     }
 
     /**
@@ -58,12 +79,7 @@ final class SingleDataMapper implements DataTransformerInterface
      */
     private function validate($data): bool
     {
-//        $builder = new SingleConstraints();
-//        $this->objectMapper->buildConstraints($builder, $this->options);
-//        $constraints = $builder->build();
-//
-//
-//
+
         $violations = $this->objectMapper->validate($data);
 
         if (0 === $violations->count()) {
@@ -72,4 +88,5 @@ final class SingleDataMapper implements DataTransformerInterface
 
         throw new SingleMappingFailedException($violations);
     }
+
 }

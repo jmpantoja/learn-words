@@ -44,13 +44,13 @@ final class RouteBaseUtils
         return !str_ends_with($piece, 'bundle');
     }
 
-    public function baseRouteName(): string
+    public function getBaseRouteName(): string
     {
         $className = implode('_', $this->pieces);
         return sprintf('admin_%s', $className);
     }
 
-    public function baseRoutePattern(): string
+    public function getBaseRoutePattern(): string
     {
         return implode('/', $this->pieces);
     }

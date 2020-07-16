@@ -79,7 +79,7 @@ final class CompositeConstraints implements ConstraintsDefinition
         return $this->options['fields'][$name];
     }
 
-    public function constraints(): array
+    public function getConstraints(): array
     {
         return [new Collection($this->options)];
     }

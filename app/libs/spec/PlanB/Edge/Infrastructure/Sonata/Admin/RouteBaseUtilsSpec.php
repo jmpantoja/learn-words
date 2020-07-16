@@ -18,7 +18,7 @@ class RouteBaseUtilsSpec extends ObjectBehavior
     {
         $className = 'Namespace\Bundle\NamedBundle\Domain\Entity\Name';
         $this->beConstructedThrough('fromClassName', [$className]);
-        $this->baseRouteName()->shouldReturn('admin_namespace_name');
+        $this->getBaseRouteName()->shouldReturn('admin_namespace_name');
     }
 
     public function it_returns_base_route_pattern()
@@ -26,7 +26,7 @@ class RouteBaseUtilsSpec extends ObjectBehavior
         $className = 'Namespace\Bundle\NamedBundle\Domain\Entity\Name';
         $this->beConstructedThrough('fromClassName', [$className]);
 
-        $this->baseRoutePattern()->shouldReturn('namespace/name');
+        $this->getBaseRoutePattern()->shouldReturn('namespace/name');
     }
 
 }
