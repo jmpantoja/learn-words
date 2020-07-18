@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace LearnWords\Term\Domain\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\PersistentCollection;
 use PlanB\Edge\Domain\Entity\EntityInterface;
 use PlanB\Edge\Domain\Entity\Traits\NotifyEvents;
 
@@ -22,18 +25,23 @@ class Term implements EntityInterface
 
     private TermId $id;
     private Word $word;
+    private Collection $tags;
 
-    public function __construct(TermId $termId, Word $word)
+    private Collection $lines;
+
+    public function __construct(TermId $termId, Word $word, TagList $tagList)
     {
         $this->id = $termId;
-        $this->update($word);
+        $this->tags = $tagList;
 
+        $this->update($word, $tagList);
         $this->notify(new TermHasBeenCreated($this));
     }
 
-    public function update(Word $word): self
+    public function update(Word $word, TagList $tagList): self
     {
-        $this->setWord($word);
+        $this->word = $word;
+        $this->tags = $tagList->getCollection();
 
         $this->notify(new TermHasBeenUpdated($this));
         return $this;
@@ -55,13 +63,14 @@ class Term implements EntityInterface
         return $this->word;
     }
 
+
     /**
-     * @param Word $word
-     * @return Term
+     * @return PersistentCollection
      */
-    private function setWord(Word $word): self
+    public function getTags()
     {
-        $this->word = $word;
-        return $this;
+        return $this->tags;
     }
+
+
 }

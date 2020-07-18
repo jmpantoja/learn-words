@@ -59,12 +59,12 @@ class DomainEventDispatcher extends BaseEventDispatcher
         return parent::dispatch($event);
     }
 
-    private function __clone()
+    public function __clone()
     {
         throw new BadMethodCallException('Este objeto no puede ser clonado');
     }
 
-    private function __wakeup()
+    public function __wakeup()
     {
         throw new BadMethodCallException('Este objeto no puede ser deserializado');
     }

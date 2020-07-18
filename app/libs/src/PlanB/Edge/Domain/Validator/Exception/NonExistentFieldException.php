@@ -31,10 +31,6 @@ final class NonExistentFieldException extends InvalidArgumentException
      */
     private function parseMessage(string $name, array $available = []): string
     {
-        if (empty($available)) {
-            return sprintf('El campo "%s" no existe.', $name);
-        }
-
         return sprintf('El campo "%s" no existe. (%s)', ...[
             $name,
             implode(', ', $available)

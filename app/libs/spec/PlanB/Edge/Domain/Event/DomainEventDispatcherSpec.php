@@ -4,8 +4,8 @@ namespace spec\PlanB\Edge\Domain\Event;
 
 use BadMethodCallException;
 use PhpSpec\ObjectBehavior;
-use PlanB\Edge\Domain\Event\DomainEventInterface;
 use PlanB\Edge\Domain\Event\DomainEventDispatcher;
+use PlanB\Edge\Domain\Event\DomainEventInterface;
 use PlanB\Edge\Domain\Event\DomainEventsCollector;
 use Prophecy\Argument;
 use Symfony\Contracts\EventDispatcher\Event;
@@ -36,6 +36,16 @@ class DomainEventDispatcherSpec extends ObjectBehavior
 
         $eventsCollector->handle($domainEvent, Argument::type('string'))->shouldHaveBeenCalledOnce();
         $eventsCollector->handle($event, Argument::type('string'))->shouldNotHaveBeenCalled();
+    }
+
+    public function it_throws_an_exception_when_try_to_clone_the_singleton()
+    {
+        $this->shouldThrow(BadMethodCallException::class)->during('__clone');
+    }
+
+    public function it_throws_an_exception_when_try_to_serialize_the_singleton()
+    {
+        $this->shouldThrow(BadMethodCallException::class)->during('__wakeup');
     }
 
 }

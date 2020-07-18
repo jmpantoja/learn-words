@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace LearnWords\Term\Infrastructure\Normalizer;
 
 
+use Doctrine\ORM\PersistentCollection;
+use LearnWords\Term\Domain\Model\TagList;
 use LearnWords\Term\Domain\Model\Term;
 use LearnWords\Term\Domain\Model\TermId;
 use LearnWords\Term\Domain\Model\Word;
@@ -32,10 +34,13 @@ final class TermDenormalizer extends Denormalizer
     protected function mapToObject($data, ?Term $term = null): object
     {
         $word = $this->partial($data['word'], Word::class);
+        $tagList = TagList::wrap($data['tags']);
 
         if (is_null($term)) {
-            return new Term(new TermId(), $word);
+            return new Term(new TermId(), $word, $tagList);
         }
-        return $term->update($word);
+
+        return $term->update($word, $tagList);
     }
+
 }

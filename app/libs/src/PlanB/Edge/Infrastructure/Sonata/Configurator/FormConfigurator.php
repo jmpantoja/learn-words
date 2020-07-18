@@ -13,8 +13,8 @@ declare(strict_types=1);
 namespace PlanB\Edge\Infrastructure\Sonata\Configurator;
 
 use PlanB\Edge\Domain\Entity\EntityBuilder;
+use PlanB\Edge\Infrastructure\Sonata\Admin\AdminInterface;
 use PlanB\Edge\Infrastructure\Sonata\Doctrine\ManagerCommandFactoryInterface;
-use PlanB\Edge\Infrastructure\Symfony\Form\CompositeDataMapper;
 use PlanB\Edge\Infrastructure\Symfony\Form\CompositeDataMapperInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\CompositeFormTypeInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\CustomDataMapper;
@@ -28,6 +28,7 @@ use Throwable;
 
 abstract class FormConfigurator implements FormConfiguratorInterface, CompositeFormTypeInterface
 {
+    private string $className;
 
     private CompositeDataMapperInterface $dataMapper;
 
@@ -41,13 +42,21 @@ abstract class FormConfigurator implements FormConfiguratorInterface, CompositeF
         return $this;
     }
 
-
     public function handle(FormMapper $formMapper, ?object $subject): self
     {
         $this->formMapper = $formMapper;
+
+        $this->className = $formMapper->getAdmin()->getClass();
         $this->formMapper->getFormBuilder()->setDataMapper($this->dataMapper);
 
         $this->configure($subject);
+        return $this;
+    }
+
+    private function setAdmin(AdminInterface $admin): self
+    {
+        $this->admin = $admin;
+        $this->className = $admin->getClass();
         return $this;
     }
 
@@ -94,11 +103,15 @@ abstract class FormConfigurator implements FormConfiguratorInterface, CompositeF
         try {
             return $serializer->denormalize($data, $this->getClass(), null, $context);
         } catch (Throwable $throwable) {
+            dump($throwable->getMessage());
             throw new TransformationFailedException($throwable->getMessage());
         }
     }
 
-    abstract public function getClass(): string;
+    final public function getClass(): string
+    {
+        return $this->className;
+    }
 
     public function validate(array $data): ConstraintViolationListInterface
     {

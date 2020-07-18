@@ -10,6 +10,11 @@ use PlanB\Edge\Domain\Validator\Exception\ValidationFailedException;
 class WordSpec extends ObjectBehavior
 {
 
+    public function let()
+    {
+        $this->beConstructedWith('palabra', Lang::SPANISH());
+    }
+
     public function it_is_initializable()
     {
         $this->beConstructedWith('palabra', Lang::ENGLISH());
@@ -32,6 +37,20 @@ class WordSpec extends ObjectBehavior
         $this->shouldHaveType(Word::class);
         $this->getLang()->shouldBeLike(Lang::ENGLISH());
         $this->getWord()->shouldReturn('word');
+    }
+
+    public function it_is_able_to_determine_if_a_value_is_valid()
+    {
+        $this::isValid([
+            'word' => 'palabra',
+            'lang' => Lang::SPANISH()
+        ])->shouldReturn(true);
+
+        $this::isValid([
+            'word' => 'pa',
+            'lang' => Lang::SPANISH()
+        ])->shouldReturn(false);
+
     }
 
     public function it_throws_an_exception_when_the_word_is_too_short()

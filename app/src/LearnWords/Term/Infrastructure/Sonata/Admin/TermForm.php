@@ -18,10 +18,23 @@ use LearnWords\Term\Domain\TermBuilder;
 use LearnWords\Term\Infrastructure\Symfony\Form\Type\WordType;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfigurator;
 use PlanB\Edge\Infrastructure\Sonata\Doctrine\ManagerCommandFactoryInterface;
+use PlanB\Edge\Infrastructure\Sonata\Doctrine\ModelManager;
 use PlanB\Edge\Infrastructure\Symfony\Validator\ConstraintBuilderFactory;
+use Sonata\AdminBundle\Form\Type\ModelType;
+
 
 final class TermForm extends FormConfigurator
 {
+    /**
+     * @var ModelManager
+     */
+    private ModelManager $modelManager;
+
+    public function __construct(ModelManager $modelManager)
+    {
+        $this->modelManager = $modelManager;
+    }
+
     public function attachTo(): string
     {
         return TermAdmin::class;
@@ -29,11 +42,13 @@ final class TermForm extends FormConfigurator
 
     public function configure(Term $term = null)
     {
-        $this->add('word', WordType::class);
+        $this
+            ->add('word', WordType::class)
+            ->add('tags', ModelType::class, [
+                'by_reference' => false,
+                'multiple' => true,
+                'property' => 'tag',
+            ]);
     }
 
-    public function getClass(): string
-    {
-        return Term::class;
-    }
 }

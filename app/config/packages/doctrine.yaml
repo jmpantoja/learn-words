@@ -8,10 +8,12 @@ doctrine:
         types:
             lang: LearnWords\Term\Infrastructure\Doctrine\DBAL\Type\LangType
             TermId: LearnWords\Term\Infrastructure\Doctrine\DBAL\Type\TermIdType
+            TagId: LearnWords\Term\Infrastructure\Doctrine\DBAL\Type\TagIdType
 
         mapping_types:
             lang: string
             TermId: string
+            TagId: string
             
     orm:
         auto_generate_proxy_classes: true
