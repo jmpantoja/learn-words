@@ -1,0 +1,24 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="LearnWords\Domain\Term\Term"
+            table="terms">
+
+        <id name="id" column="id" type="TermId"/>
+        <embedded name="word" class="LearnWords\Domain\Term\Word"/>
+
+        <many-to-many field="tags" target-entity="LearnWords\Domain\Tag\Tag" inversed-by="terms">
+            <join-table name="term_x_tags">
+                <join-columns>
+                    <join-column/>
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column/>
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+
+    </entity>
+</doctrine-mapping>

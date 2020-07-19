@@ -1,0 +1,4 @@
+LearnWords\Domain\Tag\Tag:
+    attributes:
+        tag:
+            groups: ['read', 'write']

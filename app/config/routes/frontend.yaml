@@ -1,8 +1,4 @@
-#frontend_home:
-#    path: /
-#    controller: \LearnWords\Site\Frontend\Controller\HomeController
-
 home:
     path: /
     defaults:
-        _controller: \LearnWords\Term\Infrastructure\Symfony\Controller\HomeController
+        _controller: \LearnWords\Infrastructure\UI\Web\Controller\HomeController

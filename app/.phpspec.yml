@@ -2,20 +2,18 @@ formatter.name: pretty
 suites:
     PlanB:
         namespace: PlanB
-        src_path: "%paths.config%/libs/src"
-        spec_path: "%paths.config%/libs"
+        src_path: "%paths.config%/src"
+        spec_path: "%paths.config%"
 
     LearnWords:
         namespace: LearnWords
-        src_path: "%paths.config%/libs"
+        src_path: "%paths.config%/src"
         spec_path: "%paths.config%"
 
 extensions:
     FriendsOfPhpSpec\PhpSpec\CodeCoverage\CodeCoverageExtension:
         output:
-            html: reports/coverage        
+            html: build/coverage
+            
         whitelist:
             - src
-            - libs
-        blacklist:
-            - libs/spec

@@ -63,17 +63,11 @@
     },
     "autoload": {
         "files": [
-            "libs/src/PlanB/EdgeBundle/Resources/functions/datatype.php"
+            "src/PlanB/EdgeBundle/Resources/functions/datatype.php"
         ],
         "psr-4": {
-            "App\\": "src/",
-            "PlanB\\": "libs/src/PlanB/",
+            "PlanB\\": "src/PlanB/",
             "LearnWords\\": "src/LearnWords/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "LearnWords\\Tests\\": "tests/"
         }
     },
     "replace": {

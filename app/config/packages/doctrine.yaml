@@ -6,9 +6,10 @@ doctrine:
         #server_version: '5.8'
 
         types:
-            lang: LearnWords\Term\Infrastructure\Doctrine\DBAL\Type\LangType
-            TermId: LearnWords\Term\Infrastructure\Doctrine\DBAL\Type\TermIdType
-            TagId: LearnWords\Term\Infrastructure\Doctrine\DBAL\Type\TagIdType
+            lang: LearnWords\Infrastructure\Domain\Term\DBAL\LangType
+            TermId: LearnWords\Infrastructure\Domain\Term\DBAL\TermIdType
+            
+            TagId: LearnWords\Infrastructure\Domain\Tag\DBAL\TagIdType
 
         mapping_types:
             lang: string
@@ -20,9 +21,14 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         auto_mapping: true
         mappings:
-            App:
+            Term:
                 is_bundle: false
                 type: xml
-                dir: '%kernel.project_dir%/config/mapping/doctrine'
-                prefix: 'LearnWords'
-                alias: LearnWords
+                dir: '%kernel.project_dir%/src/LearnWords/Infrastructure/Domain/Term/Mapping/ORM'
+                prefix: 'LearnWords\Domain\Term'
+            Tag:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/LearnWords/Infrastructure/Domain/Tag/Mapping/ORM'
+                prefix: 'LearnWords\Domain\Tag'
+

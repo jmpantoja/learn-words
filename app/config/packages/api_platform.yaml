@@ -2,8 +2,9 @@ api_platform:
     show_webby: false
     
     mapping:
-        paths: ['%kernel.project_dir%/config/mapping/api']
-    
+        paths: 
+            - '%kernel.project_dir%/src/LearnWords/Infrastructure/Domain/Term/Mapping/Api'
+            - '%kernel.project_dir%/src/LearnWords/Infrastructure/Domain/Tag/Mapping/Api'
     formats:
         json:     ['application/json']
         jsonld:   ['application/ld+json']

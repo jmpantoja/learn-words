@@ -17,27 +17,28 @@ services:
         resource: '../src/LearnWords/*'
         exclude: '../src/LearnWords/{*/Domain/Model,*/Infrastructure/Doctrine/Migrations,Kernel.php}'
         #exclude: '../src/LearnWords/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
-    
 
-#    # controllers are imported separately to make sure services can be injected
-#    # as action arguments even if you don't extend any base controller class
-    LearnWords\Term\Infrastructure\Symfony\Controller\:
-        resource: '../src/LearnWords/Term/Infrastructure/Symfony/Controller'
+
+    #    # controllers are imported separately to make sure services can be injected
+    #    # as action arguments even if you don't extend any base controller class
+    LearnWords\Infrastructure\UI\Web\Controller\:
+        resource: '../src/LearnWords/Infrastructure/UI/Web/Controller'
         tags: ['controller.service_arguments']
+
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-
+    #
     admin.term:
-        class: LearnWords\Term\Infrastructure\Sonata\Admin\TermAdmin
-        arguments: [~, LearnWords\Term\Domain\Model\Term, ~]
+        class: LearnWords\Infrastructure\UI\Admin\Term\TermAdmin
+        arguments: [~, LearnWords\Domain\Term\Term, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: Term }
         public: true
 
     admin.tag:
-        class: LearnWords\Term\Infrastructure\Sonata\Admin\TagAdmin
-        arguments: [~, LearnWords\Term\Domain\Model\Tag, ~]
+        class: LearnWords\Infrastructure\UI\Admin\Tag\TagAdmin
+        arguments: [~, LearnWords\Domain\Tag\Tag, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: admin, label: Tag }
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Tag } 
         public: true

@@ -1,7 +1,7 @@
 framework:
     serializer:
         enabled: true
-#        sss: asdad
         mapping:
-            paths: ['%kernel.project_dir%/config/mapping/serialization']
-
+            paths:
+                - '%kernel.project_dir%/src/LearnWords/Infrastructure/Domain/Term/Mapping/Serializer'
+                - '%kernel.project_dir%/src/LearnWords/Infrastructure/Domain/Tag/Mapping/Serializer'
