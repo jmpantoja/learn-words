@@ -21,17 +21,23 @@ final class EntityIdNormalizer implements ContextAwareNormalizerInterface
 {
 
     /**
-     * @inheritDoc
+     * @param mixed $data
+     * @param string|null $format
+     * @param mixed[] $context
+     * @return bool
      */
-    public function supportsNormalization($data, $format = null, array $context = [])
+    public function supportsNormalization($data, $format = null, array $context = []): bool
     {
         return $data instanceof EntityId;
     }
 
     /**
-     * @inheritDoc
+     * @param mixed $object
+     * @param string|null $format
+     * @param mixed[] $context
+     * @return string
      */
-    public function normalize($object, $format = null, array $context = [])
+    public function normalize($object, $format = null, array $context = []): string
     {
         return (string)$object;
     }

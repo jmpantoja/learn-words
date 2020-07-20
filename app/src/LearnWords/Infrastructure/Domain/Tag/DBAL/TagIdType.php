@@ -22,6 +22,7 @@ final class TagIdType extends EntityIdType
 
     protected function fromString(string $value): TagId
     {
+        // @phpstan-ignore-next-line
         return TagId::fromString($value);
     }
 

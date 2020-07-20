@@ -32,12 +32,10 @@ final class FormDataMapperCompiler implements CompilerPassInterface
      * @inheritDoc
      * @param ContainerBuilder $container
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $this->processComposite($container);
         $this->processSingle($container);
-
-
     }
 
     /**
@@ -53,7 +51,7 @@ final class FormDataMapperCompiler implements CompilerPassInterface
         }
     }
 
-    private function processSingle(ContainerBuilder $container)
+    private function processSingle(ContainerBuilder $container): void
     {
         $dataMapper = $container->getDefinition(SingleDataMapper::class);
 

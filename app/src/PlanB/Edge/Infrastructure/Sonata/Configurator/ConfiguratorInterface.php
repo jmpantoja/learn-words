@@ -6,5 +6,5 @@ interface ConfiguratorInterface
 {
     public function attachTo(): string;
 
-    public function configure();
+    public function configure(): void;
 }

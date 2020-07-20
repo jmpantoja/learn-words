@@ -14,7 +14,15 @@ declare(strict_types=1);
 namespace PlanB\Edge\Infrastructure\Sonata\Configurator;
 
 
+use Sonata\AdminBundle\Datagrid\ListMapper;
+
 interface DatagridConfiguratorInterface extends ConfiguratorInterface
 {
     public const TYPE = 'datagrid';
+
+    /**
+     * @param ListMapper $listMapper
+     * @return $this
+     */
+    public function handle(ListMapper $listMapper): self;
 }

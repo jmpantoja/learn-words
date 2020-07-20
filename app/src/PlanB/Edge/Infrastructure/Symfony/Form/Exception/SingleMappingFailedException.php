@@ -17,10 +17,11 @@ namespace PlanB\Edge\Infrastructure\Symfony\Form\Exception;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\ConstraintViolationList;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 final class SingleMappingFailedException extends TransformationFailedException
 {
-    public function __construct(ConstraintViolationList $violations)
+    public function __construct(ConstraintViolationListInterface $violations)
     {
         $violation = $violations->get(0);
         $message = $violation->getMessage();

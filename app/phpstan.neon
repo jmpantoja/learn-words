@@ -1,0 +1,14 @@
+parameters:
+	level: 6
+	paths:
+	    - src
+
+
+	ignoreErrors:
+	    - '#invoked with [0-9]+ parameter[s]?, [0-9]+ required#'
+
+	reportUnmatchedIgnoredErrors: false
+
+	checkMissingIterableValueType: false
+
+	checkGenericClassInNonGenericObjectType: false

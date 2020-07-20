@@ -15,8 +15,10 @@ namespace PlanB\Edge\Infrastructure\Symfony\Normalizer;
 
 
 use Exception;
+use LogicException;
 use Symfony\Component\Serializer\Exception\MappingException;
 use Symfony\Component\Serializer\Normalizer\ContextAwareDenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\SerializerAwareInterface;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -24,22 +26,31 @@ use Symfony\Component\Serializer\SerializerInterface;
 abstract class Denormalizer implements ContextAwareDenormalizerInterface, SerializerAwareInterface
 {
 
-    private SerializerInterface $serializer;
+    private DenormalizerInterface $serializer;
 
     /**
-     * @inheritDoc
+     * @param SerializerInterface $serializer
+     * @return $this
      */
-    public function setSerializer(SerializerInterface $serializer)
+    public function setSerializer(SerializerInterface $serializer): self
     {
+        if (!$serializer instanceof DenormalizerInterface) {
+            throw new LogicException('Expected a serializer that also implements DenormalizerInterface.');
+        }
+
         $this->serializer = $serializer;
+        return $this;
     }
 
     /**
-     * @inheritDoc
+     * @param mixed $data
+     * @param string $type
+     * @param string|null $format
+     * @param mixed[] $context
+     * @return object
      */
-    public function denormalize($data, $type, $format = null, array $context = [])
+    public function denormalize($data, $type, $format = null, array $context = []): object
     {
-
         try {
             $entity = $context[ObjectNormalizer::OBJECT_TO_POPULATE] ?? null;
             return $this->mapToObject($data, $entity);
@@ -48,14 +59,18 @@ abstract class Denormalizer implements ContextAwareDenormalizerInterface, Serial
         }
     }
 
+    /**
+     * @param mixed $data
+     * @return object
+     */
     abstract protected function mapToObject($data): object;
 
     /**
-     * @param $data
+     * @param mixed $data
      * @param string $type
-     * @return mixed
+     * @return object
      */
-    public function partial($data, string $type)
+    public function partial($data, string $type): object
     {
         return $this->serializer->denormalize($data, $type);
     }

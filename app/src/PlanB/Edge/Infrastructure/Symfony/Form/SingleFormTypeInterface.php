@@ -22,7 +22,17 @@ interface SingleFormTypeInterface
 {
     public function setDataMapper(SingleDataMapperInterface $dataMapper): self;
 
+    /**
+     * @param DenormalizerInterface $serializer
+     * @param mixed $data
+     * @param mixed[] $context
+     * @return object|null
+     */
     public function denormalize(DenormalizerInterface $serializer, $data, array $context): ?object;
 
+    /**
+     * @param mixed $data
+     * @return ConstraintViolationListInterface
+     */
     public function validate($data): ConstraintViolationListInterface;
 }

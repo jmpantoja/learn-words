@@ -14,7 +14,11 @@ declare(strict_types=1);
 
 if (!function_exists('is_stringable')) {
 
-    function is_stringable($value)
+    /**
+     * @param mixed $value
+     * @return bool
+     */
+    function is_stringable($value): bool
     {
         return is_null($value)
             || is_scalar($value)

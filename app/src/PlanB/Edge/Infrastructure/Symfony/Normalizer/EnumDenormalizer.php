@@ -21,17 +21,26 @@ final class EnumDenormalizer implements ContextAwareDenormalizerInterface
 {
 
     /**
-     * @inheritDoc
+     * @param mixed $data
+     * @param string $type
+     * @param null $format
+     * @param mixed[] $context
+     *
+     * @return bool
      */
-    public function supportsDenormalization($data, $type, $format = null, array $context = [])
+    public function supportsDenormalization($data, $type, $format = null, array $context = []): bool
     {
         return is_a($type, Enum::class, true);
     }
 
     /**
-     * @inheritDoc
+     * @param mixed $data
+     * @param string $type
+     * @param null $format
+     * @param mixed[] $context
+     * @return Enum
      */
-    public function denormalize($data, $type, $format = null, array $context = [])
+    public function denormalize($data, $type, $format = null, array $context = []): Enum
     {
         return forward_static_call([$type, 'make'], $data);
     }

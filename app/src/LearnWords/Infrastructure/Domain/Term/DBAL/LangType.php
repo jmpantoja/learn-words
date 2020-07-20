@@ -25,6 +25,7 @@ final class LangType extends EnumType
      */
     public function byKey(string $value, AbstractPlatform $platform): Lang
     {
+        // @phpstan-ignore-next-line
         return Lang::byKey($value);
     }
 

@@ -30,6 +30,8 @@ class DomainEventDispatcherSpec extends ObjectBehavior
 
     public function it_deals_domain_events_by_event_collector(DomainEventsCollector $eventsCollector, DomainEventInterface $domainEvent, Event $event)
     {
+        $eventsCollector->handle(Argument::any(), Argument::any())->willReturn($eventsCollector);
+
         $this->setDomainEventsCollector($eventsCollector);
         $this->dispatch($domainEvent);
         $this->dispatch($event);

@@ -31,10 +31,7 @@ final class CompositeDataMapper implements CompositeDataMapperInterface
 {
     private CompositeFormTypeInterface $objectMapper;
     private PropertyAccessorInterface $propertyAccessor;
-    /**
-     * @var DenormalizerInterface|SerializerInterface
-     */
-    private SerializerInterface $serializer;
+    private DenormalizerInterface $serializer;
 
     public function __construct(SerializerInterface $serializer, PropertyAccessorInterface $propertyAccessor = null)
     {
@@ -64,16 +61,17 @@ final class CompositeDataMapper implements CompositeDataMapperInterface
     }
 
     /**
-     * @inheritDoc
+     * @param mixed $data
+     * @param FormInterface[]|\Traversable $forms
      */
-    public function mapDataToForms($data, $forms)
+    public function mapDataToForms($data, $forms): void
     {
         $empty = null === $data || [] === $data;
         if ($empty) {
             return;
         }
 
-        if (!$empty && !\is_array($data) && !\is_object($data)) {
+        if (!\is_array($data) && !\is_object($data)) {
             throw new UnexpectedTypeException($data, 'object, array or empty');
         }
 
@@ -92,7 +90,7 @@ final class CompositeDataMapper implements CompositeDataMapperInterface
      * @inheritDoc
      * @throws \ReflectionException
      */
-    public function mapFormsToData($forms, &$entity)
+    public function mapFormsToData($forms, &$entity): void
     {
         if (null === $entity) {
             return;
@@ -102,9 +100,9 @@ final class CompositeDataMapper implements CompositeDataMapperInterface
     }
 
     /**
-     * @param $forms
-     * @param $entity
-     * @return object|void|null
+     * @param iterable $forms
+     * @param object|null $entity
+     * @return object|null
      */
     public function mapFormsToObject(iterable $forms, $entity = null): ?object
     {
@@ -163,16 +161,33 @@ final class CompositeDataMapper implements CompositeDataMapperInterface
     }
 
     /**
-     * @param null $entity
+     * @param object|null $entity
      * @return object|null
      */
-    private function computeSubject($entity = null): ?object
+    private function computeSubject(?object $entity = null): ?object
     {
         if (!($entity instanceof EntityInterface)) {
             return null;
         }
 
+        if (null === $this->extractIdPropertyValue($entity)) {
+            return null;
+        }
+
+        return $entity;
+    }
+
+    /**
+     * @param EntityInterface $entity
+     * @return mixed|null
+     */
+    private function extractIdPropertyValue(EntityInterface $entity)
+    {
         $properties = (array)$entity;
+
+        if (empty($properties)) {
+            return null;
+        }
 
         $idValue = null;
         foreach ($properties as $key => $value) {
@@ -180,11 +195,6 @@ final class CompositeDataMapper implements CompositeDataMapperInterface
                 $idValue = $value;
             }
         }
-
-        if (null === $idValue) {
-            return null;
-        }
-
-        return $entity;
+        return $idValue;
     }
 }

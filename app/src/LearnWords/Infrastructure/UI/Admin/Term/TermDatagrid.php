@@ -24,7 +24,7 @@ final class TermDatagrid extends DatagridConfigurator
         return TermAdmin::class;
     }
 
-    public function configure()
+    public function configure(): void
     {
         $this->addIdentifier('word');
     }

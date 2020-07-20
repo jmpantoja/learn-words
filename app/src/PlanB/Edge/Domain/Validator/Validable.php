@@ -18,10 +18,21 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 interface Validable
 {
+    /**
+     * @param mixed $data
+     */
     public function ensureIsValid($data): void;
 
+    /**
+     * @param mixed $input
+     * @return ConstraintViolationListInterface
+     */
     public static function validate($input): ConstraintViolationListInterface;
 
+    /**
+     * @param mixed $data
+     * @return bool
+     */
     public static function isValid($data): bool;
 
     public static function getConstraints(): array;

@@ -21,7 +21,6 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 
-
 abstract class Admin extends AbstractAdmin implements AdminInterface
 {
     private FormConfiguratorInterface $formConfigurator;
@@ -68,7 +67,7 @@ abstract class Admin extends AbstractAdmin implements AdminInterface
         return $this;
     }
 
-    protected function configureListFields(ListMapper $listMapper)
+    protected function configureListFields(ListMapper $listMapper): void
     {
         $this->datagridConfigurator
             ->handle($listMapper);

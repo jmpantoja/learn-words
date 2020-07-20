@@ -34,6 +34,7 @@ final class TagDenormalizer extends Denormalizer
         if (is_null($tag)) {
             return new Tag(new TagId(), $label);
         }
+
         return $tag->update($label);
     }
 }

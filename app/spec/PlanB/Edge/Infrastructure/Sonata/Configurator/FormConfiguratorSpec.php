@@ -13,7 +13,6 @@ use PlanB\Edge\Infrastructure\Symfony\Form\CompositeDataMapperInterface;
 use Prophecy\Argument;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
@@ -85,7 +84,7 @@ class ConcreteFormConfigurator extends FormConfigurator
         return 'className';
     }
 
-    public function configure()
+    public function configure(): void
     {
         $this->tab('tab');
 
@@ -94,11 +93,6 @@ class ConcreteFormConfigurator extends FormConfigurator
                 'label' => 'Nombre'
             ]);
     }
-
-//    protected function initialize(AdminInterface $admin, FormBuilderInterface $formBuilder): FormConfigurator
-//    {
-//        return $this;
-//    }
 
     public function getClass(): string
     {

@@ -39,7 +39,7 @@ final class TermForm extends FormConfigurator
         return TermAdmin::class;
     }
 
-    public function configure(Term $term = null)
+    public function configure(Term $term = null): void
     {
         $this
             ->add('word', WordType::class)

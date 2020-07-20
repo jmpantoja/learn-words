@@ -18,7 +18,6 @@ use PlanB\Edge\Infrastructure\Sonata\Admin\AdminInterface;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\DatagridConfiguratorInterface;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfiguratorInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\CompositeFormTypeInterface;
-use PlanB\Edge\Infrastructure\Symfony\Form\SingleDataMapperInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\SingleFormTypeInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -34,9 +33,11 @@ class PlanBEdgeExtension extends Extension implements PrependExtensionInterface
     /**
      * Loads a specific configuration.
      *
+     * @param mixed[] $configs
+     * @param ContainerBuilder $container
      * @throws \Exception
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
 
         $container->registerForAutoconfiguration(UseCaseInterface::class)
@@ -70,13 +71,16 @@ class PlanBEdgeExtension extends Extension implements PrependExtensionInterface
 
     /**
      * Allow an extension to prepend the extension configurations.
+     *
+     * @param ContainerBuilder $container
      */
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
 
         $extensions = array_keys($container->getExtensions());
 
         $pathToPackages = realpath(__DIR__ . '/../Resources/config/packages');
+
         $config = $this->loadPackagesConfig($pathToPackages);
 
         foreach ($extensions as $extension) {
@@ -87,12 +91,17 @@ class PlanBEdgeExtension extends Extension implements PrependExtensionInterface
         }
     }
 
-    private function loadPackagesConfig(string $pathToDir)
+    /**
+     * @param string $pathToDir
+     * @return mixed[]
+     */
+    private function loadPackagesConfig(string $pathToDir): array
     {
         $finder = new Finder();
         $finder->name('*.yaml')->in($pathToDir);
 
 
+        $data = [];
         foreach ($finder as $file) {
             $data[] = Yaml::parseFile($file->getPathname());
         }

@@ -25,7 +25,7 @@ final class TagForm extends FormConfigurator
         return TagAdmin::class;
     }
 
-    public function configure(Tag $tag = null)
+    public function configure(Tag $tag = null): void
     {
         $this->add('tag');
     }

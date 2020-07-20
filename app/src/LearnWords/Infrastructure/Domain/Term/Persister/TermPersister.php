@@ -33,7 +33,8 @@ final class TermPersister implements ContextAwareDataPersisterInterface
     }
 
     /**
-     * @inheritDoc
+     * @param mixed $data
+     * @param mixed[] $context
      */
     public function supports($data, array $context = []): bool
     {
@@ -41,20 +42,22 @@ final class TermPersister implements ContextAwareDataPersisterInterface
     }
 
     /**
-     * @inheritDoc
+     * @param mixed $data
+     * @param mixed[] $context
      */
-    public function persist($data, array $context = [])
+    public function persist($data, array $context = []): void
     {
-        $command = SaveTerm::make($data);
+        $command = new SaveTerm($data);
         $this->commandBus->handle($command);
     }
 
     /**
-     * @inheritDoc
+     * @param mixed $data
+     * @param mixed[] $context
      */
-    public function remove($data, array $context = [])
+    public function remove($data, array $context = []): void
     {
-        $command = DeleteTerm::make($data);
+        $command = new DeleteTerm($data);
         $this->commandBus->handle($command);
     }
 }

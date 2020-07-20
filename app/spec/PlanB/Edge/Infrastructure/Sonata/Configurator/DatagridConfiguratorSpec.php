@@ -39,7 +39,7 @@ class ConcreteDatagridConfigurator extends DatagridConfigurator
         return 'className';
     }
 
-    public function configure()
+    public function configure(): void
     {
         $this->addIdentifier('ID')
             ->add('NAME');

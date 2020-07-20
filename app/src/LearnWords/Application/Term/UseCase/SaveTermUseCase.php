@@ -26,9 +26,9 @@ final class SaveTermUseCase implements UseCaseInterface
         $this->termRepository = $termRepository;
     }
 
-    public function handle(SaveTerm $command)
+    public function handle(SaveTerm $command): void
     {
-        $term = $command->getEntity();
+        $term = $command->getTerm();
         $this->termRepository->persist($term);
     }
 }

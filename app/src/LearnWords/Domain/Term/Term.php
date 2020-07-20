@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace LearnWords\Domain\Term;
 
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\PersistentCollection;
 use LearnWords\Domain\Tag\TagList;
 use LearnWords\Domain\Term\SaveTerm\TermHasBeenCreated;
 use LearnWords\Domain\Term\SaveTerm\TermHasBeenUpdated;
@@ -66,10 +65,7 @@ class Term implements EntityInterface
     }
 
 
-    /**
-     * @return PersistentCollection
-     */
-    public function getTags()
+    public function getTags(): Collection
     {
         return $this->tags;
     }

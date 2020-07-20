@@ -30,12 +30,12 @@ final class TermDoctrineRepository extends ServiceEntityRepository implements Te
     }
 
 
-    public function persist(Term $term)
+    public function persist(Term $term): void
     {
         $this->getEntityManager()->persist($term);
     }
 
-    public function delete(Term $term)
+    public function delete(Term $term): void
     {
         $this->getEntityManager()->remove($term);
     }

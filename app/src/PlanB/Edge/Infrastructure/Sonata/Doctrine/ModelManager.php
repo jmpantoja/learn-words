@@ -20,7 +20,6 @@ use Sonata\DoctrineORMAdminBundle\Model\ModelManager as SonataModelManager;
 
 final class ModelManager extends SonataModelManager
 {
-    private ManagerCommandFactoryInterface $commandFactory;
     /**
      * @var DataPersisterInterface
      */
@@ -44,16 +43,28 @@ final class ModelManager extends SonataModelManager
         return $r->newInstanceWithoutConstructor();
     }
 
+    /**
+     * @param object $command
+     * @return mixed
+     */
     public function create($command)
     {
         return $this->dataPersister->persist($command);
     }
 
+    /**
+     * @param object $command
+     * @return mixed
+     */
     public function update($command)
     {
         return $this->dataPersister->persist($command);
     }
 
+    /**
+     * @param object $entity
+     * @return mixed
+     */
     public function delete($entity)
     {
         return $this->dataPersister->remove($entity);

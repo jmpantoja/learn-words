@@ -23,20 +23,20 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 final class SingleDataMapper implements SingleDataMapperInterface
 {
-    private SerializerInterface $serializer;
+    private DenormalizerInterface $serializer;
 
     private SingleFormTypeInterface $objectMapper;
 
     public function __construct(SerializerInterface $serializer)
     {
-        $this->serializer = $serializer;
+        $this->setSerializer($serializer);
     }
 
     /**
      * @param SerializerInterface $serializer
-     * @return CompositeDataMapper
+     * @return $this
      */
-    private function setSerializer(SerializerInterface $serializer): CompositeDataMapper
+    private function setSerializer(SerializerInterface $serializer): self
     {
         if (!$serializer instanceof DenormalizerInterface) {
             throw new LogicException('Expected a serializer that also implements DenormalizerInterface.');
@@ -45,7 +45,6 @@ final class SingleDataMapper implements SingleDataMapperInterface
         $this->serializer = $serializer;
         return $this;
     }
-
 
     public function attach(SingleFormTypeInterface $objectMapper): self
     {
@@ -74,12 +73,11 @@ final class SingleDataMapper implements SingleDataMapperInterface
     }
 
     /**
-     * @param array $data
-     * @return ConstraintViolationListInterface
+     * @param mixed $data
+     * @return bool
      */
     private function validate($data): bool
     {
-
         $violations = $this->objectMapper->validate($data);
 
         if (0 === $violations->count()) {

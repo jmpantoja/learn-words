@@ -14,11 +14,14 @@ declare(strict_types=1);
 namespace PlanB\Edge\Domain\Validator\Constraints;
 
 
+use b;
 use Symfony\Component\Validator\Constraints\Type;
 
 final class DataType extends Type
 {
+    /**
+     * @var string
+     */
     public $message = 'This value is not of the correct type.';
-    public $allowNull = false;
-
+    public bool  $allowNull = false;
 }

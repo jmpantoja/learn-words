@@ -16,7 +16,7 @@ namespace LearnWords\Domain\Term;
 
 interface TermRepositoryInterface
 {
-    public function persist(Term $term);
+    public function persist(Term $term): void ;
 
-    public function delete(Term $term);
+    public function delete(Term $term): void ;
 }

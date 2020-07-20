@@ -15,12 +15,26 @@ namespace LearnWords\Application\Term\UseCase;
 
 
 use LearnWords\Domain\Term\Term;
-use PlanB\Edge\Application\UseCase\EntityCommand;
 
-final class DeleteTerm extends EntityCommand
+final class DeleteTerm
 {
-    public static function make(Term $term)
+    private Term $term;
+
+    /**
+     * SaveTerm constructor.
+     * @param Term $term
+     */
+    public function __construct(Term $term)
     {
-        return new self($term);
+        $this->term = $term;
     }
+
+    /**
+     * @return Term
+     */
+    public function getTerm(): Term
+    {
+        return $this->term;
+    }
+
 }

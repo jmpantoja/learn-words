@@ -20,13 +20,8 @@ use PlanB\Edge\Domain\Entity\EntityInterface;
 
 final class Tag implements EntityInterface
 {
-
-    /**
-     * @var TagId
-     */
     private TagId $id;
-    private string $tag = '';
-
+    private string $tag;
     private PersistentCollection $terms;
 
     public function __construct(TagId $tagId, string $tag)
@@ -61,9 +56,14 @@ final class Tag implements EntityInterface
     }
 
 
-
     public function isLike(string $label): bool
     {
         return 0 === strcasecmp($this->tag, $label);
+    }
+
+    public function update(string $label): self
+    {
+        $this->tag = $label;
+        return $this;
     }
 }

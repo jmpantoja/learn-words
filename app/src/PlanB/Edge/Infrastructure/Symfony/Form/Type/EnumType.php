@@ -18,18 +18,19 @@ use PlanB\Edge\Domain\Enum\Enum;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Choice;
+use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\ValidatorBuilder;
 
 abstract class EnumType extends SingleType
 {
 
-    public function getParent()
+    public function getParent(): string
     {
         return ChoiceType::class;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 
@@ -50,7 +51,7 @@ abstract class EnumType extends SingleType
         });
     }
 
-    public function customOptions(OptionsResolver $resolver)
+    public function customOptions(OptionsResolver $resolver): void
     {
 
     }

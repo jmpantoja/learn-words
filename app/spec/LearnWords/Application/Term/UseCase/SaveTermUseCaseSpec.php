@@ -19,6 +19,8 @@ class SaveTermUseCaseSpec extends ObjectBehavior
 {
     public function let(TermRepositoryInterface $termRepository, DomainEventsCollector $eventsCollector)
     {
+        $eventsCollector->handle(Argument::any(), Argument::any())->willReturn($eventsCollector);
+
         $this->beConstructedWith($termRepository);
 
         DomainEventDispatcher::getInstance()
@@ -34,7 +36,7 @@ class SaveTermUseCaseSpec extends ObjectBehavior
     {
         $term = new Term(new TermId(), Word::spanish('hola'), TagList::collect());
 
-        $command = SaveTerm::make($term);
+        $command = new SaveTerm($term);
         $this->handle($command);
         $termRepository->persist($term)->shouldHaveBeenCalled();
 

@@ -18,7 +18,7 @@ class DomainEventsCollector
 {
     private array $events = [];
 
-    public function handle(DomainEventInterface $event)
+    public function handle(DomainEventInterface $event): self
     {
         $this->events[] = $event;
 

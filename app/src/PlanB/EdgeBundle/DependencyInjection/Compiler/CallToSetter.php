@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace PlanB\EdgeBundle\DependencyInjection\Compiler;
 
 
+use LogicException;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\DatagridConfiguratorInterface;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfigurator;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfiguratorInterface;
@@ -72,7 +73,7 @@ final class CallToSetter
         return new Reference($service);
     }
 
-    private function getMethodName()
+    private function getMethodName(): string
     {
         switch ($this->type) {
             case FormConfiguratorInterface::TYPE:
@@ -80,6 +81,8 @@ final class CallToSetter
 
             case DatagridConfiguratorInterface::TYPE:
                 return 'setDatagridConfigurator';
+            default:
+                throw new LogicException('El tipo no es correcto');
         }
     }
 

@@ -24,7 +24,7 @@ final class TagDatagrid extends DatagridConfigurator
         return TagAdmin::class;
     }
 
-    public function configure()
+    public function configure(): void
     {
         $this->addIdentifier('tag');
     }

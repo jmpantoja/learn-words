@@ -25,9 +25,9 @@ final class DeleteTermUseCase implements UseCaseInterface
         $this->termRepository = $termRepository;
     }
 
-    public function handle(DeleteTerm $command)
+    public function handle(DeleteTerm $command): void
     {
-        $term = $command->getEntity();
-        return $this->termRepository->delete($term);
+        $term = $command->getTerm();
+        $this->termRepository->delete($term);
     }
 }

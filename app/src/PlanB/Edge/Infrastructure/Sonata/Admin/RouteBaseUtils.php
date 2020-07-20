@@ -36,7 +36,7 @@ final class RouteBaseUtils
         $this->pieces = array_filter($pieces, [$this, 'filter']);
     }
 
-    private function filter(string $piece)
+    private function filter(string $piece): bool
     {
         if (in_array($piece, static::NON_ALLOWED_WORDS)) {
             return false;

@@ -38,7 +38,7 @@ final class EventStore extends ServiceEntityRepository implements EventStoreInte
         parent::__construct($registry, Event::class);
     }
 
-    public function persist(DomainEventInterface $domainEvent)
+    public function persist(DomainEventInterface $domainEvent): void
     {
         $event = $this->createEventObject($domainEvent);
 

@@ -23,14 +23,14 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 final class WordType extends CompositeType
 {
-    public function customForm(FormBuilderInterface $builder, array $options)
+    public function customForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('word', TextType::class)
             ->add('lang', LangType::class);
     }
 
-    public function customOptions(OptionsResolver $resolver)
+    public function customOptions(OptionsResolver $resolver): void
     {
     }
 

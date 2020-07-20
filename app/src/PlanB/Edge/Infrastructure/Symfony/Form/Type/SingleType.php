@@ -21,6 +21,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
@@ -34,12 +35,12 @@ abstract class SingleType extends AbstractType implements SingleFormTypeInterfac
         return $this;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addModelTransformer($this->dataMapper);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $this->customOptions($resolver);
 
@@ -49,20 +50,34 @@ abstract class SingleType extends AbstractType implements SingleFormTypeInterfac
         ]);
     }
 
-    public function getParent()
+    public function getParent(): string
     {
         return TextType::class;
     }
 
-    abstract public function customOptions(OptionsResolver $resolver);
+    abstract public function customOptions(OptionsResolver $resolver): void ;
 
+    /**
+     * @param DenormalizerInterface $serializer
+     * @param mixed $data
+     * @param mixed[] $context
+     * @return object|null
+     *
+     * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
+     */
     public function denormalize(DenormalizerInterface $serializer, $data, array $context): ?object
     {
         return $serializer->denormalize($data, $this->getClass(), null, $context);
     }
 
+
     abstract public function getClass(): string;
 
+
+    /**
+     * @param mixed $data
+     * @return ConstraintViolationListInterface
+     */
     public function validate($data): ConstraintViolationListInterface
     {
         return new ConstraintViolationList();

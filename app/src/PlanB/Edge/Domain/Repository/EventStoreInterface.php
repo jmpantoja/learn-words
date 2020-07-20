@@ -18,5 +18,5 @@ use PlanB\Edge\Domain\Event\DomainEventInterface;
 
 interface EventStoreInterface
 {
-    public function persist(DomainEventInterface $event);
+    public function persist(DomainEventInterface $event): void ;
 }

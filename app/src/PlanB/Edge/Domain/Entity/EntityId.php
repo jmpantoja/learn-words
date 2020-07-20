@@ -23,7 +23,7 @@ class EntityId
      * @param string $uuid
      * @throws \Exception
      */
-    public function __construct(string $uuid = null)
+    final public function __construct(string $uuid = null)
     {
         if (is_null($uuid)) {
             $this->uuid = (string)Uuid::uuid1();

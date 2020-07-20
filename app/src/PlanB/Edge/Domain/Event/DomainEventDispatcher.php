@@ -21,7 +21,7 @@ class DomainEventDispatcher extends BaseEventDispatcher
     protected static ?DomainEventDispatcher $instance = null;
     private DomainEventsCollector $eventsCollector;
 
-    private function __construct()
+    final private function __construct()
     {
         parent::__construct();
         $this->eventsCollector = new DomainEventsCollector();
@@ -36,7 +36,7 @@ class DomainEventDispatcher extends BaseEventDispatcher
         return static::$instance;
     }
 
-    public function setDomainEventsCollector(DomainEventsCollector $eventsCollector)
+    public function setDomainEventsCollector(DomainEventsCollector $eventsCollector): self
     {
         $this->eventsCollector = $eventsCollector;
         return $this;

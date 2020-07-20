@@ -51,8 +51,8 @@ abstract class EnumType extends Type
     }
 
     /**
-     * @param $value
-     * @return mixed
+     * @param string $value
+     * @return Enum
      */
     abstract public function byKey(string $value, AbstractPlatform $platform): Enum;
 }

@@ -32,7 +32,7 @@ final class SonataAdminCompiler implements CompilerPassInterface
      * @inheritDoc
      * @param ContainerBuilder $container
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $this->addConfiguratorAliases($container);
         $this->addToConfiguratorSetters($container);
@@ -40,7 +40,6 @@ final class SonataAdminCompiler implements CompilerPassInterface
 
     /**
      * @param ContainerBuilder $container
-     * @return int|string
      */
     private function addConfiguratorAliases(ContainerBuilder $container): void
     {
@@ -53,6 +52,11 @@ final class SonataAdminCompiler implements CompilerPassInterface
         }
     }
 
+    /**
+     * @param string $id
+     * @param string|null $alias
+     * @return array|string[]
+     */
     private function sanitizeAliases(string $id, ?string $alias): array
     {
         if (is_null($alias)) {
@@ -64,10 +68,10 @@ final class SonataAdminCompiler implements CompilerPassInterface
 
     /**
      * @param Definition $definition
-     * @param $tags
-     * @return string
+     * @param string[][] $tags
+     * @return string|null
      */
-    private function configuratorAlias(Definition $definition, $tags): ?string
+    private function configuratorAlias(Definition $definition, array $tags): ?string
     {
         $class = $definition->getClass();
 

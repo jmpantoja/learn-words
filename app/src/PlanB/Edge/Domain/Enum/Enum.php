@@ -18,7 +18,11 @@ use LogicException;
 
 abstract class Enum extends \MyCLabs\Enum\Enum
 {
-    public static function make($value): ?self
+    /**
+     * @param mixed $value
+     * @return self
+     */
+    public static function make($value): self
     {
         if ($value instanceof static) {
             return $value;
@@ -29,7 +33,7 @@ abstract class Enum extends \MyCLabs\Enum\Enum
         }
 
         if (static::hasValue($value)) {
-            return self::byValue($value);
+            return static::byValue($value);
         }
 
         $message = sprintf('No se puede crear un objeto "%s" a partir del valor "%s"', static::class, $value);
@@ -43,7 +47,7 @@ abstract class Enum extends \MyCLabs\Enum\Enum
     }
 
     /**
-     * @param $value
+     * @param mixed $value
      * @return Enum
      */
     public static function byValue($value): Enum

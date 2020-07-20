@@ -13,12 +13,12 @@ declare(strict_types=1);
 namespace PlanB\Edge\Infrastructure\Sonata\Configurator;
 
 use PlanB\Edge\Domain\Entity\EntityBuilder;
-use PlanB\Edge\Infrastructure\Sonata\Admin\AdminInterface;
 use PlanB\Edge\Infrastructure\Sonata\Doctrine\ManagerCommandFactoryInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\CompositeDataMapperInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\CompositeFormTypeInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\CustomDataMapper;
 use PlanB\Edge\Infrastructure\Symfony\Validator\ConstraintBuilderFactory;
+use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -79,9 +79,15 @@ abstract class FormConfigurator implements FormConfiguratorInterface, CompositeF
         return $this;
     }
 
-    protected function add($name, $type = null, array $options = [], array $fieldDescriptionOptions = []): self
+    /**
+     * @param string $name
+     * @param string|null $type
+     * @param mixed[] $options
+     * @param mixed[] $fieldDescriptionOptions
+     * @return $this
+     */
+    protected function add(string $name, ?string $type = null, array $options = [], array $fieldDescriptionOptions = []): self
     {
-
         $this->formMapper->add($name, $type, $options, $fieldDescriptionOptions);
         return $this;
     }
@@ -102,7 +108,8 @@ abstract class FormConfigurator implements FormConfiguratorInterface, CompositeF
         $this->isOpened = true;
     }
 
-    public function denormalize(DenormalizerInterface $serializer, $data, array $context): ?object
+
+    public function denormalize(DenormalizerInterface $serializer, array $data, array $context): ?object
     {
         try {
             return $serializer->denormalize($data, $this->getClass(), null, $context);

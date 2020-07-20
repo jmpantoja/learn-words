@@ -17,6 +17,11 @@ use InvalidArgumentException;
 
 final class InvalidTypeException extends InvalidArgumentException
 {
+    /**
+     * InvalidTypeException constructor.
+     * @param mixed $value
+     * @param string $expectedTypes
+     */
     public function __construct($value, string $expectedTypes)
     {
         $type = \is_object($value) ? \get_class($value) : \gettype($value);

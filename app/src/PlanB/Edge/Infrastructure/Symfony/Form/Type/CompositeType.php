@@ -14,23 +14,18 @@ declare(strict_types=1);
 namespace PlanB\Edge\Infrastructure\Symfony\Form\Type;
 
 
-use PlanB\Edge\Infrastructure\Symfony\Form\CompositeDataMapper;
 use PlanB\Edge\Infrastructure\Symfony\Form\CompositeDataMapperInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\CompositeFormTypeInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Throwable;
 
 abstract class CompositeType extends AbstractType implements CompositeFormTypeInterface
 {
-    /**
-     * @var CompositeDataMapper
-     */
-    private CompositeDataMapper $dataMapper;
+    private CompositeDataMapperInterface $dataMapper;
 
     public function setDataMapper(CompositeDataMapperInterface $dataMapper): self
     {
@@ -38,7 +33,7 @@ abstract class CompositeType extends AbstractType implements CompositeFormTypeIn
         return $this;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->setDataMapper($this->dataMapper);
 
@@ -49,7 +44,7 @@ abstract class CompositeType extends AbstractType implements CompositeFormTypeIn
         }
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $this->customOptions($resolver);
 
@@ -59,11 +54,17 @@ abstract class CompositeType extends AbstractType implements CompositeFormTypeIn
         ]);
     }
 
-    abstract public function customForm(FormBuilderInterface $builder, array $options);
+    abstract public function customForm(FormBuilderInterface $builder, array $options): void;
 
-    abstract function customOptions(OptionsResolver $resolver);
+    abstract function customOptions(OptionsResolver $resolver): void;
 
-    public function denormalize(DenormalizerInterface $serializer, $data, array $context): ?object
+    /**
+     * @param DenormalizerInterface $serializer
+     * @param mixed[] $data
+     * @param mixed[] $context
+     * @return object|null
+     */
+    public function denormalize(DenormalizerInterface $serializer, array $data, array $context): ?object
     {
         try {
             return $serializer->denormalize($data, $this->getClass(), null, $context);
@@ -73,6 +74,4 @@ abstract class CompositeType extends AbstractType implements CompositeFormTypeIn
     }
 
     abstract public function getClass(): string;
-
-
 }

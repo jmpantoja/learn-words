@@ -21,9 +21,10 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class DataTypeValidator extends TypeValidator
 {
     /**
-     * {@inheritdoc}
+     * @param mixed $value
+     * @param Constraint $constraint
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof DataType) {
             throw new UnexpectedTypeException($constraint, DataType::class);

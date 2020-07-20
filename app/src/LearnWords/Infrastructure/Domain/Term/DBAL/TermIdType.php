@@ -22,6 +22,7 @@ final class TermIdType extends EntityIdType
 
     protected function fromString(string $value): TermId
     {
+        // @phpstan-ignore-next-line
         return TermId::fromString($value);
     }
 
