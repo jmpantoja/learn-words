@@ -27,6 +27,7 @@ trait ValidableTrait
     public function ensureIsValid($data): void
     {
         $violations = static::validate($data);
+
         if (0 === $violations->count()) {
             return;
         }

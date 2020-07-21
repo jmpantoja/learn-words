@@ -20,6 +20,7 @@ use PlanB\Edge\Domain\Validator\Traits\ValidableTrait;
 use PlanB\Edge\Domain\Validator\Validable;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 final class Word implements Validable
 {
@@ -45,7 +46,7 @@ final class Word implements Validable
             'lang' => $lang
         ]);
 
-        $this->word = $word;
+        $this->setWord($word);
         $this->lang = $lang;
     }
 
@@ -56,6 +57,10 @@ final class Word implements Validable
                 new NotBlank(),
                 new Length([
                     'min' => 3
+                ]),
+                new Regex([
+                    'pattern' => '/^[\p{Latin}\h]*$/u',
+                    'message' => 'sólo se admiten letras o espacios'
                 ])
             ])
             ->required('lang', [
@@ -63,6 +68,12 @@ final class Word implements Validable
                     'type' => Lang::class
                 ])
             ]);
+    }
+
+    private function setWord(string $word): self
+    {
+        $this->word = mb_strtolower($word);
+        return $this;
     }
 
     /**
@@ -86,5 +97,4 @@ final class Word implements Validable
     {
         return $this->getWord();
     }
-
 }

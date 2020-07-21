@@ -36,7 +36,7 @@ final class TermDenormalizer extends Denormalizer
         $tagList = TagList::collect($data['tags']);
 
         if (is_null($term)) {
-            return new Term(new TermId(), $word, $tagList);
+            return new Term($word, $tagList);
         }
 
         return $term->update($word, $tagList);

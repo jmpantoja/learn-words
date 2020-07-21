@@ -58,7 +58,7 @@ final class TagList extends ArrayCollection
             return $this;
         }
 
-        $tag = new Tag(new TagId(), $label);
+        $tag = new Tag($label);
         $this->collection->add($tag);
 
         return $this;

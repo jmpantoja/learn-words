@@ -15,7 +15,6 @@ namespace LearnWords\Infrastructure\Domain\Tag\Serializer;
 
 
 use LearnWords\Domain\Tag\Tag;
-use LearnWords\Domain\Tag\TagId;
 use PlanB\Edge\Infrastructure\Symfony\Normalizer\Denormalizer;
 
 final class TagDenormalizer extends Denormalizer
@@ -32,7 +31,7 @@ final class TagDenormalizer extends Denormalizer
     {
         $label = $data['tag'];
         if (is_null($tag)) {
-            return new Tag(new TagId(), $label);
+            return new Tag($label);
         }
 
         return $tag->update($label);

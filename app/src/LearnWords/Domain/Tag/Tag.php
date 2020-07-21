@@ -24,9 +24,9 @@ final class Tag implements EntityInterface
     private string $tag;
     private PersistentCollection $terms;
 
-    public function __construct(TagId $tagId, string $tag)
+    public function __construct(string $tag)
     {
-        $this->id = $tagId;
+        $this->id = new TagId();
         $this->tag = $tag;
 
     }

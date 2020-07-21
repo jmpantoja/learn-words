@@ -3,10 +3,8 @@
 namespace spec\LearnWords\Infrastructure\Domain\Term\Serializer;
 
 use LearnWords\Domain\Tag\Tag;
-use LearnWords\Domain\Tag\TagId;
 use LearnWords\Domain\Tag\TagList;
 use LearnWords\Domain\Term\Term;
-use LearnWords\Domain\Term\TermId;
 use LearnWords\Domain\Term\Word;
 use LearnWords\Infrastructure\Domain\Term\Serializer\TermDenormalizer;
 use PhpSpec\ObjectBehavior;
@@ -46,8 +44,8 @@ class TermDenormalizerSpec extends ObjectBehavior
         $word = Word::spanish('word');
 
         $tagList = TagList::collect([
-            new Tag(new TagId(), 'tag-A'),
-            new Tag(new TagId(), 'tag-B'),
+            new Tag('tag-A'),
+            new Tag('tag-B'),
         ]);
 
         $serializer->denormalize(Argument::any(), Word::class)
@@ -70,8 +68,8 @@ class TermDenormalizerSpec extends ObjectBehavior
         $word = Word::spanish('word');
 
         $tagList = TagList::collect([
-            new Tag(new TagId(), 'tag-A'),
-            new Tag(new TagId(), 'tag-B'),
+            new Tag('tag-A'),
+            new Tag('tag-B'),
         ]);
 
         $serializer->denormalize(Argument::any(), Word::class)
@@ -82,8 +80,8 @@ class TermDenormalizerSpec extends ObjectBehavior
             'tags' => $tagList
         ];
 
-        $termId = new TermId();
-        $term = new Term($termId, Word::spanish('valor'), TagList::collect());
+
+        $term = new Term(Word::spanish('valor'), TagList::collect());
 
         $response = $this->denormalize($input, Term::class, null, [
             ObjectNormalizer::OBJECT_TO_POPULATE => $term
@@ -91,7 +89,6 @@ class TermDenormalizerSpec extends ObjectBehavior
 
         $response->shouldReturn($term);
 
-        $response->getId()->shouldReturn($termId);
         $response->getWord()->shouldReturn($word);
         $response->getTags()->shouldReturn($tagList);
     }

@@ -28,11 +28,9 @@ class Term implements EntityInterface
     private Word $word;
     private Collection $tags;
 
-    private Collection $lines;
-
-    public function __construct(TermId $termId, Word $word, TagList $tagList)
+    public function __construct(Word $word, TagList $tagList)
     {
-        $this->id = $termId;
+        $this->id = new TermId();
         $this->tags = $tagList;
 
         $this->update($word, $tagList);

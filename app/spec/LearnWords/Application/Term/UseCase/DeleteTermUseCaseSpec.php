@@ -4,11 +4,9 @@ namespace spec\LearnWords\Application\Term\UseCase;
 
 use LearnWords\Application\Term\UseCase\DeleteTerm;
 use LearnWords\Application\Term\UseCase\DeleteTermUseCase;
-use LearnWords\Application\Term\UseCase\SaveTerm;
 use LearnWords\Domain\Tag\TagList;
 use LearnWords\Domain\Term\SaveTerm\TermHasBeenCreated;
 use LearnWords\Domain\Term\Term;
-use LearnWords\Domain\Term\TermId;
 use LearnWords\Domain\Term\TermRepositoryInterface;
 use LearnWords\Domain\Term\Word;
 use PhpSpec\ObjectBehavior;
@@ -33,14 +31,14 @@ class DeleteTermUseCaseSpec extends ObjectBehavior
         $this->shouldHaveType(DeleteTermUseCase::class);
     }
 
-    public function it_is_able_to_delete_a_term( TermRepositoryInterface $termRepository, DomainEventsCollector $eventsCollector)
+    public function it_is_able_to_delete_a_term(Term $term,
+                                                TermRepositoryInterface $termRepository,
+                                                DomainEventsCollector $eventsCollector)
     {
-        $term = new Term(new TermId(), Word::spanish('hola'), TagList::collect());
-
-        $command = new DeleteTerm($term);
+        $command = new DeleteTerm($term->getWrappedObject());
         $this->handle($command);
 
-        $termRepository->delete($term)->shouldHaveBeenCalledOnce();
+        $termRepository->delete($term)->shouldBeCalled();
 //
 //        $eventsCollector->handle(Argument::type(TermHasBeenCreated::class), TermHasBeenCreated::class)
 //            ->shouldHaveBeenCalledOnce();

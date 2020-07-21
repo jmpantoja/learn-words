@@ -7,7 +7,6 @@ use LearnWords\Application\Term\UseCase\SaveTermUseCase;
 use LearnWords\Domain\Tag\TagList;
 use LearnWords\Domain\Term\SaveTerm\TermHasBeenCreated;
 use LearnWords\Domain\Term\Term;
-use LearnWords\Domain\Term\TermId;
 use LearnWords\Domain\Term\TermRepositoryInterface;
 use LearnWords\Domain\Term\Word;
 use PhpSpec\ObjectBehavior;
@@ -32,9 +31,10 @@ class SaveTermUseCaseSpec extends ObjectBehavior
         $this->shouldHaveType(SaveTermUseCase::class);
     }
 
-    public function it_is_able_to_save_a_term( TermRepositoryInterface $termRepository, DomainEventsCollector $eventsCollector)
+    public function it_is_able_to_save_a_term(TermRepositoryInterface $termRepository,
+                                              DomainEventsCollector $eventsCollector)
     {
-        $term = new Term(new TermId(), Word::spanish('hola'), TagList::collect());
+        $term = new Term(Word::spanish('hola'), TagList::collect());
 
         $command = new SaveTerm($term);
         $this->handle($command);

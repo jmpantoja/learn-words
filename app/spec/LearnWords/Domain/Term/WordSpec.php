@@ -47,6 +47,11 @@ class WordSpec extends ObjectBehavior
         ])->shouldReturn(true);
 
         $this::isValid([
+            'word' => 'palabra con espacios',
+            'lang' => Lang::SPANISH()
+        ])->shouldReturn(true);
+
+        $this::isValid([
             'word' => 'pa',
             'lang' => Lang::SPANISH()
         ])->shouldReturn(false);
@@ -59,10 +64,21 @@ class WordSpec extends ObjectBehavior
         $this->shouldThrow(ValidationFailedException::class)->duringInstantiation();
     }
 
+    public function it_throws_an_exception_when_the_word_contains_symbols()
+    {
+        $this->beConstructedThrough('english', ['xx$aaadad']);
+        $this->shouldThrow(ValidationFailedException::class)->duringInstantiation();
+    }
+
+    public function it_throws_an_exception_when_the_word_contains_numbers()
+    {
+        $this->beConstructedThrough('english', ['xx4564aaadad']);
+        $this->shouldThrow(ValidationFailedException::class)->duringInstantiation();
+    }
+
     public function it_is_stringable()
     {
-        $this->beConstructedThrough('english', ['oooo']);
-
-        $this->__toString()->shouldReturn('oooo');
+        $this->beConstructedThrough('english', ['XXXX']);
+        $this->__toString()->shouldReturn('xxxx');
     }
 }
