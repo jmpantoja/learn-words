@@ -17,6 +17,7 @@ namespace LearnWords\Domain\Tag;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use LearnWords\Domain\Term\Term;
+use Traversable;
 
 final class TagList extends ArrayCollection
 {
@@ -25,15 +26,20 @@ final class TagList extends ArrayCollection
      */
     private Collection $collection;
 
-    public static function collect(array $input = []): self
+    public static function collect(iterable $input = []): self
     {
-        return static::wrap(new ArrayCollection($input));
+
+        if ($input instanceof Collection) {
+            return new static($input);
+        }
+
+        if ($input instanceof Traversable) {
+            $input = iterator_to_array($input);
+        }
+
+        return new static(new ArrayCollection($input));
     }
 
-    public static function wrap(Collection $collection): self
-    {
-        return new self($collection);
-    }
 
     private function __construct(Collection $collection)
     {

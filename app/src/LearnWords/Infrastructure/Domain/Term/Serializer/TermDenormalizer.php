@@ -33,7 +33,7 @@ final class TermDenormalizer extends Denormalizer
     protected function mapToObject($data, ?Term $term = null): object
     {
         $word = $this->partial($data['word'], Word::class);
-        $tagList = TagList::wrap($data['tags']);
+        $tagList = TagList::collect($data['tags']);
 
         if (is_null($term)) {
             return new Term(new TermId(), $word, $tagList);

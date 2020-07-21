@@ -38,10 +38,6 @@ abstract class CompositeType extends AbstractType implements CompositeFormTypeIn
         $builder->setDataMapper($this->dataMapper);
 
         $this->customForm($builder, $options);
-
-        foreach ($builder as $name => $form) {
-            $form->setPropertyPath($name);
-        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void

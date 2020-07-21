@@ -14,7 +14,7 @@
         </id>
 
         <field name="name"/>
-        <field name="event" length="512"/>
+        <field name="event" type="text" />
         <field name="date" type="datetime_immutable"/>
     </entity>
 

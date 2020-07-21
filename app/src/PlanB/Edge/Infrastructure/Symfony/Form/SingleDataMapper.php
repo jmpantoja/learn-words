@@ -36,7 +36,7 @@ final class SingleDataMapper implements SingleDataMapperInterface
      * @param SerializerInterface $serializer
      * @return $this
      */
-    private function setSerializer(SerializerInterface $serializer): self
+    public function setSerializer(SerializerInterface $serializer): self
     {
         if (!$serializer instanceof DenormalizerInterface) {
             throw new LogicException('Expected a serializer that also implements DenormalizerInterface.');

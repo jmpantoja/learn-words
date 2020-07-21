@@ -3,6 +3,7 @@
 namespace spec\PlanB\Edge\Infrastructure\Symfony\Form;
 
 use ArrayObject;
+use LogicException;
 use PhpSpec\ObjectBehavior;
 use PlanB\Edge\Infrastructure\Symfony\Form\Exception\SingleMappingFailedException;
 use PlanB\Edge\Infrastructure\Symfony\Form\SingleDataMapper;
@@ -48,6 +49,13 @@ class SingleDataMapperSpec extends ObjectBehavior
     {
         $this->shouldHaveType(SingleDataMapper::class);
     }
+
+    public function it_throws_an_exception_if_serializer_not_implement_denormalizer_interface(SerializerInterface $otherSerializer)
+    {
+
+        $this->shouldThrow(LogicException::class)->during('setSerializer', [$otherSerializer]);
+    }
+
 
     public function it_is_able_to_transform_a_value()
     {

@@ -43,7 +43,7 @@ final class CompositeDataMapper implements CompositeDataMapperInterface
      * @param SerializerInterface $serializer
      * @return CompositeDataMapper
      */
-    private function setSerializer(SerializerInterface $serializer): CompositeDataMapper
+    public function setSerializer(SerializerInterface $serializer): CompositeDataMapper
     {
         if (!$serializer instanceof DenormalizerInterface) {
             throw new LogicException('Expected a serializer that also implements DenormalizerInterface.');
@@ -89,13 +89,10 @@ final class CompositeDataMapper implements CompositeDataMapperInterface
     /**
      * @inheritDoc
      * @throws \ReflectionException
+     * @codeCoverageIgnore
      */
     public function mapFormsToData($forms, &$entity): void
     {
-        if (null === $entity) {
-            return;
-        }
-
         $entity = $this->mapFormsToObject($forms, $entity);
     }
 
@@ -139,8 +136,8 @@ final class CompositeDataMapper implements CompositeDataMapperInterface
     private function validate(array $data, array $forms): bool
     {
         $violations = $this->objectMapper->validate($data);
-
         foreach ($violations as $name => $violation) {
+
             $field = $this->propertyAccessor->getValue($forms, $violation->getPropertyPath());
             $field->addError(new FormError($violation->getMessage()));
         }
@@ -185,16 +182,13 @@ final class CompositeDataMapper implements CompositeDataMapperInterface
     {
         $properties = (array)$entity;
 
-        if (empty($properties)) {
-            return null;
-        }
-
         $idValue = null;
         foreach ($properties as $key => $value) {
             if (substr($key, -3, 3) === "\x00id") {
                 $idValue = $value;
             }
         }
+
         return $idValue;
     }
 }

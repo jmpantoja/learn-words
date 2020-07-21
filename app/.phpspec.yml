@@ -17,3 +17,8 @@ extensions:
             
         whitelist:
             - src
+            
+        blacklist:
+            - src/PlanB/EdgeBundle
+            - src/LearnWords/Infrastructure/UI
+            - src/LearnWords/Kernel.php

@@ -58,4 +58,11 @@ class WordSpec extends ObjectBehavior
         $this->beConstructedThrough('english', ['xx']);
         $this->shouldThrow(ValidationFailedException::class)->duringInstantiation();
     }
+
+    public function it_is_stringable()
+    {
+        $this->beConstructedThrough('english', ['oooo']);
+
+        $this->__toString()->shouldReturn('oooo');
+    }
 }

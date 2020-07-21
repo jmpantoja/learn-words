@@ -6,6 +6,7 @@ parameters:
 
 	ignoreErrors:
 	    - '#invoked with [0-9]+ parameter[s]?, [0-9]+ required#'
+	    - '#Empty array passed to foreach#'
 
 	reportUnmatchedIgnoredErrors: false
 

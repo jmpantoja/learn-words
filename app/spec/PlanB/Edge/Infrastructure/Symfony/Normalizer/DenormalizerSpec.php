@@ -3,11 +3,13 @@
 namespace spec\PlanB\Edge\Infrastructure\Symfony\Normalizer;
 
 use Exception;
+use LogicException;
 use PhpSpec\ObjectBehavior;
 use PlanB\Edge\Infrastructure\Symfony\Normalizer\Denormalizer;
 use stdClass;
 use Symfony\Component\Serializer\Exception\MappingException;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class DenormalizerSpec extends ObjectBehavior
 {
@@ -21,6 +23,12 @@ class DenormalizerSpec extends ObjectBehavior
     {
         $this->shouldHaveType(Denormalizer::class);
     }
+
+    public function it_throws_an_exception_if_serializer_not_implement_denormalizer_interface(SerializerInterface $otherSerializer)
+    {
+        $this->shouldThrow(LogicException::class)->during('setSerializer', [$otherSerializer]);
+    }
+
 
     public function it_is_able_to_create_a_new_object(Observer $observer)
     {
