@@ -34,7 +34,7 @@ class SaveTermUseCaseSpec extends ObjectBehavior
     public function it_is_able_to_save_a_term(TermRepositoryInterface $termRepository,
                                               DomainEventsCollector $eventsCollector)
     {
-        $term = new Term(Word::spanish('hola'), TagList::collect());
+        $term = new Term(Word::spanish('hola'), TagList::empty());
 
         $command = new SaveTerm($term);
         $this->handle($command);

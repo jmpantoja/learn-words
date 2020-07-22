@@ -14,12 +14,12 @@ declare(strict_types=1);
 namespace LearnWords\Infrastructure\UI\Admin\Term;
 
 use LearnWords\Domain\Term\Term;
+use LearnWords\Infrastructure\UI\Web\Form\Term\TagListType;
 use LearnWords\Infrastructure\UI\Web\Form\Term\WordType;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfigurator;
 use PlanB\Edge\Infrastructure\Sonata\Doctrine\ManagerCommandFactoryInterface;
 use PlanB\Edge\Infrastructure\Sonata\Doctrine\ModelManager;
 use PlanB\Edge\Infrastructure\Symfony\Validator\ConstraintBuilderFactory;
-use Sonata\AdminBundle\Form\Type\ModelType;
 
 
 final class TermForm extends FormConfigurator
@@ -42,12 +42,10 @@ final class TermForm extends FormConfigurator
     public function configure(Term $term = null): void
     {
         $this
-            ->add('word', WordType::class)
-            ->add('tags', ModelType::class, [
-                'by_reference' => false,
-                'multiple' => true,
-                'property' => 'tag',
-            ]);
+            ->add('word', WordType::class);
+
+        $this->add('tags', TagListType::class);
+
     }
 
 }

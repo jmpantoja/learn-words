@@ -60,7 +60,7 @@ class TermDenormalizerSpec extends ObjectBehavior
         $response->shouldBeAnInstanceOf(Term::class);
 
         $response->getWord()->shouldReturn($word);
-        $response->getTags()->shouldReturn($tagList);
+        $response->getTags()->shouldBeLike($tagList);
     }
 
     public function it_is_able_to_update_a_term_from_an_array(DenormalizerInterface $serializer)
@@ -81,7 +81,7 @@ class TermDenormalizerSpec extends ObjectBehavior
         ];
 
 
-        $term = new Term(Word::spanish('valor'), TagList::collect());
+        $term = new Term(Word::spanish('valor'), TagList::empty());
 
         $response = $this->denormalize($input, Term::class, null, [
             ObjectNormalizer::OBJECT_TO_POPULATE => $term
@@ -90,7 +90,7 @@ class TermDenormalizerSpec extends ObjectBehavior
         $response->shouldReturn($term);
 
         $response->getWord()->shouldReturn($word);
-        $response->getTags()->shouldReturn($tagList);
+        $response->getTags()->shouldBeLike($tagList);
     }
 
 

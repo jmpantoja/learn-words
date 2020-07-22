@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace LearnWords\Domain\Tag;
 
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\PersistentCollection;
 use PlanB\Edge\Domain\Entity\EntityInterface;
 
@@ -22,12 +24,13 @@ final class Tag implements EntityInterface
 {
     private TagId $id;
     private string $tag;
-    private PersistentCollection $terms;
+    private Collection $terms;
 
     public function __construct(string $tag)
     {
         $this->id = new TagId();
         $this->tag = $tag;
+        $this->terms = new ArrayCollection();
 
     }
 
@@ -47,10 +50,8 @@ final class Tag implements EntityInterface
         return $this->tag;
     }
 
-    /**
-     * @return PersistentCollection
-     */
-    public function getTerms()
+
+    public function getTerms(): Collection
     {
         return $this->terms;
     }

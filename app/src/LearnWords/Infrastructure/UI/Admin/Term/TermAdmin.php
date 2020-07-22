@@ -18,5 +18,8 @@ use PlanB\Edge\Infrastructure\Sonata\Admin\Admin;
 
 final class TermAdmin extends Admin
 {
-
+    public function toString($object)
+    {
+        return $object->getWord();
+    }
 }

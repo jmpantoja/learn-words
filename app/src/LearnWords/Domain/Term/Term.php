@@ -20,12 +20,14 @@ use LearnWords\Domain\Term\SaveTerm\TermHasBeenUpdated;
 use PlanB\Edge\Domain\Entity\EntityInterface;
 use PlanB\Edge\Domain\Entity\Traits\NotifyEvents;
 
+
 class Term implements EntityInterface
 {
     use NotifyEvents;
 
     private TermId $id;
     private Word $word;
+
     private Collection $tags;
 
     public function __construct(Word $word, TagList $tagList)
@@ -40,9 +42,10 @@ class Term implements EntityInterface
     public function update(Word $word, TagList $tagList): self
     {
         $this->word = $word;
-        $this->tags = $tagList->getCollection();
+        $this->tags = $tagList;
 
         $this->notify(new TermHasBeenUpdated($this));
+
         return $this;
     }
 
@@ -63,10 +66,9 @@ class Term implements EntityInterface
     }
 
 
-    public function getTags(): Collection
+    public function getTags(): TagList
     {
-        return $this->tags;
+        return TagList::collect($this->tags);
     }
-
 
 }

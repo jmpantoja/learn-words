@@ -21,7 +21,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
@@ -55,7 +54,7 @@ abstract class SingleType extends AbstractType implements SingleFormTypeInterfac
         return TextType::class;
     }
 
-    abstract public function customOptions(OptionsResolver $resolver): void ;
+    abstract public function customOptions(OptionsResolver $resolver): void;
 
     /**
      * @param DenormalizerInterface $serializer

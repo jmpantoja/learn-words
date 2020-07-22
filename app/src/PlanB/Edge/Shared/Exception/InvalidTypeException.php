@@ -15,7 +15,7 @@ namespace PlanB\Edge\Shared\Exception;
 
 use InvalidArgumentException;
 
-final class InvalidTypeException extends InvalidArgumentException
+class InvalidTypeException extends InvalidArgumentException
 {
     /**
      * InvalidTypeException constructor.

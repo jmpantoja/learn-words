@@ -43,7 +43,7 @@ final class Clue implements Validable
             ]));
     }
 
-    private function setClue(string $clue): self 
+    private function setClue(string $clue): self
     {
         $this->clue = mb_strtolower($clue);
         return $this;

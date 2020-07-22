@@ -41,5 +41,4 @@ final class TermDenormalizer extends Denormalizer
 
         return $term->update($word, $tagList);
     }
-
 }

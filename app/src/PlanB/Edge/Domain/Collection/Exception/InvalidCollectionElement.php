@@ -11,16 +11,12 @@
 
 declare(strict_types=1);
 
-namespace LearnWords\Domain\Tag;
+namespace PlanB\Edge\Domain\Collection\Exception;
 
 
-use PlanB\Edge\Domain\Collection\EntityList;
+use PlanB\Edge\Shared\Exception\InvalidTypeException;
 
-final class TagList extends EntityList
+class InvalidCollectionElement extends InvalidTypeException implements CollectionExceptionInterface
 {
 
-    public function getType(): string
-    {
-        return Tag::class;
-    }
 }
