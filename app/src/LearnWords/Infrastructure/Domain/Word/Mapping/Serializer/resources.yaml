@@ -1,0 +1,25 @@
+LearnWords\Domain\Word\Word:
+    attributes:
+        id:
+            groups: ['read']
+        word:
+            groups: ['read', 'write']
+        lang:
+            groups: ['read', 'write']
+        tags:
+            groups: ['read', 'write']
+
+LearnWords\Domain\Word\WordId:
+    attributes:
+        uuid:
+            groups: ['read']
+
+LearnWords\Domain\Word\Lang:
+    attributes:
+        value:
+            groups: ['read', 'write']
+
+LearnWords\Domain\Tag\Tag:
+    attributes:
+        tag:
+            groups: ['read', 'write']

@@ -1,0 +1,15 @@
+LearnWords\Domain\Word\Word:
+    collectionOperations:
+        get: ~
+        post: ~
+    itemOperations:
+        get: ~
+        delete: ~
+        put: ~
+
+    attributes:
+        normalization_context:
+            groups: ['read']
+
+        denormalization_context:
+            groups: ['write']

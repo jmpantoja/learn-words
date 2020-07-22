@@ -30,15 +30,15 @@ services:
     # please note that last definitions always *replace* previous ones
     #
     admin.term:
-        class: LearnWords\Infrastructure\UI\Admin\Term\TermAdmin
-        arguments: [~, LearnWords\Domain\Term\Term, ~]
+        class: LearnWords\Infrastructure\UI\Admin\Word\WordAdmin
+        arguments: [~, LearnWords\Domain\Word\Word, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: admin, label: Term }
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Palabras }
         public: true
 
     admin.tag:
         class: LearnWords\Infrastructure\UI\Admin\Tag\TagAdmin
-        arguments: [~, LearnWords\Domain\Tag\Tag, ~]
+        arguments: [~, LearnWords\Domain\Word\Tag, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: Tag } 
         public: true

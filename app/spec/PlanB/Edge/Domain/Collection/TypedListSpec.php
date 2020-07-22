@@ -46,7 +46,6 @@ class TypedListSpec extends ObjectBehavior
         $this->reduce(function (?string $carry, string $item) {
             return sprintf('%s%s', $carry, strtolower($item));
         })->shouldReturn('abc');
-
     }
 }
 

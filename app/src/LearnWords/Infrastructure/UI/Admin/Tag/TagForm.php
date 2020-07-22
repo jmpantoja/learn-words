@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace LearnWords\Infrastructure\UI\Admin\Tag;
 
-use LearnWords\Domain\Tag\Tag;
+use LearnWords\Domain\Word\Tag;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfigurator;
 use PlanB\Edge\Infrastructure\Sonata\Doctrine\ManagerCommandFactoryInterface;
 use PlanB\Edge\Infrastructure\Symfony\Validator\ConstraintBuilderFactory;
