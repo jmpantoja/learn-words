@@ -31,9 +31,26 @@ final class WordDenormalizer extends Denormalizer
 
     protected function mapToObject($data, ?Word $word = null): object
     {
+
+        $word = $this->buildWord($data, $word);
+
+        $questions = $data['questions'] ?? [];
+
+        foreach ($questions as $question) {
+            $wording = $question['wording'];
+            $description = $question['description'];
+
+
+            $word->addQuestion($wording, $description);
+        }
+
+        return $word;
+    }
+
+    protected function buildWord(array $data, ?Word $word): Word
+    {
         $value = $data['word'];
         $lang = $this->partial($data['lang'], Lang::class);
-
         $tagList = TagList::collect($data['tags']);
 
         if (is_null($word)) {

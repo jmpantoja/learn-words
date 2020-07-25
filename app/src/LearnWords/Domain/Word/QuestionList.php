@@ -11,23 +11,19 @@
 
 declare(strict_types=1);
 
-namespace LearnWords\Application\Word\UseCase;
+namespace LearnWords\Domain\Word;
 
-use LearnWords\Domain\Word\Word;
+use PlanB\Edge\Domain\Collection\EntityList;
 
-final class SaveWord
+final class QuestionList extends EntityList
 {
-    private Word $word;
 
-    public function __construct(Word $word)
+    public function getType(): string
     {
-        $this->word = $word;
+        return Question::class;
     }
 
-    public function getWord(): Word
-    {
-        return $this->word;
-    }
+
 
 
 }

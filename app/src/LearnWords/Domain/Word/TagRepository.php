@@ -11,12 +11,12 @@
 
 declare(strict_types=1);
 
-namespace PlanB\Edge\Infrastructure\Symfony\Form;
+namespace LearnWords\Domain\Word;
 
 
-use Symfony\Component\Form\DataTransformerInterface;
-
-interface SingleDataMapperInterface extends DataTransformerInterface
+interface TagRepository
 {
-    public function attach(SingleFormTypeInterface $formType): self;
+    public function persist(Tag $tag): void ;
+
+    public function delete(Tag $tag): void ;
 }

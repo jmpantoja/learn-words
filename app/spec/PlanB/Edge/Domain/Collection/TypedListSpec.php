@@ -2,6 +2,7 @@
 
 namespace spec\PlanB\Edge\Domain\Collection;
 
+use Doctrine\Common\Collections\AbstractLazyCollection;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhpSpec\ObjectBehavior;
 use PlanB\Edge\Domain\Collection\Exception\InvalidCollectionElement;
@@ -18,7 +19,7 @@ class TypedListSpec extends ObjectBehavior
     public function it_is_initializable_without_values()
     {
         $this->shouldHaveType(TypedList::class);
-        $this->shouldHaveType(ArrayCollection::class);
+        $this->shouldHaveType(AbstractLazyCollection::class);
     }
 
     public function it_is_able_to_add_values()

@@ -3,6 +3,7 @@
 namespace spec\PlanB\Edge\Domain\Collection;
 
 use ArrayIterator;
+use Doctrine\Common\Collections\AbstractLazyCollection;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhpSpec\ObjectBehavior;
 use PlanB\Edge\Domain\Collection\EntityList;
@@ -27,7 +28,7 @@ class EntityListSpec extends ObjectBehavior
 
         $this->shouldHaveType(EntityList::class);
         $this->shouldHaveType(TypedList::class);
-        $this->shouldHaveType(ArrayCollection::class);
+        $this->shouldHaveType(AbstractLazyCollection::class);
     }
 
     public function it_is_initializable_with_an_array()
@@ -40,7 +41,7 @@ class EntityListSpec extends ObjectBehavior
 
         $this->shouldHaveType(EntityList::class);
         $this->shouldHaveType(TypedList::class);
-        $this->shouldHaveType(ArrayCollection::class);
+        $this->shouldHaveType(AbstractLazyCollection::class);
 
         $this->count()->shouldReturn(3);
     }
@@ -55,7 +56,7 @@ class EntityListSpec extends ObjectBehavior
 
         $this->shouldHaveType(EntityList::class);
         $this->shouldHaveType(TypedList::class);
-        $this->shouldHaveType(ArrayCollection::class);
+        $this->shouldHaveType(AbstractLazyCollection::class);
 
         $this->count()->shouldReturn(3);
     }

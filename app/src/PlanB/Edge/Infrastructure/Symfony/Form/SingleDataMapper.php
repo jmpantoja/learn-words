@@ -25,7 +25,7 @@ final class SingleDataMapper implements SingleDataMapperInterface
 {
     private DenormalizerInterface $serializer;
 
-    private SingleFormTypeInterface $objectMapper;
+    private SingleFormTypeInterface $formType;
 
     public function __construct(SerializerInterface $serializer)
     {
@@ -46,9 +46,9 @@ final class SingleDataMapper implements SingleDataMapperInterface
         return $this;
     }
 
-    public function attach(SingleFormTypeInterface $objectMapper): self
+    public function attach(SingleFormTypeInterface $formType): self
     {
-        $this->objectMapper = $objectMapper;
+        $this->formType = $formType;
         return $this;
     }
 
@@ -67,7 +67,7 @@ final class SingleDataMapper implements SingleDataMapperInterface
     {
         $this->validate($value);
 
-        return $this->objectMapper->denormalize($this->serializer, $value, [
+        return $this->formType->denormalize($this->serializer, $value, [
             ObjectNormalizer::OBJECT_TO_POPULATE => null
         ]);
     }
@@ -78,7 +78,7 @@ final class SingleDataMapper implements SingleDataMapperInterface
      */
     private function validate($data): bool
     {
-        $violations = $this->objectMapper->validate($data);
+        $violations = $this->formType->validate($data);
 
         if (0 === $violations->count()) {
             return true;

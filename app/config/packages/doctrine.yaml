@@ -7,14 +7,15 @@ doctrine:
 
         types:
             lang: LearnWords\Infrastructure\Domain\Word\DBAL\LangType
-            WordId: LearnWords\Infrastructure\Domain\Word\DBAL\WordIdType
-            
+            WordId: LearnWords\Infrastructure\Domain\Word\DBAL\WordIdType        
             TagId: LearnWords\Infrastructure\Domain\Word\DBAL\TagIdType
+            QuestionId: LearnWords\Infrastructure\Domain\Word\DBAL\QuestionIdType
 
         mapping_types:
             lang: string
             WordId: string
             TagId: string
+            QuestionId: string
             
     orm:
         auto_generate_proxy_classes: true

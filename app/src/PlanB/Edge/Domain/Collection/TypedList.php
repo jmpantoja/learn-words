@@ -14,16 +14,18 @@ declare(strict_types=1);
 namespace PlanB\Edge\Domain\Collection;
 
 
+use Doctrine\Common\Collections\AbstractLazyCollection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use PlanB\Edge\Domain\Collection\Exception\InvalidClassnameException;
 use PlanB\Edge\Domain\Collection\Exception\InvalidCollectionElement;
 use Traversable;
 
-abstract class TypedList extends ArrayCollection
+abstract class TypedList extends AbstractLazyCollection
 {
     public static function empty(): self
     {
-        return new static([]);
+        return static::collect([]);
     }
 
     /**
@@ -32,19 +34,37 @@ abstract class TypedList extends ArrayCollection
      */
     public static function collect(iterable $input): self
     {
+        if ($input instanceof Collection) {
+            return new static($input);
+        }
+
         if ($input instanceof Traversable) {
             $input = iterator_to_array($input);
         }
 
-        return new static($input);
+        return new static(new ArrayCollection($input));
     }
 
-
-    final protected function __construct(array $input)
+    final protected function __construct(Collection $input)
     {
         foreach ($input as $value) {
-            $this->add($value);
+            $this->ensureValueIsValid($value);
         }
+
+        $this->initialize();
+        $this->collection = $input;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function doInitialize()
+    {
+        if (!($this->collection instanceof Collection)) {
+            return;
+        }
+
+        $this->collection->clear();
     }
 
     /**
@@ -89,6 +109,10 @@ abstract class TypedList extends ArrayCollection
             throw new InvalidCollectionElement($value, $type);
         }
 
+        if (!function_exists($functionName)) {
+            return;
+        }
+
         if (!is_object($value) and !$functionName($value)) {
             throw new InvalidCollectionElement($value, $type);
         }
@@ -106,4 +130,6 @@ abstract class TypedList extends ArrayCollection
     {
         return array_reduce($this->toArray(), $callback, $initial);
     }
+
+
 }

@@ -27,22 +27,31 @@ class Word implements EntityInterface
     private WordId $id;
     private string $word;
     private Lang $lang;
-
+    private Collection $questions;
     private Collection $tags;
 
-    public function __construct(string $word, Lang $lang, TagList $tagList)
+    public function __construct(string $word, Lang $lang, TagList $tagList = null)
     {
         $this->id = new WordId();
-        $this->update($word, $lang, $tagList);
+        $this->questions = QuestionList::empty();
+
+        $this->initialize($word, $lang, $tagList);
+
         $this->notify(new WordHasBeenCreated($this));
     }
 
-    public function update(string $word, Lang $lang, TagList $tagList): self
+    protected function initialize(string $word, Lang $lang, ?TagList $tagList): self
     {
         $this->word = $word;
         $this->lang = $lang;
-        $this->tags = $tagList;
+        $this->tags = $tagList ?? TagList::empty();
 
+        return $this;
+    }
+
+    public function update(string $word, Lang $lang, TagList $tagList = null): self
+    {
+        $this->initialize($word, $lang, $tagList);
         $this->notify(new WordHasBeenUpdated($this));
 
         return $this;
@@ -69,6 +78,21 @@ class Word implements EntityInterface
     public function getTags(): TagList
     {
         return TagList::collect($this->tags);
+    }
+
+    public function addQuestion(string $wording, string $description): self
+    {
+        $questionList = $this->getQuestions();
+
+
+        $question = new Question($this, $wording);
+        $questionList->add($question);
+        return $this;
+    }
+
+    public function getQuestions(): QuestionList
+    {
+        return QuestionList::collect($this->questions);
     }
 
 }

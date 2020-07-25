@@ -9,6 +9,12 @@
         <field name="word" />
         <field name="lang" type="lang" />
 
+        <one-to-many field="questions" target-entity="LearnWords\Domain\Word\Question" mapped-by="word" orphan-removal="true">
+            <cascade>
+                <cascade-persist />
+            </cascade>
+        </one-to-many>
+
         <many-to-many field="tags" target-entity="LearnWords\Domain\Word\Tag" inversed-by="words">
             <join-table name="word_x_tags">
                 <join-columns>

@@ -11,12 +11,12 @@
 
 declare(strict_types=1);
 
-namespace PlanB\Edge\Infrastructure\Symfony\Form;
+namespace LearnWords\Domain\Word;
 
 
-use Symfony\Component\Form\DataTransformerInterface;
+use PlanB\Edge\Domain\Entity\EntityId;
 
-interface SingleDataMapperInterface extends DataTransformerInterface
+final class QuestionId extends EntityId
 {
-    public function attach(SingleFormTypeInterface $formType): self;
+
 }

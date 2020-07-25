@@ -13,20 +13,20 @@ declare(strict_types=1);
 
 namespace LearnWords\Application\Word\UseCase;
 
-use LearnWords\Domain\Word\Word;
+use LearnWords\Domain\Word\Tag;
 
-final class SaveWord
+final class SaveTag
 {
-    private Word $word;
+    private Tag $tag;
 
-    public function __construct(Word $word)
+    public function __construct(Tag $tag)
     {
-        $this->word = $word;
+        $this->tag = $tag;
     }
 
-    public function getWord(): Word
+    public function getTag(): Tag
     {
-        return $this->word;
+        return $this->tag;
     }
 
 

@@ -111,18 +111,14 @@ abstract class FormConfigurator implements FormConfiguratorInterface, CompositeF
 
     public function denormalize(DenormalizerInterface $serializer, array $data, array $context): ?object
     {
+
         try {
-            return $serializer->denormalize($data, $this->getClass(), null, $context);
+            return $serializer->denormalize($data, $this->className, null, $context);
         } catch (Throwable $throwable) {
-            dump($throwable->getMessage());
             throw new TransformationFailedException($throwable->getMessage());
         }
     }
 
-    public function getClass(): string
-    {
-        return $this->className;
-    }
 
     public function validate(array $data): ConstraintViolationListInterface
     {

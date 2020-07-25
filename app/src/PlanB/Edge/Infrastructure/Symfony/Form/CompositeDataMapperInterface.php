@@ -18,5 +18,5 @@ use Symfony\Component\Form\DataMapperInterface;
 
 interface CompositeDataMapperInterface extends DataMapperInterface
 {
-    public function attach(CompositeFormTypeInterface $objectMapper): self;
+    public function attach(CompositeFormTypeInterface $formType): self;
 }

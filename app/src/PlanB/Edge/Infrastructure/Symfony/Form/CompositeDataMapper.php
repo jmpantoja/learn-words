@@ -29,7 +29,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 final class CompositeDataMapper implements CompositeDataMapperInterface
 {
-    private CompositeFormTypeInterface $objectMapper;
+    private CompositeFormTypeInterface $formType;
     private PropertyAccessorInterface $propertyAccessor;
     private DenormalizerInterface $serializer;
 
@@ -54,9 +54,9 @@ final class CompositeDataMapper implements CompositeDataMapperInterface
     }
 
 
-    public function attach(CompositeFormTypeInterface $objectMapper): self
+    public function attach(CompositeFormTypeInterface $formType): self
     {
-        $this->objectMapper = $objectMapper;
+        $this->formType = $formType;
         return $this;
     }
 
@@ -109,7 +109,6 @@ final class CompositeDataMapper implements CompositeDataMapperInterface
         if (!$this->validate($data, $forms)) {
             return null;
         }
-
         return $this->denormalize($data, $entity);
     }
 
@@ -135,7 +134,7 @@ final class CompositeDataMapper implements CompositeDataMapperInterface
      */
     private function validate(array $data, array $forms): bool
     {
-        $violations = $this->objectMapper->validate($data);
+        $violations = $this->formType->validate($data);
         foreach ($violations as $name => $violation) {
 
             $field = $this->propertyAccessor->getValue($forms, $violation->getPropertyPath());
@@ -152,7 +151,7 @@ final class CompositeDataMapper implements CompositeDataMapperInterface
      */
     private function denormalize(array $data, $entity = null)
     {
-        return $this->objectMapper->denormalize($this->serializer, $data, [
+        return $this->formType->denormalize($this->serializer, $data, [
             ObjectNormalizer::OBJECT_TO_POPULATE => $this->computeSubject($entity)
         ]);
     }

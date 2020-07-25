@@ -60,12 +60,11 @@ class WordDenormalizerSpec extends ObjectBehavior
 
         $response->getWord()->shouldReturn('hola');
         $response->getLang()->shouldBeLike(Lang::SPANISH());
-        $response->getTags()->shouldBeLike($tagList);
+        $response->getTags()->shouldIterateAs($tagList);
     }
 
     public function it_is_able_to_update_a_word_from_an_array(DenormalizerInterface $serializer)
     {
-
         $serializer->denormalize('SPANISH', Lang::class)->willReturn(Lang::SPANISH());
 
         $tagList = TagList::collect([
@@ -79,7 +78,6 @@ class WordDenormalizerSpec extends ObjectBehavior
             'tags' => $tagList
         ];
 
-
         $word = new Word('valor', Lang::SPANISH(), TagList::empty());
 
         $response = $this->denormalize($input, Word::class, null, [
@@ -90,7 +88,7 @@ class WordDenormalizerSpec extends ObjectBehavior
 
         $response->getWord()->shouldReturn('hola');
         $response->getLang()->shouldBeLike(Lang::SPANISH());
-        $response->getTags()->shouldBeLike($tagList);
+        $response->getTags()->shouldIterateAs($tagList);
     }
 
 

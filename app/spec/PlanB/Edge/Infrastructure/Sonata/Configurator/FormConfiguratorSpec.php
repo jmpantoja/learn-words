@@ -102,10 +102,10 @@ class FormConfiguratorSpec extends ObjectBehavior
         $denormalizer->denormalize($data, 'className', null, $context)->shouldBeCalled();
     }
 
-    public function it_returns_the_className(){
-        $this->getClass()
-            ->shouldReturn('className');
-    }
+//    public function it_returns_the_className(){
+//        $this->getClass()
+//            ->shouldReturn('className');
+//    }
 
 
     public function it_returns_a_constraint_violations_list(){
@@ -145,10 +145,4 @@ class ConcreteFormConfigurator extends FormConfigurator
             ]);
 
     }
-//
-//    public function getClass(): string
-//    {
-//        return 'className';
-//    }
-
 }
