@@ -8,7 +8,7 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Types\Types;
 use PlanB\Edge\Domain\Enum\Enum;
-use PlanB\Edge\Shared\Exception\InvalidTypeException;
+use PlanB\Edge\Domain\VarType\Exception\InvalidTypeException;
 
 
 abstract class EnumType extends Type
@@ -47,7 +47,7 @@ abstract class EnumType extends Type
      */
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
     {
-        return Types::TEXT;
+        return $platform->getVarcharTypeDeclarationSQL($fieldDeclaration);
     }
 
     /**

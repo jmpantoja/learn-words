@@ -33,6 +33,8 @@ class DomainEventDispatcherSpec extends ObjectBehavior
         $eventsCollector->handle(Argument::any(), Argument::any())->willReturn($eventsCollector);
 
         $this->setDomainEventsCollector($eventsCollector);
+        $this->getEventsCollector()->shouldReturn($eventsCollector);
+
         $this->dispatch($domainEvent);
         $this->dispatch($event);
 

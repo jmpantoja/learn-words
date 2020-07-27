@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace LearnWords\Infrastructure\UI\Web\Form\Word;
 
 
+use PlanB\Edge\Infrastructure\Symfony\Form\FormSerializerInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\Type\CompositeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -30,10 +31,10 @@ final class QuestionType extends CompositeType
 
     public function customForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('wording')
-            ->add('description')
-            ->add('example_A')
-            ->add('example_B');
+        $builder->add('wording');
+//            ->add('description')
+//            ->add('example_A')
+//            ->add('example_B');
     }
 
     function customOptions(OptionsResolver $resolver): void
@@ -41,8 +42,8 @@ final class QuestionType extends CompositeType
 
     }
 
-    public function getClass(): string
+    public function denormalize(FormSerializerInterface $serializer, $data, ?object $subject = null)
     {
-        return '';
+        return $serializer->denormalize($data, $subject);
     }
 }

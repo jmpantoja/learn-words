@@ -4,7 +4,10 @@ namespace spec\PlanB\Edge\Infrastructure\Symfony\Form\Type;
 
 use PhpSpec\ObjectBehavior;
 use PlanB\Edge\Domain\Enum\Enum;
+use PlanB\Edge\Infrastructure\Symfony\Form\FormSerializerInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\Type\EnumType;
+use Prophecy\Argument;
+use stdClass;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -29,8 +32,6 @@ class EnumTypeSpec extends ObjectBehavior
     {
         $this->resolve()
             ->shouldIterateAs([
-                "compound" => false,
-                "by_reference" => false,
                 "enum_class" => ConcreteEnum::class,
                 "choices" => [
                     "red" => "RED",
@@ -49,6 +50,21 @@ class EnumTypeSpec extends ObjectBehavior
             ->shouldReturn(1);
     }
 
+    public function it_delegate_in_serializer_data_normalization(FormSerializerInterface $serializer){
+        $data = new stdClass();
+        $response = Argument::any();
+
+        $serializer->normalize($data)->willReturn($response);
+        $this->normalize($serializer, $data)->shouldReturn($response);
+    }
+
+    public function it_delegate_in_serializer_data_denormalization(FormSerializerInterface $serializer){
+        $data = new stdClass();
+        $response = ConcreteEnum::RED();
+
+        $serializer->denormalize($data, Argument::cetera())->willReturn($response);
+        $this->denormalize($serializer, $data)->shouldReturn($response);
+    }
 }
 
 class ConcreteEnumType extends EnumType

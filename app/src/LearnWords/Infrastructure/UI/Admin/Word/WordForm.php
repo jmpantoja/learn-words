@@ -18,6 +18,7 @@ use LearnWords\Domain\Word\Word;
 use LearnWords\Infrastructure\UI\Web\Form\Word\LangType;
 use LearnWords\Infrastructure\UI\Web\Form\Word\QuestionListType;
 use LearnWords\Infrastructure\UI\Web\Form\Word\TagListType;
+use PlanB\Edge\Domain\Collection\SnapshotList;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfigurator;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 

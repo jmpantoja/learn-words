@@ -14,45 +14,29 @@ declare(strict_types=1);
 namespace PlanB\Edge\Infrastructure\Symfony\Form;
 
 
-use LogicException;
+use Error;
+use Exception;
 use PlanB\Edge\Domain\Entity\EntityInterface;
 use PlanB\Edge\Infrastructure\Symfony\Validator\ConstraintBuilderFactory;
+use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\SerializerInterface;
 
 
 final class CompositeDataMapper implements CompositeDataMapperInterface
 {
     private CompositeFormTypeInterface $formType;
     private PropertyAccessorInterface $propertyAccessor;
-    private DenormalizerInterface $serializer;
+    private FormSerializerInterface $serializer;
 
-    public function __construct(SerializerInterface $serializer, PropertyAccessorInterface $propertyAccessor = null)
+    public function __construct(FormSerializerInterface $serializer, PropertyAccessorInterface $propertyAccessor = null)
     {
-        $this->setSerializer($serializer);
+        $this->serializer = $serializer;
         $this->propertyAccessor = $propertyAccessor ?? PropertyAccess::createPropertyAccessor();
     }
-
-    /**
-     * @param SerializerInterface $serializer
-     * @return CompositeDataMapper
-     */
-    public function setSerializer(SerializerInterface $serializer): CompositeDataMapper
-    {
-        if (!$serializer instanceof DenormalizerInterface) {
-            throw new LogicException('Expected a serializer that also implements DenormalizerInterface.');
-        }
-
-        $this->serializer = $serializer;
-        return $this;
-    }
-
 
     public function attach(CompositeFormTypeInterface $formType): self
     {
@@ -75,13 +59,16 @@ final class CompositeDataMapper implements CompositeDataMapperInterface
             throw new UnexpectedTypeException($data, 'object, array or empty');
         }
 
+
         foreach ($forms as $name => $form) {
             $config = $form->getConfig();
 
             if (!$this->propertyAccessor->isReadable($data, $name) || !$config->getMapped()) {
                 continue;
             }
+
             $value = $this->propertyAccessor->getValue($data, $name);
+
             $form->setData($value);
         }
     }
@@ -99,16 +86,18 @@ final class CompositeDataMapper implements CompositeDataMapperInterface
     /**
      * @param iterable $forms
      * @param object|null $entity
-     * @return object|null
+     * @return mixed
      */
-    public function mapFormsToObject(iterable $forms, $entity = null): ?object
+    public function mapFormsToObject(iterable $forms, $entity = null)
     {
+
         $forms = iterator_to_array($forms);
         $data = $this->extractData($forms);
 
         if (!$this->validate($data, $forms)) {
             return null;
         }
+
         return $this->denormalize($data, $entity);
     }
 
@@ -136,7 +125,6 @@ final class CompositeDataMapper implements CompositeDataMapperInterface
     {
         $violations = $this->formType->validate($data);
         foreach ($violations as $name => $violation) {
-
             $field = $this->propertyAccessor->getValue($forms, $violation->getPropertyPath());
             $field->addError(new FormError($violation->getMessage()));
         }
@@ -151,16 +139,23 @@ final class CompositeDataMapper implements CompositeDataMapperInterface
      */
     private function denormalize(array $data, $entity = null)
     {
-        return $this->formType->denormalize($this->serializer, $data, [
-            ObjectNormalizer::OBJECT_TO_POPULATE => $this->computeSubject($entity)
-        ]);
+        $subject = $this->computeSubject($entity);
+        try {
+            return $this->formType->denormalize($this->serializer, $data, $subject);
+        } catch (TransformationFailedException $exception) {
+            throw $exception;
+        } catch (Error $exception) {
+            throw $exception;
+        } catch (Exception $exception) {
+            return $subject;
+        }
     }
 
     /**
      * @param object|null $entity
      * @return object|null
      */
-    private function computeSubject(?object $entity = null): ?object
+    private function computeSubject($entity): ?object
     {
         if (!($entity instanceof EntityInterface)) {
             return null;

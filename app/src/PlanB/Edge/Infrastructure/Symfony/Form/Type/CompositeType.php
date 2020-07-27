@@ -16,12 +16,10 @@ namespace PlanB\Edge\Infrastructure\Symfony\Form\Type;
 
 use PlanB\Edge\Infrastructure\Symfony\Form\CompositeDataMapperInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\CompositeFormTypeInterface;
+use PlanB\Edge\Infrastructure\Symfony\Form\FormSerializerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Throwable;
 
 abstract class CompositeType extends AbstractType implements CompositeFormTypeInterface
 {
@@ -30,6 +28,7 @@ abstract class CompositeType extends AbstractType implements CompositeFormTypeIn
     public function setDataMapper(CompositeDataMapperInterface $dataMapper): self
     {
         $this->dataMapper = $dataMapper->attach($this);
+
         return $this;
     }
 
@@ -37,16 +36,13 @@ abstract class CompositeType extends AbstractType implements CompositeFormTypeIn
     {
         $builder->setDataMapper($this->dataMapper);
         $this->customForm($builder, $options);
+        $builder->setByReference(false);
+        $builder->setCompound(true);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $this->customOptions($resolver);
-
-        $resolver->setDefaults([
-            'compound' => true,
-            'by_reference' => false
-        ]);
     }
 
     abstract public function customForm(FormBuilderInterface $builder, array $options): void;
@@ -54,19 +50,11 @@ abstract class CompositeType extends AbstractType implements CompositeFormTypeIn
     abstract function customOptions(OptionsResolver $resolver): void;
 
     /**
-     * @param DenormalizerInterface $serializer
-     * @param mixed[] $data
-     * @param mixed[] $context
-     * @return object|null
+     * @inheritDoc
      */
-    public function denormalize(DenormalizerInterface $serializer, array $data, array $context): ?object
+    public function normalize(FormSerializerInterface $serializer, $data)
     {
-        try {
-            return $serializer->denormalize($data, $this->getClass(), null, $context);
-        } catch (Throwable $e) {
-            return $context[ObjectNormalizer::OBJECT_TO_POPULATE];
-        }
+        return $serializer->normalize($data);
     }
 
-    abstract public function getClass(): string;
 }

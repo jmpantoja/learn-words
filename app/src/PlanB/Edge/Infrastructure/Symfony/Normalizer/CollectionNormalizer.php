@@ -15,6 +15,7 @@ namespace PlanB\Edge\Infrastructure\Symfony\Normalizer;
 
 
 use Doctrine\Common\Collections\Collection;
+use PlanB\Edge\Domain\Collection\SnapshotList;
 use Symfony\Component\Serializer\Normalizer\ContextAwareNormalizerInterface;
 
 final class CollectionNormalizer implements ContextAwareNormalizerInterface
@@ -33,6 +34,10 @@ final class CollectionNormalizer implements ContextAwareNormalizerInterface
      */
     public function normalize($object, $format = null, array $context = [])
     {
+//        if($format === SnapshotList::class){
+//            return  new SnapshotList($object);
+//        }
+
         return $object->toArray();
     }
 }

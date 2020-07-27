@@ -15,7 +15,6 @@ namespace PlanB\Edge\Infrastructure\Symfony\Form;
 
 
 use PlanB\Edge\Infrastructure\Symfony\Validator\ConstraintBuilderFactory;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 interface SingleFormTypeInterface
@@ -23,12 +22,19 @@ interface SingleFormTypeInterface
     public function setDataMapper(SingleDataMapperInterface $dataMapper): self;
 
     /**
-     * @param DenormalizerInterface $serializer
+     * @param FormSerializerInterface $serializer
      * @param mixed $data
-     * @param mixed[] $context
-     * @return object|null
+     * @return mixed
      */
-    public function denormalize(DenormalizerInterface $serializer, $data, array $context): ?object;
+    public function normalize(FormSerializerInterface $serializer, $data);
+
+    /**
+     * @param FormSerializerInterface $serializer
+     * @param mixed $data
+     * @param object|null $subject
+     * @return mixed
+     */
+    public function denormalize(FormSerializerInterface $serializer, $data, ?object $subject = null);
 
     /**
      * @param mixed $data

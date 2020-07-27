@@ -6,8 +6,10 @@ use Exception;
 use LogicException;
 use PhpSpec\ObjectBehavior;
 use PlanB\Edge\Infrastructure\Symfony\Normalizer\Denormalizer;
+use Prophecy\Argument;
 use stdClass;
 use Symfony\Component\Serializer\Exception\MappingException;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -84,6 +86,22 @@ class DenormalizerSpec extends ObjectBehavior
         ]);
 
         $observer->method($data, $entity)->shouldBeCalledOnce();
+    }
+
+    public function it_delegate_in_serializer_to_denormalize_some_partial_data(SerializerInterface $serializer)
+    {
+
+        $data = new stdClass();
+        $type = static::class;
+        $response = Argument::any();
+
+        $serializer->beADoubleOf(DenormalizerInterface::class);
+
+        $serializer->denormalize($data, $type)->willReturn($response);
+
+        $this->setSerializer($serializer);
+
+        $this->partial($data, $type)->shouldReturn($response);
     }
 
 }

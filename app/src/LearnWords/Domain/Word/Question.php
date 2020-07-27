@@ -31,6 +31,16 @@ final class Question implements EntityInterface
         $this->wording = $wording;
     }
 
+    public function update(string $wording): self
+    {
+        if($this->wording == $wording){
+            return $this;
+        }
+
+        $this->wording = $wording;
+        return $this;
+    }
+
     public function getId(): QuestionId
     {
         return $this->id;
@@ -45,4 +55,5 @@ final class Question implements EntityInterface
     {
         return $this->wording;
     }
+
 }

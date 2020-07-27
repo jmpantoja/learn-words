@@ -17,12 +17,12 @@ use PlanB\Edge\Infrastructure\Sonata\Doctrine\ManagerCommandFactoryInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\CompositeDataMapperInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\CompositeFormTypeInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\CustomDataMapper;
+use PlanB\Edge\Infrastructure\Symfony\Form\FormSerializerInterface;
 use PlanB\Edge\Infrastructure\Symfony\Validator\ConstraintBuilderFactory;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Throwable;
@@ -108,17 +108,27 @@ abstract class FormConfigurator implements FormConfiguratorInterface, CompositeF
         $this->isOpened = true;
     }
 
-
-    public function denormalize(DenormalizerInterface $serializer, array $data, array $context): ?object
+    /**
+     * @inheritDoc
+     */
+    public function normalize(FormSerializerInterface $serializer, $data)
     {
+        return $serializer->normalize($data);
+    }
 
+
+    /**
+     * @inheritDoc
+     */
+    public function denormalize(FormSerializerInterface $serializer, $data, ?object $subject = null)
+    {
         try {
-            return $serializer->denormalize($data, $this->className, null, $context);
+            return $serializer->denormalize($data, $subject, $this->className);
         } catch (Throwable $throwable) {
+            dump($throwable->getMessage());
             throw new TransformationFailedException($throwable->getMessage());
         }
     }
-
 
     public function validate(array $data): ConstraintViolationListInterface
     {

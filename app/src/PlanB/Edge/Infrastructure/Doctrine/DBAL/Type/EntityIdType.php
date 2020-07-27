@@ -7,7 +7,7 @@ namespace PlanB\Edge\Infrastructure\Doctrine\DBAL\Type;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 use PlanB\Edge\Domain\Entity\EntityId;
-use PlanB\Edge\Shared\Exception\InvalidTypeException;
+use PlanB\Edge\Domain\VarType\Exception\InvalidTypeException;
 
 
 abstract class EntityIdType extends Type

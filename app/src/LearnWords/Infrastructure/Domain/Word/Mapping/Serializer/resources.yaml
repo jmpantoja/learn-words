@@ -6,6 +6,8 @@ LearnWords\Domain\Word\Word:
             groups: ['read', 'write']
         lang:
             groups: ['read', 'write']
+        questions:
+            groups: ['read', 'write']            
         tags:
             groups: ['read', 'write']
 
@@ -19,7 +21,12 @@ LearnWords\Domain\Word\Lang:
         value:
             groups: ['read', 'write']
 
-LearnWords\Domain\Tag\Tag:
+LearnWords\Domain\Word\Tag:
     attributes:
         tag:
+            groups: ['read', 'write']
+
+LearnWords\Domain\Word\Question:
+    attributes:
+        wording:
             groups: ['read', 'write']

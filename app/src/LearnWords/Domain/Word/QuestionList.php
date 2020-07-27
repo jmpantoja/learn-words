@@ -13,17 +13,13 @@ declare(strict_types=1);
 
 namespace LearnWords\Domain\Word;
 
-use PlanB\Edge\Domain\Collection\EntityList;
+use PlanB\Edge\Domain\Collection\TypedList;
 
-final class QuestionList extends EntityList
+final class QuestionList extends TypedList
 {
 
     public function getType(): string
     {
         return Question::class;
     }
-
-
-
-
 }

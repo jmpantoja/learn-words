@@ -5,6 +5,7 @@ namespace spec\LearnWords\Infrastructure\Domain\Word\Serializer;
 use LearnWords\Domain\Word\Lang;
 use LearnWords\Domain\Word\Tag;
 use LearnWords\Domain\Word\TagList;
+use LearnWords\Domain\Word\TagRepository;
 use LearnWords\Domain\Word\Word;
 use LearnWords\Infrastructure\Domain\Word\Serializer\TagDenormalizer;
 use LearnWords\Infrastructure\Domain\Word\Serializer\WordDenormalizer;
@@ -17,8 +18,10 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class TagDenormalizerSpec extends ObjectBehavior
 {
-    public function let(DenormalizerInterface $serializer)
+    public function let(DenormalizerInterface $serializer, TagRepository $repository)
     {
+        $this->beConstructedWith($repository);
+
         $serializer->beADoubleOf(SerializerInterface::class);
         $this->setSerializer($serializer);
     }
@@ -30,7 +33,7 @@ class TagDenormalizerSpec extends ObjectBehavior
 
     public function it_detects_if_a_value_is_supported()
     {
-        $this->supportsDenormalization(Argument::any(), Tag::class)
+        $this->supportsDenormalization([], Tag::class)
             ->shouldReturn(true);
     }
 
@@ -46,14 +49,12 @@ class TagDenormalizerSpec extends ObjectBehavior
 
         $response = $this->denormalize($input, Tag::class);
         $response->shouldBeAnInstanceOf(Tag::class);
-
         $response->getTag()->shouldReturn('hola');
     }
 
     public function it_is_able_to_update_a_word_from_an_array(DenormalizerInterface $serializer)
     {
         $input = ['tag' => 'hola'];
-
         $tag = new Tag('valor');
 
         $response = $this->denormalize($input, Tag::class, null, [
@@ -61,10 +62,8 @@ class TagDenormalizerSpec extends ObjectBehavior
         ]);
 
         $response->shouldReturn($tag);
-
         $response->getTag()->shouldReturn('hola');
     }
-
 
     public function it_throws_an_exception_when_input_array_is_invalid()
     {

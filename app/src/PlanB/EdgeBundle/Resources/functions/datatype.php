@@ -11,6 +11,7 @@
 
 declare(strict_types=1);
 
+use PlanB\Edge\Domain\VarType\TypeUtils;
 
 if (!function_exists('is_stringable')) {
 
@@ -24,5 +25,17 @@ if (!function_exists('is_stringable')) {
             || is_scalar($value)
             || (is_object($value) && method_exists($value, '__toString'));
     }
+}
 
+
+if (!function_exists('is_typeof')) {
+
+    /**
+     * @param mixed $value
+     * @return bool
+     */
+    function is_typeof($value, string $type): bool
+    {
+        return TypeUtils::isTypeOf($value, $type);
+    }
 }

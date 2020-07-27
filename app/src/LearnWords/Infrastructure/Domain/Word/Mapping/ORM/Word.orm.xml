@@ -6,12 +6,20 @@
     <entity name="LearnWords\Domain\Word\Word" table="words">
 
         <id name="id" column="id" type="WordId"/>
-        <field name="word" />
-        <field name="lang" type="lang" />
+        <field name="word"/>
+        <field name="lang" type="lang" length="20"/>
 
-        <one-to-many field="questions" target-entity="LearnWords\Domain\Word\Question" mapped-by="word" orphan-removal="true">
+        <unique-constraints>
+            <unique-constraint columns="word,lang"></unique-constraint>
+        </unique-constraints>
+
+        <one-to-many field="questions" target-entity="LearnWords\Domain\Word\Question" mapped-by="word"
+                     orphan-removal="true">
+            <order-by>
+                <order-by-field name="id"/>
+            </order-by>
             <cascade>
-                <cascade-persist />
+                <cascade-persist/>
             </cascade>
         </one-to-many>
 
@@ -24,6 +32,9 @@
                     <join-column/>
                 </inverse-join-columns>
             </join-table>
+            <cascade>
+                <cascade-persist/>
+            </cascade>
         </many-to-many>
 
     </entity>

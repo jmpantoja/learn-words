@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace PlanB\Edge\Infrastructure\Symfony\Form\Type;
 
 
+use PlanB\Edge\Infrastructure\Symfony\Form\FormSerializer;
 use PlanB\Edge\Infrastructure\Symfony\Form\SingleDataMapperInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\SingleFormTypeInterface;
 use Symfony\Component\Form\AbstractType;
@@ -37,16 +38,13 @@ abstract class SingleType extends AbstractType implements SingleFormTypeInterfac
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addModelTransformer($this->dataMapper);
+        $builder->setByReference(false);
+        $builder->setCompound(false);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $this->customOptions($resolver);
-
-        $resolver->setDefaults([
-            'compound' => false,
-            'by_reference' => false
-        ]);
     }
 
     public function getParent(): string
@@ -55,22 +53,6 @@ abstract class SingleType extends AbstractType implements SingleFormTypeInterfac
     }
 
     abstract public function customOptions(OptionsResolver $resolver): void;
-
-    /**
-     * @param DenormalizerInterface $serializer
-     * @param mixed $data
-     * @param mixed[] $context
-     * @return object|null
-     *
-     * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
-     */
-    public function denormalize(DenormalizerInterface $serializer, $data, array $context): ?object
-    {
-        return $serializer->denormalize($data, $this->getClass(), null, $context);
-    }
-
-
-    abstract public function getClass(): string;
 
 
     /**

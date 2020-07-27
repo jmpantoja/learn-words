@@ -19,4 +19,6 @@ interface TagRepository
     public function persist(Tag $tag): void ;
 
     public function delete(Tag $tag): void ;
+
+    public function findByLabel(string $label): ?Tag;
 }

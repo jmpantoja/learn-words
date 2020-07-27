@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace LearnWords\Domain\Word;
 
 use Doctrine\Common\Collections\Collection;
+use LearnWords\Domain\Word\WordPersistence\QuestionHasBeenAdded;
 use LearnWords\Domain\Word\WordPersistence\WordHasBeenCreated;
 use LearnWords\Domain\Word\WordPersistence\WordHasBeenUpdated;
 use PlanB\Edge\Domain\Entity\EntityInterface;
@@ -62,6 +63,7 @@ class Word implements EntityInterface
         return $this->id;
     }
 
+
     public function getWord(): string
     {
         return $this->word;
@@ -80,19 +82,35 @@ class Word implements EntityInterface
         return TagList::collect($this->tags);
     }
 
-    public function addQuestion(string $wording, string $description): self
-    {
-        $questionList = $this->getQuestions();
-
-
-        $question = new Question($this, $wording);
-        $questionList->add($question);
-        return $this;
-    }
-
     public function getQuestions(): QuestionList
     {
         return QuestionList::collect($this->questions);
+    }
+
+    public function addQuestion(string $wording): self
+    {
+        $question = new Question($this, $wording);
+        $this->questions->add($question);
+
+        $this->notify(new QuestionHasBeenAdded($this->getId(), $question));
+        return $this;
+    }
+
+
+    public function removeQuestion(Question $question): self
+    {
+        $this->questions->removeElement($question);
+        return $this;
+    }
+
+    public function updateQuestion(int $key, string $wording): self
+    {
+        if (!$this->questions->containsKey($key)) {
+            return $this;
+        }
+
+        $this->questions->get($key)->update($wording);
+        return $this;
     }
 
 }

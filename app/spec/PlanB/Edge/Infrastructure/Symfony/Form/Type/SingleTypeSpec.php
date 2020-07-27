@@ -3,13 +3,14 @@
 namespace spec\PlanB\Edge\Infrastructure\Symfony\Form\Type;
 
 use PhpSpec\ObjectBehavior;
+use PlanB\Edge\Infrastructure\Symfony\Form\FormSerializerInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\SingleDataMapperInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\Type\SingleType;
 use Prophecy\Argument;
+use stdClass;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 class SingleTypeSpec extends ObjectBehavior
@@ -30,6 +31,8 @@ class SingleTypeSpec extends ObjectBehavior
     public function it_is_able_to_build_the_form(FormBuilderInterface $builder)
     {
         $builder->addModelTransformer(Argument::type(SingleDataMapperInterface::class))->shouldBeCalled();
+        $builder->setCompound(false)->shouldBeCalled();
+        $builder->setByReference(false)->shouldBeCalled();
 
         $this->buildForm($builder, $options = []);
     }
@@ -41,8 +44,6 @@ class SingleTypeSpec extends ObjectBehavior
         ];
 
         $this->resolve($data)->shouldIterateAs([
-            "compound" => false,
-            "by_reference" => false,
             "option" => "hola"
         ]);
     }
@@ -52,16 +53,16 @@ class SingleTypeSpec extends ObjectBehavior
         $this->getParent()->shouldReturn(TextType::class);
     }
 
-    public function it_is_able_to_denormalize_a_value(DenormalizerInterface $denormalizer)
+    public function it_is_able_to_denormalize_a_value(FormSerializerInterface $serializer)
     {
         $response = Argument::any();
         $data = ['key' => 'value'];
-        $context = [];
+        $subject = new stdClass();
 
-        $denormalizeCall = $denormalizer->denormalize($data, ConcreteSingleType::class, null, $context);
+        $denormalizeCall = $serializer->denormalize($data, $subject, ConcreteSingleType::class);
         $denormalizeCall->willReturn($response);
 
-        $this->denormalize($denormalizer, $data, $context)
+        $this->denormalize($serializer, $data, $subject)
             ->shouldReturn($response);
 
         $denormalizeCall->shouldHaveBeenCalled();
@@ -93,5 +94,21 @@ class ConcreteSingleType extends SingleType
     public function getClass(): string
     {
         return static::class;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function normalize(FormSerializerInterface $serializer, $data)
+    {
+        return $serializer->denormalize($data);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function denormalize(FormSerializerInterface $serializer, $data, ?object $subject = null)
+    {
+        return $serializer->denormalize($data, $subject, $this->getClass());
     }
 }

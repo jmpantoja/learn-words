@@ -17,6 +17,7 @@ namespace PlanB\Edge\Domain\Collection;
 use Doctrine\Common\Collections\AbstractLazyCollection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Exception;
 use PlanB\Edge\Domain\Collection\Exception\InvalidClassnameException;
 use PlanB\Edge\Domain\Collection\Exception\InvalidCollectionElement;
 use Traversable;
@@ -45,7 +46,7 @@ abstract class TypedList extends AbstractLazyCollection
         return new static(new ArrayCollection($input));
     }
 
-    final protected function __construct(Collection $input)
+    final private function __construct(Collection $input)
     {
         foreach ($input as $value) {
             $this->ensureValueIsValid($value);
@@ -60,11 +61,6 @@ abstract class TypedList extends AbstractLazyCollection
      */
     protected function doInitialize()
     {
-        if (!($this->collection instanceof Collection)) {
-            return;
-        }
-
-        $this->collection->clear();
     }
 
     /**
@@ -98,25 +94,9 @@ abstract class TypedList extends AbstractLazyCollection
     {
         $type = $this->getType();
 
-        $functionName = 'is_' . $type;
-
-
-        if (!class_exists($type) and !function_exists($functionName)) {
-            throw new InvalidClassnameException($type);
-        }
-
-        if (is_object($value) and !is_a($value, $type)) {
+        if(!is_typeof($value, $type)){
             throw new InvalidCollectionElement($value, $type);
         }
-
-        if (!function_exists($functionName)) {
-            return;
-        }
-
-        if (!is_object($value) and !$functionName($value)) {
-            throw new InvalidCollectionElement($value, $type);
-        }
-
     }
 
     abstract public function getType(): string;
@@ -130,6 +110,5 @@ abstract class TypedList extends AbstractLazyCollection
     {
         return array_reduce($this->toArray(), $callback, $initial);
     }
-
 
 }

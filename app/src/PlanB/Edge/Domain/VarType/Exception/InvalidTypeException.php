@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace PlanB\Edge\Shared\Exception;
+namespace PlanB\Edge\Domain\VarType\Exception;
 
 use InvalidArgumentException;
 

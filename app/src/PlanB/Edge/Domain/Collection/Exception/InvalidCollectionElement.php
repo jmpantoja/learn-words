@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace PlanB\Edge\Domain\Collection\Exception;
 
 
-use PlanB\Edge\Shared\Exception\InvalidTypeException;
+use PlanB\Edge\Domain\VarType\Exception\InvalidTypeException;
 
 class InvalidCollectionElement extends InvalidTypeException implements CollectionExceptionInterface
 {

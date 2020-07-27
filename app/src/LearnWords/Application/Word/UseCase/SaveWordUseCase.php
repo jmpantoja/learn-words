@@ -29,6 +29,7 @@ final class SaveWordUseCase implements UseCaseInterface
     public function handle(SaveWord $command): void
     {
         $word = $command->getWord();
+
         $this->wordRepository->persist($word);
     }
 }

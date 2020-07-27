@@ -6,9 +6,12 @@ use ArrayObject;
 use LogicException;
 use PhpSpec\ObjectBehavior;
 use PlanB\Edge\Infrastructure\Symfony\Form\Exception\SingleMappingFailedException;
+use PlanB\Edge\Infrastructure\Symfony\Form\FormSerializer;
+use PlanB\Edge\Infrastructure\Symfony\Form\FormSerializerInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\SingleDataMapper;
 use PlanB\Edge\Infrastructure\Symfony\Form\SingleFormTypeInterface;
 use Prophecy\Argument;
+use stdClass;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -17,17 +20,15 @@ use Symfony\Component\Validator\ConstraintViolationList;
 
 class SingleDataMapperSpec extends ObjectBehavior
 {
-    public function let(SerializerInterface $serializer,
+    public function let(FormSerializerInterface $serializer,
                         ConstraintViolationList $constraintViolationList,
                         ConstraintViolation $constraintViolation,
-                        SingleFormTypeInterface $objectMapper)
+                        SingleFormTypeInterface $formType)
     {
-        $serializer->implement(DenormalizerInterface::class);
-
         $this->prepareViolationsList($constraintViolationList, $constraintViolation);
 
         $this->beConstructedWith($serializer);
-        $this->attach($objectMapper);
+        $this->attach($formType);
     }
 
     /**
@@ -50,30 +51,32 @@ class SingleDataMapperSpec extends ObjectBehavior
         $this->shouldHaveType(SingleDataMapper::class);
     }
 
-    public function it_throws_an_exception_if_serializer_not_implement_denormalizer_interface(SerializerInterface $otherSerializer)
+    public function it_is_able_to_transform_a_object_to_an_array(FormSerializerInterface $serializer,
+                                                                  SingleFormTypeInterface $formType)
     {
+        $data = new stdClass();
+        $response = [
+            'key' => 'value'
+        ];
 
-        $this->shouldThrow(LogicException::class)->during('setSerializer', [$otherSerializer]);
+        $normalizeCall = $formType->normalize($serializer, $data);
+        $normalizeCall->willReturn($response);
+
+        $this->transform($data)->shouldReturn($response);
+        $normalizeCall->shouldHaveBeenCalledOnce();
     }
 
 
-    public function it_is_able_to_transform_a_value()
-    {
-        $this->transform(333)->shouldReturn(333);
-    }
-
-    public function it_is_able_to_transform_a_string_to_an_object(SerializerInterface $serializer,
-                                                                  SingleFormTypeInterface $objectMapper)
+    public function it_is_able_to_transform_a_string_to_an_object(FormSerializerInterface $serializer,
+                                                                  SingleFormTypeInterface $formType)
     {
         $data = 'entrada';
         $response = new ArrayObject([
             'value' => $data
         ]);
 
-        $validateCall = $objectMapper->validate($data);
-        $denormalizeCall = $objectMapper->denormalize($serializer, $data, [
-            ObjectNormalizer::OBJECT_TO_POPULATE => null
-        ]);
+        $validateCall = $formType->validate($data);
+        $denormalizeCall = $formType->denormalize($serializer, $data, $subject = null);
 
         $validateCall->willReturn(new ConstraintViolationList());
         $denormalizeCall->willReturn($response);
@@ -85,14 +88,14 @@ class SingleDataMapperSpec extends ObjectBehavior
     }
 
     public function it_throws_an_exception_when_validation_fails(ConstraintViolationList $constraintViolationList,
-                                                                 SingleFormTypeInterface $objectMapper)
+                                                                 SingleFormTypeInterface $formType)
     {
         $data = 'entrada';
 
         $constraintViolationList->count()->willReturn(1);
 
-        $validateCall = $objectMapper->validate($data);
-        $denormalizeCall = $objectMapper->denormalize(Argument::any(), Argument::any(), Argument::any(),);
+        $validateCall = $formType->validate($data);
+        $denormalizeCall = $formType->denormalize(Argument::any(), Argument::any(), Argument::any(),);
 
         $validateCall->willReturn($constraintViolationList->getWrappedObject());
 
@@ -102,6 +105,4 @@ class SingleDataMapperSpec extends ObjectBehavior
         $denormalizeCall->shouldNotBeCalled();
         $validateCall->shouldHaveBeenCalled();
     }
-
-
 }

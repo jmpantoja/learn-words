@@ -41,8 +41,6 @@ class WordDenormalizerSpec extends ObjectBehavior
 
     public function it_is_able_to_create_a_word_from_an_array(DenormalizerInterface $serializer)
     {
-        $serializer->denormalize('SPANISH', Lang::class)->willReturn(Lang::SPANISH());
-
         $tagList = TagList::collect([
             new Tag('tag-A'),
             new Tag('tag-B'),
@@ -55,6 +53,10 @@ class WordDenormalizerSpec extends ObjectBehavior
             'tags' => $tagList
         ];
 
+        $serializer->denormalize('SPANISH', Lang::class)->willReturn(Lang::SPANISH());
+        $serializer->denormalize($tagList, TagList::class)->willReturn($tagList);
+
+
         $response = $this->denormalize($input, Word::class);
         $response->shouldBeAnInstanceOf(Word::class);
 
@@ -65,8 +67,6 @@ class WordDenormalizerSpec extends ObjectBehavior
 
     public function it_is_able_to_update_a_word_from_an_array(DenormalizerInterface $serializer)
     {
-        $serializer->denormalize('SPANISH', Lang::class)->willReturn(Lang::SPANISH());
-
         $tagList = TagList::collect([
             new Tag('tag-A'),
             new Tag('tag-B'),
@@ -79,6 +79,10 @@ class WordDenormalizerSpec extends ObjectBehavior
         ];
 
         $word = new Word('valor', Lang::SPANISH(), TagList::empty());
+
+        $serializer->denormalize('SPANISH', Lang::class)->willReturn(Lang::SPANISH());
+        $serializer->denormalize($tagList, TagList::class)->willReturn($tagList);
+
 
         $response = $this->denormalize($input, Word::class, null, [
             ObjectNormalizer::OBJECT_TO_POPULATE => $word
@@ -94,7 +98,6 @@ class WordDenormalizerSpec extends ObjectBehavior
 
     public function it_throws_an_exception_when_input_array_is_invalid()
     {
-
         $input = [
             'XXX' => 'hola',
             'YYY' => 'SPANISH'

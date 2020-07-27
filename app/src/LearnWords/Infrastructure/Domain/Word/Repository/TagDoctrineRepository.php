@@ -19,9 +19,6 @@ use Doctrine\Persistence\ManagerRegistry;
 use LearnWords\Domain\Word\Tag;
 use LearnWords\Domain\Word\TagPersistence\TagHasBeenDeleted;
 use LearnWords\Domain\Word\TagRepository;
-use LearnWords\Domain\Word\Word;
-use LearnWords\Domain\Word\WordPersistence\WordHasBeenDeleted;
-use LearnWords\Domain\Word\WordRepository;
 
 final class TagDoctrineRepository extends ServiceEntityRepository implements TagRepository
 {
@@ -41,5 +38,11 @@ final class TagDoctrineRepository extends ServiceEntityRepository implements Tag
     {
         $tag->notify(new TagHasBeenDeleted($tag));
         $this->getEntityManager()->remove($tag);
+    }
+
+    public function findByLabel(string $label): ?Tag
+    {
+        $repository = $this->getEntityManager()->getRepository(Tag::class);
+        return $repository->findOneBy(['tag' => $label]);
     }
 }

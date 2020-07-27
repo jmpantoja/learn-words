@@ -40,4 +40,5 @@ final class WordDoctrineRepository extends ServiceEntityRepository implements Wo
 
         $this->getEntityManager()->remove($word);
     }
+
 }

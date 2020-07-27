@@ -15,6 +15,7 @@ namespace PlanB\Edge\Infrastructure\Symfony\Normalizer;
 
 
 use Exception;
+use LearnWords\Domain\Word\Word;
 use LogicException;
 use Symfony\Component\Serializer\Exception\MappingException;
 use Symfony\Component\Serializer\Normalizer\ContextAwareDenormalizerInterface;

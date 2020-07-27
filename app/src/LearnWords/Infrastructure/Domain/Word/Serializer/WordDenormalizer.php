@@ -15,8 +15,10 @@ namespace LearnWords\Infrastructure\Domain\Word\Serializer;
 
 
 use LearnWords\Domain\Word\Lang;
+use LearnWords\Domain\Word\Question;
 use LearnWords\Domain\Word\TagList;
 use LearnWords\Domain\Word\Word;
+use PlanB\Edge\Domain\Collection\SnapshotList;
 use PlanB\Edge\Infrastructure\Symfony\Normalizer\Denormalizer;
 
 final class WordDenormalizer extends Denormalizer
@@ -31,18 +33,11 @@ final class WordDenormalizer extends Denormalizer
 
     protected function mapToObject($data, ?Word $word = null): object
     {
-
         $word = $this->buildWord($data, $word);
 
-        $questions = $data['questions'] ?? [];
+        $questions = SnapshotList::collect($data['questions'] ?? []);
 
-        foreach ($questions as $question) {
-            $wording = $question['wording'];
-            $description = $question['description'];
-
-
-            $word->addQuestion($wording, $description);
-        }
+        $this->updateQuestions($word, $questions);
 
         return $word;
     }
@@ -51,12 +46,35 @@ final class WordDenormalizer extends Denormalizer
     {
         $value = $data['word'];
         $lang = $this->partial($data['lang'], Lang::class);
-        $tagList = TagList::collect($data['tags']);
+        $tagList = $this->partial($data['tags'], TagList::class);
 
         if (is_null($word)) {
             return new Word($value, $lang, $tagList);
         }
 
         return $word->update($value, $lang, $tagList);
+    }
+
+    /**
+     * @param Word $word
+     * @param SnapshotList|null $questions
+     */
+    protected function updateQuestions(Word $word, ?SnapshotList $questions): void
+    {
+        if (!($questions instanceof SnapshotList)) {
+            return;
+        }
+
+        $questions->eachUpdate(function (array $question, int $key) use ($word) {
+            return $word->updateQuestion($key, $question['wording']);
+        });
+
+        $questions->eachDelete(function (Question $question) use ($word) {
+            return $word->removeQuestion($question);
+        });
+
+        $questions->eachInsert(function (array $question) use ($word) {
+            return $word->addQuestion($question['wording']);
+        });
     }
 }

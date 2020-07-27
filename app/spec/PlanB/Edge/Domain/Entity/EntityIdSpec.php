@@ -17,6 +17,15 @@ class EntityIdSpec extends ObjectBehavior
         $this->shouldHaveType(EntityId::class);
     }
 
+    public function it_is_initializable_from_a_string()
+    {
+        $this->beConstructedThrough('fromString', [self::UUID]);
+        $this->shouldHaveType(EntityId::class);
+
+        $this->getUuid()->shouldReturn(self::UUID);
+    }
+
+
     public function it_returns_an_uuid_by_default()
     {
         $this->getUuid()->shouldBeString();

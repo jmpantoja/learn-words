@@ -23,28 +23,15 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 final class SingleDataMapper implements SingleDataMapperInterface
 {
-    private DenormalizerInterface $serializer;
+    private FormSerializerInterface $serializer;
 
     private SingleFormTypeInterface $formType;
 
-    public function __construct(SerializerInterface $serializer)
+    public function __construct(FormSerializerInterface $serializer)
     {
-        $this->setSerializer($serializer);
-    }
-
-    /**
-     * @param SerializerInterface $serializer
-     * @return $this
-     */
-    public function setSerializer(SerializerInterface $serializer): self
-    {
-        if (!$serializer instanceof DenormalizerInterface) {
-            throw new LogicException('Expected a serializer that also implements DenormalizerInterface.');
-        }
-
         $this->serializer = $serializer;
-        return $this;
     }
+
 
     public function attach(SingleFormTypeInterface $formType): self
     {
@@ -57,7 +44,7 @@ final class SingleDataMapper implements SingleDataMapperInterface
      */
     public function transform($value)
     {
-        return $value;
+        return $this->formType->normalize($this->serializer, $value);
     }
 
     /**
@@ -66,10 +53,7 @@ final class SingleDataMapper implements SingleDataMapperInterface
     public function reverseTransform($value)
     {
         $this->validate($value);
-
-        return $this->formType->denormalize($this->serializer, $value, [
-            ObjectNormalizer::OBJECT_TO_POPULATE => null
-        ]);
+        return $this->formType->denormalize($this->serializer, $value);
     }
 
     /**

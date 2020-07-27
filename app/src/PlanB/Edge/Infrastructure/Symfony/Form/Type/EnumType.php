@@ -15,6 +15,7 @@ namespace PlanB\Edge\Infrastructure\Symfony\Form\Type;
 
 
 use PlanB\Edge\Domain\Enum\Enum;
+use PlanB\Edge\Infrastructure\Symfony\Form\FormSerializerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Choice;
@@ -71,4 +72,26 @@ abstract class EnumType extends SingleType
 
         return $validator->validate($data, $constraints);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function normalize(FormSerializerInterface $serializer, $data)
+    {
+        return $serializer->normalize($data);
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function denormalize(FormSerializerInterface $serializer, $data, ?object $subject = null): ?Enum
+    {
+        return $serializer->denormalize($data, $subject, $this->getClass());
+    }
+
+    /**
+     * @return string
+     */
+    abstract public function getClass(): string;
 }

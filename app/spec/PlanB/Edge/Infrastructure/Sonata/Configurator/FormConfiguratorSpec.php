@@ -10,8 +10,10 @@ use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfigurator;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfiguratorInterface;
 use PlanB\Edge\Infrastructure\Sonata\Doctrine\ManagerCommandFactoryInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\CompositeDataMapperInterface;
+use PlanB\Edge\Infrastructure\Symfony\Form\FormSerializerInterface;
 use Prophecy\Argument;
 use Sonata\AdminBundle\Form\FormMapper;
+use stdClass;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -81,34 +83,43 @@ class FormConfiguratorSpec extends ObjectBehavior
 
     }
 
-    public function it_is_able_to_denormalize_data(DenormalizerInterface $denormalizer)
+    public function it_is_able_to_normalize_data(FormSerializerInterface $serializer)
     {
         $data = [];
-        $context = [];
+        $response = Argument::any();
+        $serializer->normalize($data)->willReturn($response);
 
-        $this->denormalize($denormalizer, $data, $context);
-        $denormalizer->denormalize($data, 'className', null, $context)->shouldBeCalled();
+        $this->normalize($serializer, $data)->shouldReturn($response);
+        $serializer->normalize($data)->shouldBeCalled();
     }
 
-    public function it_throws_an_exception_when_denormalize_fails(DenormalizerInterface $denormalizer)
+    public function it_is_able_to_denormalize_data(FormSerializerInterface $serializer)
     {
         $data = [];
-        $context = [];
-        $denormalizer->denormalize(Argument::any(), Argument::any(), Argument::any(), Argument::any())
+        $subject = new stdClass();
+        $response = Argument::any();
+
+        $serializer->denormalize($data, $subject, 'className')->willReturn($response);
+
+        $this->denormalize($serializer, $data, $subject)->shouldReturn($response);
+        $serializer->denormalize($data, $subject, 'className')->shouldBeCalled();
+    }
+
+    public function it_throws_an_exception_when_denormalize_fails(FormSerializerInterface $serializer)
+    {
+        $data = [];
+        $subject = new stdClass();
+
+        $serializer->denormalize(Argument::any(), Argument::any(), Argument::any())
             ->willThrow(\Exception::class);
 
-        $this->shouldThrow(TransformationFailedException::class)->during('denormalize', [$denormalizer, $data, $context]);
+        $this->shouldThrow(TransformationFailedException::class)->during('denormalize', [$serializer, $data, $subject]);
 
-        $denormalizer->denormalize($data, 'className', null, $context)->shouldBeCalled();
+        $serializer->denormalize($data, $subject, 'className')->shouldBeCalled();
     }
 
-//    public function it_returns_the_className(){
-//        $this->getClass()
-//            ->shouldReturn('className');
-//    }
-
-
-    public function it_returns_a_constraint_violations_list(){
+    public function it_returns_a_constraint_violations_list()
+    {
         $this->validate($data = [])
             ->shouldBeAnInstanceOf(ConstraintViolationList::class);
     }
