@@ -16,7 +16,10 @@ namespace PlanB\Edge\Infrastructure\Sonata\Doctrine;
 
 use ApiPlatform\Core\DataPersister\DataPersisterInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use ReflectionClass;
+use RuntimeException;
 use Sonata\DoctrineORMAdminBundle\Model\ModelManager as SonataModelManager;
+use Symfony\Component\Serializer\SerializerInterface;
 
 final class ModelManager extends SonataModelManager
 {
@@ -24,41 +27,43 @@ final class ModelManager extends SonataModelManager
      * @var DataPersisterInterface
      */
     private DataPersisterInterface $dataPersister;
+    /**
+     * @var SerializerInterface
+     */
+    private SerializerInterface $serializer;
 
     public function __construct(DataPersisterInterface $dataPersister, ManagerRegistry $registry)
     {
-
         $this->dataPersister = $dataPersister;
         parent::__construct($registry);
-
     }
 
     public function getModelInstance($class)
     {
-        $r = new \ReflectionClass($class);
+        $r = new ReflectionClass($class);
         if ($r->isAbstract()) {
-            throw new \RuntimeException(sprintf('Cannot initialize abstract class: %s', $class));
+            throw new RuntimeException(sprintf('Cannot initialize abstract class: %s', $class));
         }
 
         return $r->newInstanceWithoutConstructor();
     }
 
     /**
-     * @param object $command
+     * @param object $data
      * @return mixed
      */
-    public function create($command)
+    public function create($data)
     {
-        return $this->dataPersister->persist($command);
+        return $this->dataPersister->persist($data);
     }
 
     /**
-     * @param object $command
+     * @param object $data
      * @return mixed
      */
-    public function update($command)
+    public function update($data)
     {
-        return $this->dataPersister->persist($command);
+        return $this->dataPersister->persist($data);
     }
 
     /**

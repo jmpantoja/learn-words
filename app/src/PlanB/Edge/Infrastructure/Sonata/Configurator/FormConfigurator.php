@@ -12,56 +12,78 @@ declare(strict_types=1);
 
 namespace PlanB\Edge\Infrastructure\Sonata\Configurator;
 
+use PlanB\Edge\Domain\Entity\Dto;
 use PlanB\Edge\Domain\Entity\EntityBuilder;
+use PlanB\Edge\Domain\Entity\EntityId;
+use PlanB\Edge\Domain\PropertyExtractor\PropertyExtractor;
 use PlanB\Edge\Infrastructure\Sonata\Doctrine\ManagerCommandFactoryInterface;
-use PlanB\Edge\Infrastructure\Symfony\Form\CompositeDataMapperInterface;
-use PlanB\Edge\Infrastructure\Symfony\Form\CompositeFormTypeInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\CustomDataMapper;
-use PlanB\Edge\Infrastructure\Symfony\Form\FormSerializerInterface;
 use PlanB\Edge\Infrastructure\Symfony\Validator\ConstraintBuilderFactory;
-use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Form\FormMapper;
-use Symfony\Component\Form\Exception\TransformationFailedException;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\ConstraintViolationList;
-use Symfony\Component\Validator\ConstraintViolationListInterface;
-use Throwable;
 
-abstract class FormConfigurator implements FormConfiguratorInterface, CompositeFormTypeInterface
+abstract class FormConfigurator implements FormConfiguratorInterface
 {
-    protected string $className;
-
-    private CompositeDataMapperInterface $dataMapper;
-
     private FormMapper $formMapper;
 
     private bool $isOpened = false;
 
-    public function setDataMapper(CompositeDataMapperInterface $dataMapper): self
-    {
-        $this->dataMapper = $dataMapper->attach($this);
-        return $this;
-    }
+    private ?object $subject;
 
     public function handle(FormMapper $formMapper, ?object $subject): self
     {
         $this->formMapper = $formMapper;
-
         $admin = $formMapper->getAdmin();
         $formBuilder = $formMapper->getFormBuilder();
 
-        $this->initialize($admin, $formBuilder);
+        $formBuilder->addModelTransformer($this);
         $this->configure($subject);
 
         return $this;
     }
 
-    protected function initialize(AdminInterface $admin, FormBuilderInterface $formBuilder): self
+    /**
+     * @inheritDoc
+     */
+    public function transform($subject)
     {
-        $this->className = $admin->getClass();
-        $formBuilder->setDataMapper($this->dataMapper);
+        $subject = $this->computeSubject($subject);
+        if (null === $subject) {
+            return null;
+        }
+        return $this->toDto($subject);
+    }
 
-        return $this;
+    /**
+     * @param object|null $entity
+     * @return object|null
+     */
+    private function computeSubject(?object $entity): ?object
+    {
+        if (null === $entity) {
+            return null;
+        }
+
+        $idValue = PropertyExtractor::fromObject($entity)
+            ->id();
+
+        if (!($idValue instanceof EntityId)) {
+            return null;
+        }
+        return $entity;
+    }
+
+    /**
+     * @param mixed $entity
+     * @return Dto
+     */
+    abstract protected function toDto($entity): Dto;
+
+    /**
+     * @inheritDoc
+     */
+    public function reverseTransform($value)
+    {
+        return $value;
     }
 
     protected function tab(string $name): self
@@ -72,11 +94,27 @@ abstract class FormConfigurator implements FormConfiguratorInterface, CompositeF
 
     }
 
+    private function endTabs(): void
+    {
+        while ($this->formMapper->hasOpenTab()) {
+            $this->formMapper->end();
+        }
+        $this->isOpened = false;
+    }
+
     protected function group(string $name, array $options = []): self
     {
         $this->endGroups();
         $this->formMapper->with($name, $options);
         return $this;
+    }
+
+    private function endGroups(): void
+    {
+        if ($this->isOpened) {
+            $this->formMapper->end();
+        }
+        $this->isOpened = true;
     }
 
     /**
@@ -90,49 +128,6 @@ abstract class FormConfigurator implements FormConfiguratorInterface, CompositeF
     {
         $this->formMapper->add($name, $type, $options, $fieldDescriptionOptions);
         return $this;
-    }
-
-    private function endTabs(): void
-    {
-        while ($this->formMapper->hasOpenTab()) {
-            $this->formMapper->end();
-        }
-        $this->isOpened = false;
-    }
-
-    private function endGroups(): void
-    {
-        if ($this->isOpened) {
-            $this->formMapper->end();
-        }
-        $this->isOpened = true;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function normalize(FormSerializerInterface $serializer, $data)
-    {
-        return $serializer->normalize($data);
-    }
-
-
-    /**
-     * @inheritDoc
-     */
-    public function denormalize(FormSerializerInterface $serializer, $data, ?object $subject = null)
-    {
-        try {
-            return $serializer->denormalize($data, $subject, $this->className);
-        } catch (Throwable $throwable) {
-            dump($throwable->getMessage());
-            throw new TransformationFailedException($throwable->getMessage());
-        }
-    }
-
-    public function validate(array $data): ConstraintViolationListInterface
-    {
-        return new ConstraintViolationList();
     }
 
 }

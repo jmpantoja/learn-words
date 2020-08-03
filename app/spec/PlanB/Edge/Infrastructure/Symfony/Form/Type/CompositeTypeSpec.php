@@ -2,26 +2,32 @@
 
 namespace spec\PlanB\Edge\Infrastructure\Symfony\Form\Type;
 
+use ArrayIterator;
 use PhpSpec\ObjectBehavior;
+use PlanB\Edge\Domain\Entity\Dto;
 use PlanB\Edge\Infrastructure\Symfony\Form\CompositeDataMapperInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\FormSerializerInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\Type\CompositeType;
 use Prophecy\Argument;
 use stdClass;
+use Symfony\Component\Form\Event\PostSubmitEvent;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
-use Symfony\Component\Validator\ConstraintViolationListInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class CompositeTypeSpec extends ObjectBehavior
 {
-    public function let(CompositeDataMapperInterface $dataMapper)
+    public function let(ValidatorInterface $validator, ConstraintViolationList $violationList)
     {
         $this->beAnInstanceOf(ConcreteCompositeType::class);
 
-        $dataMapper->attach($this)->shouldBeCalled();
-        $this->setDataMapper($dataMapper);
+        $validator->validate(Argument::cetera())->willReturn($violationList);
+        $this->setValidator($validator);
     }
 
     public function it_is_initializable()
@@ -33,9 +39,12 @@ class CompositeTypeSpec extends ObjectBehavior
     {
 
         $builder->add('field', Argument::cetera())->shouldBeCalled();
-        $builder->setDataMapper(Argument::type(CompositeDataMapperInterface::class))->shouldBeCalled();
+        $builder->addModelTransformer($this)->shouldBeCalled();
+        $builder->addEventListener('form.post_submit', Argument::cetera())->shouldBeCalled();
+
         $builder->setByReference(false)->shouldBeCalled();
         $builder->setCompound(true)->shouldBeCalled();
+
 
         $this->buildForm($builder, $options = []);
     }
@@ -51,53 +60,55 @@ class CompositeTypeSpec extends ObjectBehavior
         ]);
     }
 
-    public function it_is_able_to_denormalize_a_value(FormSerializerInterface $serializer)
+    public function it_is_able_to_transform_a_value()
     {
-        $data = ['key' => 'value'];
-        $response = new stdClass();
         $subject = new stdClass();
-
-        $serializer->denormalize($data, $subject, ConcreteCompositeType::class)->willReturn($response);
-
-        $this->denormalize($serializer, $data, $subject)->shouldReturn($response);
-
-        $serializer->denormalize($data, $subject, ConcreteCompositeType::class)
-            ->shouldHaveBeenCalled();
+        $this->transform($subject)->shouldReturnAnInstanceOf(Dto::class);
     }
 
-    public function it_is_able_to_normalize_a_value(FormSerializerInterface $serializer)
+    public function it_is_able_to_reverse_transform_a_value()
     {
-        $data = ['key' => 'value'];
-        $response = new stdClass();
-
-        $serializer->normalize($data)->willReturn($response);
-        $this->normalize($serializer, $data)->shouldReturn($response);
-
-        $serializer->normalize($data)
-            ->shouldHaveBeenCalled();
+        $subject = new stdClass();
+        $this->reverseTransform($subject)->shouldReturn($subject);
     }
 
-    public function it_throws_an_exception_when_denormalize_fails(FormSerializerInterface $serializer)
+    public function it_returns_null_when_transform_null()
     {
-        $data = ['key' => 'value'];
-        $original = Argument::any();
-
-        $serializer->denormalize(Argument::cetera())->willThrow(\Exception::class);
-
-        $this->shouldThrow(\Exception::class)->during('denormalize', [$serializer, $data, $original]);
-
-        $serializer->denormalize($data, $original, ConcreteCompositeType::class)
-            ->shouldHaveBeenCalled();
+        $this->transform(null)->shouldReturn(null);
     }
+
+    public function it_is_able_to_validate_a_submit_form_event(Dto $data,
+                                                               FormInterface $form,
+                                                               ConstraintViolationList $violationList,
+                                                               ConstraintViolation $violation,
+                                                               FormInterface $field
+    )
+    {
+        $event = new PostSubmitEvent(...[
+            $form->getWrappedObject(),
+            $data->getWrappedObject()
+        ]);
+
+        $violation->getPropertyPath()->willReturn('key');
+        $violation->getMessage()->willReturn('error message');
+
+        $violationList->getIterator()->willReturn(new ArrayIterator([
+            $violation->getWrappedObject()
+        ]));
+
+        $form->get('key')->willReturn($field);
+        $this->validateEvent($event);
+
+        $field->addError(Argument::type(FormError::class))->shouldHaveBeenCalled();
+
+
+    }
+
+
 }
 
 class ConcreteCompositeType extends CompositeType
 {
-
-    public function validate(array $data): ConstraintViolationListInterface
-    {
-        return new ConstraintViolationList();
-    }
 
     public function customForm(FormBuilderInterface $builder, array $options): void
     {
@@ -117,16 +128,21 @@ class ConcreteCompositeType extends CompositeType
         return $resolver->resolve($options);
     }
 
-    public function getClass(): string
+
+    public function toDto($data): Dto
     {
-        return static::class;
+        return new DummyDto();
+    }
+}
+
+class DummyDto extends Dto
+{
+
+    public function update($entity): object
+    {
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function denormalize(FormSerializerInterface $serializer, $data, ?object $subject = null)
+    public function create(): object
     {
-        return $serializer->denormalize($data, $subject, $this->getClass());
     }
 }

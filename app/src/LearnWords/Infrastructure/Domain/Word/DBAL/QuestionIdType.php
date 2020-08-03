@@ -20,17 +20,17 @@ use PlanB\Edge\Infrastructure\Doctrine\DBAL\Type\EntityIdType;
 final class QuestionIdType extends EntityIdType
 {
 
-    protected function fromString(string $value): QuestionId
-    {
-        // @phpstan-ignore-next-line
-        return QuestionId::fromString($value);
-    }
-
     /**
      * @inheritDoc
      */
     public function getName()
     {
         return 'QuestionId';
+    }
+
+    protected function fromString(string $value): QuestionId
+    {
+        // @phpstan-ignore-next-line
+        return QuestionId::fromString($value);
     }
 }

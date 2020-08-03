@@ -26,6 +26,5 @@ final class PlanBEdgeBundle extends Bundle
     public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new SonataAdminCompiler(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 10);
-        $container->addCompilerPass(new FormDataMapperCompiler(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 10);
     }
 }

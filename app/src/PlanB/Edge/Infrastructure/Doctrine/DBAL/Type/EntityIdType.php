@@ -18,7 +18,7 @@ abstract class EntityIdType extends Type
             return null;
         }
 
-        if(is_scalar($value)){
+        if (is_scalar($value)) {
             $value = EntityId::fromString($value);
         }
 
@@ -38,6 +38,7 @@ abstract class EntityIdType extends Type
         return $this->fromString($value);
     }
 
+    abstract protected function fromString(string $value): EntityId;
 
     /**
      * Gets the SQL declaration snippet for a field of this type.
@@ -56,6 +57,4 @@ abstract class EntityIdType extends Type
      * @inheritDoc
      */
     abstract public function getName();
-
-    abstract protected function fromString(string $value): EntityId;
 }

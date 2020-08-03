@@ -17,11 +17,9 @@ namespace LearnWords\Infrastructure\Domain\Word\Persister;
 use ApiPlatform\Core\DataPersister\ContextAwareDataPersisterInterface;
 use League\Tactician\CommandBus;
 use LearnWords\Application\Word\UseCase\DeleteTag;
-use LearnWords\Application\Word\UseCase\DeleteWord;
 use LearnWords\Application\Word\UseCase\SaveTag;
-use LearnWords\Application\Word\UseCase\SaveWord;
 use LearnWords\Domain\Word\Tag;
-use LearnWords\Domain\Word\Word;
+use LearnWords\Infrastructure\Domain\Word\Dto\TagDto;
 
 final class TagPersister implements ContextAwareDataPersisterInterface
 {
@@ -41,7 +39,7 @@ final class TagPersister implements ContextAwareDataPersisterInterface
      */
     public function supports($data, array $context = []): bool
     {
-        return $data instanceof Tag;
+        return $data instanceof Tag or $data instanceof TagDto;
     }
 
     /**

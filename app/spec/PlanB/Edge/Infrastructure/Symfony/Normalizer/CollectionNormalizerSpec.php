@@ -6,9 +6,14 @@ use Doctrine\Common\Collections\Collection;
 use PhpSpec\ObjectBehavior;
 use PlanB\Edge\Infrastructure\Symfony\Normalizer\CollectionNormalizer;
 use Prophecy\Argument;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class CollectionNormalizerSpec extends ObjectBehavior
 {
+    public function let(SerializerInterface  $serializer){
+        $this->setSerializer($serializer);
+    }
+
     public function it_is_initializable()
     {
         $this->shouldHaveType(CollectionNormalizer::class);
@@ -32,7 +37,6 @@ class CollectionNormalizerSpec extends ObjectBehavior
         ];
 
         $collection->toArray()->willReturn($response);
-
         $this->normalize($collection)->shouldReturn($response);
     }
 }

@@ -8,20 +8,15 @@ use PlanB\Edge\Domain\Collection\TypedList;
 use PlanB\Edge\Infrastructure\Symfony\Form\FormSerializerInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\SingleDataMapperInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\Type\CollectionType;
-use Prophecy\Argument;
 use Sonata\AdminBundle\Form\Type\CollectionType as SonataCollectionType;
-use stdClass;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CollectionTypeSpec extends ObjectBehavior
 {
-    public function let(SingleDataMapperInterface $dataMapper)
+    public function let()
     {
         $this->beAnInstanceOf(ConcreteCollectionType::class);
-
-        $dataMapper->attach($this)->shouldBeCalled();
-        $this->setDataMapper($dataMapper);
     }
 
     public function it_is_initializable()
@@ -36,7 +31,7 @@ class CollectionTypeSpec extends ObjectBehavior
 
     public function it_is_able_to_build_the_form(FormBuilderInterface $builder)
     {
-        $builder->addModelTransformer(Argument::type(SingleDataMapperInterface::class))->shouldBeCalled();
+        $builder->addModelTransformer($this)->shouldBeCalled();
 
         $builder->setCompound(false)->shouldBeCalled();
         $builder->setCompound(true)->shouldBeCalled();
@@ -58,36 +53,16 @@ class CollectionTypeSpec extends ObjectBehavior
         ]);
     }
 
-    public function it_returns_a_snapshot_list_when_normalize_a_typed_list(FormSerializerInterface $serializer)
+    public function it_returns_a_snapshot_list_when_transform_an_iterable()
     {
         $typedList = ConcreteTypedList::empty();
-        $this->normalize($serializer, $typedList)->shouldReturnAnInstanceOf(SnapshotList::class);
-
-        $serializer->normalize($typedList)->shouldNotBeCalled();
+        $this->transform($typedList)->shouldReturnAnInstanceOf(SnapshotList::class);
     }
 
-    public function it_normalize_returns_null_when_pass_a_not_iterable_value(FormSerializerInterface $serializer)
+    public function it_returns_a_snapshot_list_when_transform_a_not_iterable()
     {
-        $data = new stdClass();
-        $response = null;
-
-        $this->normalize($serializer, $data)->shouldReturn($response);
+        $this->transform('otra-cosa')->shouldReturn(null);
     }
-
-    public function it_returns_same_object_when_denormalize_a_snapshot_list(FormSerializerInterface $serializer, SnapshotList $snapshotList)
-    {
-        $this->denormalize($serializer, $snapshotList)->shouldReturn($snapshotList);
-        $serializer->normalize($snapshotList)->shouldNotBeCalled();
-    }
-
-    public function it_denormalize_returns_null_when_pass_a_not_snapshot_list(FormSerializerInterface $serializer)
-    {
-        $data = new stdClass();
-        $response = null;
-
-        $this->denormalize($serializer, $data)->shouldReturn($response);
-    }
-
 }
 
 class ConcreteCollectionType extends CollectionType
@@ -106,6 +81,7 @@ class ConcreteCollectionType extends CollectionType
         return $resolver->resolve($options);
 
     }
+
 }
 
 class ConcreteTypedList extends TypedList

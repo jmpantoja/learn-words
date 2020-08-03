@@ -14,6 +14,9 @@ declare(strict_types=1);
 namespace PlanB\Edge\Domain\VarType\Exception;
 
 use InvalidArgumentException;
+use function get_class;
+use function gettype;
+use function is_object;
 
 class InvalidTypeException extends InvalidArgumentException
 {
@@ -24,7 +27,7 @@ class InvalidTypeException extends InvalidArgumentException
      */
     public function __construct($value, string $expectedTypes)
     {
-        $type = \is_object($value) ? \get_class($value) : \gettype($value);
+        $type = is_object($value) ? get_class($value) : gettype($value);
         $message = sprintf('Se esperaba un argumento de tipo "%s", pero se ha pasado un "%s"', $expectedTypes, $type);
 
         parent::__construct($message);

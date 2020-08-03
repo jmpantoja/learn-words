@@ -7,11 +7,16 @@ LearnWords\Domain\Word\Word:
         lang:
             groups: ['read', 'write']
         questions:
-            groups: ['read', 'write']            
+            groups: ['read', 'write']
         tags:
             groups: ['read', 'write']
 
 LearnWords\Domain\Word\WordId:
+    attributes:
+        uuid:
+            groups: ['read']
+
+LearnWords\Domain\Word\TagId:
     attributes:
         uuid:
             groups: ['read']
@@ -23,6 +28,8 @@ LearnWords\Domain\Word\Lang:
 
 LearnWords\Domain\Word\Tag:
     attributes:
+        id:
+            groups: ['read']
         tag:
             groups: ['read', 'write']
 

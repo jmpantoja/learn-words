@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace PlanB\Edge\Domain\Entity\Traits;
 
 
-use PlanB\Edge\Domain\Event\DomainEventInterface;
 use PlanB\Edge\Domain\Event\DomainEventDispatcher;
+use PlanB\Edge\Domain\Event\DomainEventInterface;
 
 trait NotifyEvents
 {

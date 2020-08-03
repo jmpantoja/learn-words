@@ -23,6 +23,19 @@ class SnapshotList extends AbstractLazyCollection
 {
     private array $snapshot;
 
+    final public function __construct(Collection $input)
+    {
+        $this->initialize();
+
+        $this->snapshot = $input->toArray();
+
+        while ($input instanceof AbstractLazyCollection) {
+            $input = $input->collection;
+        }
+
+        $this->collection = clone $input;
+    }
+
     public static function collect(?iterable $input = null): self
     {
         $input = $input ?? [];
@@ -37,20 +50,6 @@ class SnapshotList extends AbstractLazyCollection
         return new static(new ArrayCollection($input));
     }
 
-    final public function __construct(Collection $input)
-    {
-        $this->initialize();
-
-        $this->snapshot = $input->toArray();
-
-        while ($input instanceof AbstractLazyCollection) {
-            $input = $input->collection;
-        }
-
-        $this->collection = clone $input;
-    }
-
-
     /**
      * @inheritDoc
      */
@@ -62,13 +61,6 @@ class SnapshotList extends AbstractLazyCollection
     public function clone(): self
     {
         return clone $this;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function doInitialize()
-    {
     }
 
     public function eachInsert(callable $callback): self
@@ -121,6 +113,7 @@ class SnapshotList extends AbstractLazyCollection
     public function eachUpdate(callable $callback): self
     {
         $items = $this->getUpdateDiff();
+
         foreach ($items as $key => $item) {
             call_user_func($callback, $item, $key);
         }
@@ -147,6 +140,13 @@ class SnapshotList extends AbstractLazyCollection
         return array_map(function ($key) {
             return $this->collection->get($key);
         }, $updated);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function doInitialize()
+    {
     }
 
 }

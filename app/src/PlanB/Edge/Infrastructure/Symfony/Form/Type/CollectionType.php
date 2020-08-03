@@ -46,26 +46,24 @@ abstract class CollectionType extends SingleType
     /**
      * @inheritDoc
      */
-    public function normalize(FormSerializerInterface $serializer, $data)
+    public function transform($value)
     {
-        $data = $data ?? [];
-
-        if (is_iterable($data)) {
-            return SnapshotList::collect($data);
-        }
-
-        return null;
+        $value = $value ?? [];
+        return $this->toValue($value);
     }
 
     /**
      * @inheritDoc
      */
-    public function denormalize(FormSerializerInterface $serializer, $data, ?object $subject = null)
+    public function toValue($value)
     {
-        if ($data instanceof SnapshotList) {
-            return $data;
-        }
+        $value = $value ?? [];
 
+        if (is_iterable($value)) {
+            return SnapshotList::collect($value);
+        }
         return null;
     }
+
+
 }

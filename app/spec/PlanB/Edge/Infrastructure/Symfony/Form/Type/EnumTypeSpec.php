@@ -41,36 +41,23 @@ class EnumTypeSpec extends ObjectBehavior
             ]);
     }
 
-    public function it_is_able_to_validate_a_value()
-    {
-        $this->validate('RED')->count()
-            ->shouldReturn(0);
-
-        $this->validate('BAD_VALUE')->count()
-            ->shouldReturn(1);
+    public function it_transforms_an_enum_in_a_string(){
+        $this->transform(ConcreteEnum::RED())->shouldReturn('RED');
     }
 
-    public function it_delegate_in_serializer_data_normalization(FormSerializerInterface $serializer){
-        $data = new stdClass();
-        $response = Argument::any();
-
-        $serializer->normalize($data)->willReturn($response);
-        $this->normalize($serializer, $data)->shouldReturn($response);
+    public function it_transforms_a_string_in_a_enum(){
+        $this->reverseTransform('RED')->shouldBeLike(ConcreteEnum::RED());
     }
 
-    public function it_delegate_in_serializer_data_denormalization(FormSerializerInterface $serializer){
-        $data = new stdClass();
-        $response = ConcreteEnum::RED();
-
-        $serializer->denormalize($data, Argument::cetera())->willReturn($response);
-        $this->denormalize($serializer, $data)->shouldReturn($response);
+    public function it_returns_null_when_try_to_transform_an_invalid_string(){
+        $this->reverseTransform('REDXXX')->shouldReturn(null);
     }
 }
 
 class ConcreteEnumType extends EnumType
 {
 
-    public function getClass(): string
+    public function getDataClass(): string
     {
         return ConcreteEnum::class;
     }
@@ -81,7 +68,6 @@ class ConcreteEnumType extends EnumType
         $this->configureOptions($resolver);
 
         return $resolver->resolve($options);
-
     }
 }
 

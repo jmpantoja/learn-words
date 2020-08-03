@@ -17,13 +17,36 @@ namespace PlanB\Edge\Domain\Collection;
 use Doctrine\Common\Collections\AbstractLazyCollection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Exception;
 use PlanB\Edge\Domain\Collection\Exception\InvalidClassnameException;
 use PlanB\Edge\Domain\Collection\Exception\InvalidCollectionElement;
 use Traversable;
 
 abstract class TypedList extends AbstractLazyCollection
 {
+    final private function __construct(Collection $input)
+    {
+        foreach ($input as $value) {
+            $this->ensureValueIsValid($value);
+        }
+
+        $this->initialize();
+        $this->collection = $input;
+    }
+
+    /**
+     * @param mixed $value
+     */
+    protected function ensureValueIsValid($value): void
+    {
+        $type = $this->getType();
+
+        if (!is_typeof($value, $type)) {
+            throw new InvalidCollectionElement($value, $type);
+        }
+    }
+
+    abstract public function getType(): string;
+
     public static function empty(): self
     {
         return static::collect([]);
@@ -44,23 +67,6 @@ abstract class TypedList extends AbstractLazyCollection
         }
 
         return new static(new ArrayCollection($input));
-    }
-
-    final private function __construct(Collection $input)
-    {
-        foreach ($input as $value) {
-            $this->ensureValueIsValid($value);
-        }
-
-        $this->initialize();
-        $this->collection = $input;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function doInitialize()
-    {
     }
 
     /**
@@ -88,20 +94,6 @@ abstract class TypedList extends AbstractLazyCollection
     }
 
     /**
-     * @param mixed $value
-     */
-    protected function ensureValueIsValid($value): void
-    {
-        $type = $this->getType();
-
-        if(!is_typeof($value, $type)){
-            throw new InvalidCollectionElement($value, $type);
-        }
-    }
-
-    abstract public function getType(): string;
-
-    /**
      * @param callable $callback
      * @param mixed $initial
      * @return mixed
@@ -109,6 +101,13 @@ abstract class TypedList extends AbstractLazyCollection
     public function reduce(callable $callback, $initial = null)
     {
         return array_reduce($this->toArray(), $callback, $initial);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function doInitialize()
+    {
     }
 
 }

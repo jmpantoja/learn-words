@@ -37,7 +37,7 @@ class EventStoreSpec extends ObjectBehavior
                                                    EntityManagerInterface $repository)
     {
 
-        $serializer->serialize($domainEvent, 'json', Argument::type('array'))
+        $serializer->serialize(Argument::type('array'), 'json', Argument::type('array'))
             ->willReturn('eventData');
 
         $domainEvent->getWhen()->willReturn(new DateTimeImmutable());
@@ -53,7 +53,7 @@ class EventStoreSpec extends ObjectBehavior
     {
         $date = new DateTimeImmutable();
 
-        $serializer->serialize($domainEvent, 'json', Argument::type('array'))
+        $serializer->serialize(Argument::type('array'), 'json', Argument::type('array'))
             ->willReturn('eventData');
 
 

@@ -24,6 +24,6 @@ api_platform:
         ApiPlatform\Core\Exception\FilterValidationException: 400
         Doctrine\ORM\OptimisticLockException: 409
       
-        
+    
     swagger:
-        versions: [3]
+        versions: [2.0]

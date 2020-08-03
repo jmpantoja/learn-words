@@ -15,12 +15,10 @@ namespace PlanB\Edge\Infrastructure\Symfony\Form\Type;
 
 
 use PlanB\Edge\Domain\Enum\Enum;
+use PlanB\Edge\Domain\Validator\ConstraintsFactory;
 use PlanB\Edge\Infrastructure\Symfony\Form\FormSerializerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Choice;
-use Symfony\Component\Validator\ConstraintViolationListInterface;
-use Symfony\Component\Validator\ValidatorBuilder;
 
 abstract class EnumType extends SingleType
 {
@@ -35,7 +33,7 @@ abstract class EnumType extends SingleType
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'enum_class' => $this->getClass(),
+            'enum_class' => $this->getDataClass(),
             'choices' => []
         ]);
 
@@ -52,46 +50,31 @@ abstract class EnumType extends SingleType
         });
     }
 
+    abstract public function getDataClass(): string;
+
     public function customOptions(OptionsResolver $resolver): void
     {
 
     }
 
-    public function validate($data): ConstraintViolationListInterface
-    {
-        $validator = (new ValidatorBuilder())->getValidator();
-
-        $enumClass = $this->getClass();
-        $choices = forward_static_call([$enumClass, 'toArray']);
-
-        $constraints = [
-            new Choice([
-                'choices' => array_keys($choices)
-            ])
-        ];
-
-        return $validator->validate($data, $constraints);
-    }
-
     /**
      * @inheritDoc
      */
-    public function normalize(FormSerializerInterface $serializer, $data)
+    public function reverseTransform($value)
     {
-        return $serializer->normalize($data);
-    }
+        if (!forward_static_call([$this->getDataClass(), 'hasKey'], $value)) {
+            return null;
+        }
 
-
-    /**
-     * @inheritDoc
-     */
-    public function denormalize(FormSerializerInterface $serializer, $data, ?object $subject = null): ?Enum
-    {
-        return $serializer->denormalize($data, $subject, $this->getClass());
+        return forward_static_call([$this->getDataClass(), 'make'], $value);
     }
 
     /**
+     * @param mixed $data
      * @return string
      */
-    abstract public function getClass(): string;
+    protected function toValue($data)
+    {
+        return (string)$data;
+    }
 }

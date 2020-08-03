@@ -14,12 +14,13 @@ declare(strict_types=1);
 namespace LearnWords\Infrastructure\UI\Admin\Word;
 
 
+use LearnWords\Infrastructure\Domain\Word\Dto\WordDto;
 use PlanB\Edge\Infrastructure\Sonata\Admin\Admin;
 
 final class WordAdmin extends Admin
 {
-    public function toString($object)
+    public function getDtoClass(): string
     {
-        return $object->getWord();
+        return WordDto::class;
     }
 }

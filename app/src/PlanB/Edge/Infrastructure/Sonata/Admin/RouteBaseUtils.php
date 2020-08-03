@@ -20,6 +20,12 @@ final class RouteBaseUtils
 
     private array $pieces = [];
 
+    private function __construct(string $className)
+    {
+        $pieces = explode('\\', strtolower($className));
+        $this->pieces = array_filter($pieces, [$this, 'filter']);
+    }
+
     public static function fromEntity(EntityInterface $entity): self
     {
         return static::fromClassName(get_class($entity));
@@ -28,20 +34,6 @@ final class RouteBaseUtils
     public static function fromClassName(string $className): self
     {
         return new self($className);
-    }
-
-    private function __construct(string $className)
-    {
-        $pieces = explode('\\', strtolower($className));
-        $this->pieces = array_filter($pieces, [$this, 'filter']);
-    }
-
-    private function filter(string $piece): bool
-    {
-        if (in_array($piece, static::NON_ALLOWED_WORDS)) {
-            return false;
-        }
-        return !str_ends_with($piece, 'bundle');
     }
 
     public function getBaseRouteName(): string
@@ -53,6 +45,14 @@ final class RouteBaseUtils
     public function getBaseRoutePattern(): string
     {
         return implode('/', $this->pieces);
+    }
+
+    private function filter(string $piece): bool
+    {
+        if (in_array($piece, static::NON_ALLOWED_WORDS)) {
+            return false;
+        }
+        return !str_ends_with($piece, 'bundle');
     }
 
 

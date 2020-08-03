@@ -40,10 +40,19 @@ abstract class Enum extends \MyCLabs\Enum\Enum
         throw new LogicException($message);
     }
 
+    public static function hasKey(string $key): bool
+    {
+        return static::isValidKey($key);
+    }
 
     public static function byKey(string $value): Enum
     {
         return static::__callStatic($value, []);
+    }
+
+    public static function hasValue(string $value): bool
+    {
+        return static::isValid($value);
     }
 
     /**
@@ -54,17 +63,6 @@ abstract class Enum extends \MyCLabs\Enum\Enum
     {
         $value = static::search($value);
         return static::byKey($value);
-    }
-
-
-    public static function hasKey(string $key): bool
-    {
-        return static::isValidKey($key);
-    }
-
-    public static function hasValue(string $value): bool
-    {
-        return static::isValid($value);
     }
 
     /**

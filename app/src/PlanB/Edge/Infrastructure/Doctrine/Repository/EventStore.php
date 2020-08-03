@@ -18,6 +18,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use PlanB\Edge\Domain\Entity\Event;
 use PlanB\Edge\Domain\Event\DomainEventInterface;
+use PlanB\Edge\Domain\PropertyExtractor\PropertyExtractor;
 use PlanB\Edge\Domain\Repository\EventStoreInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -51,8 +52,13 @@ final class EventStore extends ServiceEntityRepository implements EventStoreInte
      */
     public function createEventObject(DomainEventInterface $domainEvent): Event
     {
-        $data = $this->serializer->serialize($domainEvent, 'json', [
-            ObjectNormalizer::IGNORED_ATTRIBUTES => ['when']
+        $properties = PropertyExtractor::fromObject($domainEvent)
+            ->toArray();
+
+        unset($properties['when']);
+
+        $data = $this->serializer->serialize($properties, 'json', [
+            ObjectNormalizer::GROUPS => ['read'],
         ]);
 
         return new Event(...[
@@ -61,6 +67,4 @@ final class EventStore extends ServiceEntityRepository implements EventStoreInte
             $domainEvent->getWhen()
         ]);
     }
-
-
 }

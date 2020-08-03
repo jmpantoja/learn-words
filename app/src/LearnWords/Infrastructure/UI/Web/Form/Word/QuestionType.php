@@ -14,20 +14,14 @@ declare(strict_types=1);
 namespace LearnWords\Infrastructure\UI\Web\Form\Word;
 
 
-use PlanB\Edge\Infrastructure\Symfony\Form\FormSerializerInterface;
+use LearnWords\Infrastructure\Domain\Word\Dto\QuestionDto;
+use PlanB\Edge\Infrastructure\Symfony\Form\FormAwareInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\Type\CompositeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\ConstraintViolationList;
-use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 final class QuestionType extends CompositeType
 {
-
-    public function validate(array $data): ConstraintViolationListInterface
-    {
-        return new ConstraintViolationList();
-    }
 
     public function customForm(FormBuilderInterface $builder, array $options): void
     {
@@ -39,11 +33,16 @@ final class QuestionType extends CompositeType
 
     function customOptions(OptionsResolver $resolver): void
     {
-
+        $resolver->setDefault('data_class', $this->getDataClass());
     }
 
-    public function denormalize(FormSerializerInterface $serializer, $data, ?object $subject = null)
+    public function getDataClass(): string
     {
-        return $serializer->denormalize($data, $subject);
+        return QuestionDto::class;
+    }
+
+    public function toDto($data): QuestionDto
+    {
+        return QuestionDto::fromObject($data);
     }
 }

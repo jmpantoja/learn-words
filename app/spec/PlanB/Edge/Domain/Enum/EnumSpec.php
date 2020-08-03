@@ -78,7 +78,8 @@ class EnumSpec extends ObjectBehavior
         $this->is($otherB)->shouldReturn(false);
     }
 
-    public function it_is_able_to_converts_to_string(){
+    public function it_is_able_to_converts_to_string()
+    {
         $this->__toString()->shouldReturn('KEYA');
     }
 }

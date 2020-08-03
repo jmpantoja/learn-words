@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace PlanB\Edge\Domain\Validator\Constraints;
 
 
-use b;
 use Symfony\Component\Validator\Constraints\Type;
 
 final class DataType extends Type

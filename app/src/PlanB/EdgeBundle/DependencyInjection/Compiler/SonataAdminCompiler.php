@@ -14,11 +14,9 @@ declare(strict_types=1);
 namespace PlanB\EdgeBundle\DependencyInjection\Compiler;
 
 use PlanB\Edge\Infrastructure\Sonata\Configurator\ConfiguratorFactory;
-use PlanB\Edge\Infrastructure\Sonata\Doctrine\ModelManager;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
-use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * Configura la injección de dependencias para las clases Admin de Sonata
@@ -53,20 +51,6 @@ final class SonataAdminCompiler implements CompilerPassInterface
     }
 
     /**
-     * @param string $id
-     * @param string|null $alias
-     * @return array|string[]
-     */
-    private function sanitizeAliases(string $id, ?string $alias): array
-    {
-        if (is_null($alias)) {
-            return [];
-        }
-
-        return [$alias => $id];
-    }
-
-    /**
      * @param Definition $definition
      * @param string[][] $tags
      * @return string|null
@@ -83,6 +67,20 @@ final class SonataAdminCompiler implements CompilerPassInterface
 
         $admin = forward_static_call([$class, 'attachTo']);
         return CallToSetter::configuratorServiceName($type, $admin);
+    }
+
+    /**
+     * @param string $id
+     * @param string|null $alias
+     * @return array|string[]
+     */
+    private function sanitizeAliases(string $id, ?string $alias): array
+    {
+        if (is_null($alias)) {
+            return [];
+        }
+
+        return [$alias => $id];
     }
 
     /**

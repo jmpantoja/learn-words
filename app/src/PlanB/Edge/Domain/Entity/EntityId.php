@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace PlanB\Edge\Domain\Entity;
 
+use Exception;
 use Ramsey\Uuid\Uuid;
 
 class EntityId
@@ -21,7 +22,7 @@ class EntityId
 
     /**
      * @param string $uuid
-     * @throws \Exception
+     * @throws Exception
      */
     final public function __construct(string $uuid = null)
     {

@@ -11,14 +11,12 @@
 
 declare(strict_types=1);
 
-namespace PlanB\Edge\Infrastructure\Symfony\Form;
+namespace PlanB\Edge\Domain\Validator;
 
 
-use Symfony\Component\Form\DataMapperInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-interface CompositeDataMapperInterface extends DataMapperInterface
+interface ValidatorAwareInterface
 {
-    public function attach(CompositeFormTypeInterface $formType): self;
-
-
+    public function setValidator(ValidatorInterface $validator): self;
 }

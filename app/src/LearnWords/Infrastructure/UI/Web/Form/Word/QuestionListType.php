@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace LearnWords\Infrastructure\UI\Web\Form\Word;
 
-use LearnWords\Domain\Word\QuestionList;
 use PlanB\Edge\Infrastructure\Symfony\Form\Type\CollectionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -26,6 +25,16 @@ final class QuestionListType extends CollectionType
             'entry_type' => QuestionType::class
         ]);
     }
+
+//    /**
+//     * @inheritDoc
+//     */
+//    public function reverseTransform($value)
+//    {
+//        dump($value);
+//        die('xx');
+//        return $value;
+//    }
 
 
 }

@@ -6,7 +6,6 @@ namespace PlanB\Edge\Infrastructure\Doctrine\DBAL\Type;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
-use Doctrine\DBAL\Types\Types;
 use PlanB\Edge\Domain\Enum\Enum;
 use PlanB\Edge\Domain\VarType\Exception\InvalidTypeException;
 
@@ -36,6 +35,11 @@ abstract class EnumType extends Type
         return $this->byKey($value, $platform);
     }
 
+    /**
+     * @param string $value
+     * @return Enum
+     */
+    abstract public function byKey(string $value, AbstractPlatform $platform): Enum;
 
     /**
      * Gets the SQL declaration snippet for a field of this type.
@@ -49,10 +53,4 @@ abstract class EnumType extends Type
     {
         return $platform->getVarcharTypeDeclarationSQL($fieldDeclaration);
     }
-
-    /**
-     * @param string $value
-     * @return Enum
-     */
-    abstract public function byKey(string $value, AbstractPlatform $platform): Enum;
 }

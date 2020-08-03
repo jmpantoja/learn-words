@@ -18,7 +18,7 @@ abstract class DatagridConfigurator implements DatagridConfiguratorInterface
 {
     private ListMapper $listMapper;
 
-    
+
     public function handle(ListMapper $listMapper): self
     {
         $this->listMapper = $listMapper;

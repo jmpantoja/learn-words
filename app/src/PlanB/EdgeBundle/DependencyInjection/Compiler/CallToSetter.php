@@ -73,19 +73,6 @@ final class CallToSetter
         return new Reference($service);
     }
 
-    private function getMethodName(): string
-    {
-        switch ($this->type) {
-            case FormConfiguratorInterface::TYPE:
-                return 'setFormConfigurator';
-
-            case DatagridConfiguratorInterface::TYPE:
-                return 'setDatagridConfigurator';
-            default:
-                throw new LogicException('El tipo no es correcto');
-        }
-    }
-
     /**
      * @param string $type
      * @param string $admin
@@ -97,6 +84,19 @@ final class CallToSetter
         $admin = str_replace('\\', '.', $admin);
 
         return sprintf('planb.sonata.%s.configurator.%s', $type, $admin);
+    }
+
+    private function getMethodName(): string
+    {
+        switch ($this->type) {
+            case FormConfiguratorInterface::TYPE:
+                return 'setFormConfigurator';
+
+            case DatagridConfiguratorInterface::TYPE:
+                return 'setDatagridConfigurator';
+            default:
+                throw new LogicException('El tipo no es correcto');
+        }
     }
 
 

@@ -13,8 +13,9 @@ declare(strict_types=1);
 namespace PlanB\Edge\Infrastructure\Sonata\Configurator;
 
 use Sonata\AdminBundle\Form\FormMapper;
+use Symfony\Component\Form\DataTransformerInterface;
 
-interface FormConfiguratorInterface extends ConfiguratorInterface
+interface FormConfiguratorInterface extends ConfiguratorInterface, DataTransformerInterface
 {
     public const TYPE = 'form';
 

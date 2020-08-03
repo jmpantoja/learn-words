@@ -3,7 +3,7 @@ doctrine:
         types:
             uuid_binary_ordered_time: Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType
         mapping_types:
-            uuid_binary_ordered_time: binary    
+            uuid_binary_ordered_time: binary
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware

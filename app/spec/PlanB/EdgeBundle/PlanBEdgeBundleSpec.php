@@ -24,8 +24,5 @@ class PlanBEdgeBundleSpec extends ObjectBehavior
             ->addCompilerPass(Argument::type(SonataAdminCompiler::class), PassConfig::TYPE_BEFORE_OPTIMIZATION, 10)
             ->shouldBeCalled();
 
-        $container
-            ->addCompilerPass(Argument::type(FormDataMapperCompiler::class), PassConfig::TYPE_BEFORE_OPTIMIZATION, 10)
-            ->shouldBeCalled();
     }
 }

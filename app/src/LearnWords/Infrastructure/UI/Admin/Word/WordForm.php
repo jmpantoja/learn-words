@@ -15,10 +15,11 @@ namespace LearnWords\Infrastructure\UI\Admin\Word;
 
 
 use LearnWords\Domain\Word\Word;
+use LearnWords\Infrastructure\Domain\Word\Dto\WordDto;
 use LearnWords\Infrastructure\UI\Web\Form\Word\LangType;
 use LearnWords\Infrastructure\UI\Web\Form\Word\QuestionListType;
 use LearnWords\Infrastructure\UI\Web\Form\Word\TagListType;
-use PlanB\Edge\Domain\Collection\SnapshotList;
+use PlanB\Edge\Domain\Entity\Dto;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfigurator;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
@@ -37,5 +38,10 @@ final class WordForm extends FormConfigurator
             ->add('lang', LangType::class)
             ->add('questions', QuestionListType::class)
             ->add('tags', TagListType::class);
+    }
+
+    protected function toDto($entity): Dto
+    {
+        return WordDto::fromObject($entity);
     }
 }

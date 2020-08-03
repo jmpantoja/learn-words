@@ -20,17 +20,17 @@ use PlanB\Edge\Infrastructure\Doctrine\DBAL\Type\EntityIdType;
 final class WordIdType extends EntityIdType
 {
 
-    protected function fromString(string $value): WordId
-    {
-        // @phpstan-ignore-next-line
-        return WordId::fromString($value);
-    }
-
     /**
      * @inheritDoc
      */
     public function getName()
     {
         return 'WordId';
+    }
+
+    protected function fromString(string $value): WordId
+    {
+        // @phpstan-ignore-next-line
+        return WordId::fromString($value);
     }
 }

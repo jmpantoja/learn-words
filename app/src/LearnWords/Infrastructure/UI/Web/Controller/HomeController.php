@@ -14,16 +14,13 @@ declare(strict_types=1);
 namespace LearnWords\Infrastructure\UI\Web\Controller;
 
 
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 final class HomeController
 {
-
-    public function __invoke(): JsonResponse
+    public function __invoke(): Response
     {
 
-        return new JsonResponse([
-            'success' => 'ok',
-        ]);
+        return new Response('xxxxx');
     }
 }

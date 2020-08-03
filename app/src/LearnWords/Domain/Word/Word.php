@@ -25,6 +25,8 @@ class Word implements EntityInterface
 {
     use NotifyEvents;
 
+    static private $pepe = 'asss';
+
     private WordId $id;
     private string $word;
     private Lang $lang;
@@ -58,12 +60,6 @@ class Word implements EntityInterface
         return $this;
     }
 
-    public function getId(): WordId
-    {
-        return $this->id;
-    }
-
-
     public function getWord(): string
     {
         return $this->word;
@@ -96,6 +92,10 @@ class Word implements EntityInterface
         return $this;
     }
 
+    public function getId(): WordId
+    {
+        return $this->id;
+    }
 
     public function removeQuestion(Question $question): self
     {

@@ -1,0 +1,20 @@
+LearnWords\Infrastructure\Domain\Word\Dto\WordDto:
+    properties:
+        word:
+            -   NotBlank: ~
+
+
+LearnWords\Infrastructure\Domain\Word\Dto\TagDto:
+    properties:
+        tag:
+            -   NotBlank: ~
+            -   Length:
+                    min: 3
+
+
+LearnWords\Infrastructure\Domain\Word\Dto\QuestionDto:
+    properties:
+        wording:
+            -   NotBlank: ~
+            -   Length:
+                    min: 5

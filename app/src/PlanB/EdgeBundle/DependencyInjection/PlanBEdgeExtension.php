@@ -13,16 +13,19 @@ declare(strict_types=1);
 
 namespace PlanB\EdgeBundle\DependencyInjection;
 
+use Exception;
 use PlanB\Edge\Application\UseCase\UseCaseInterface;
-use PlanB\Edge\Infrastructure\Sonata\Admin\AdminInterface;
+use PlanB\Edge\Domain\Validator\ValidatorAwareInterface;
+use PlanB\Edge\Infrastructure\Sonata\Admin\Admin;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\DatagridConfiguratorInterface;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfiguratorInterface;
-use PlanB\Edge\Infrastructure\Symfony\Form\CompositeFormTypeInterface;
-use PlanB\Edge\Infrastructure\Symfony\Form\SingleFormTypeInterface;
+use PlanB\Edge\Infrastructure\Symfony\Form\FormAwareInterface;
+use PlanB\Edge\Infrastructure\Symfony\Form\SerializerFormAwareInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Yaml\Yaml;
@@ -35,7 +38,7 @@ class PlanBEdgeExtension extends Extension implements PrependExtensionInterface
      *
      * @param mixed[] $configs
      * @param ContainerBuilder $container
-     * @throws \Exception
+     * @throws Exception
      */
     public function load(array $configs, ContainerBuilder $container): void
     {
@@ -45,11 +48,8 @@ class PlanBEdgeExtension extends Extension implements PrependExtensionInterface
                 'typehints' => true
             ]);
 
-        $container->registerForAutoconfiguration(CompositeFormTypeInterface::class)
-            ->addTag('planb.composite_form_type');
-
-        $container->registerForAutoconfiguration(SingleFormTypeInterface::class)
-            ->addTag('planb.single_form_type');
+        $container->registerForAutoconfiguration(ValidatorAwareInterface::class)
+            ->addMethodCall('setValidator', [new Reference('validator')]);
 
         $container->registerForAutoconfiguration(FormConfiguratorInterface::class)
             ->addTag('planb.admin.configurator', ['type' => FormConfiguratorInterface::TYPE]);
@@ -57,8 +57,9 @@ class PlanBEdgeExtension extends Extension implements PrependExtensionInterface
         $container->registerForAutoconfiguration(DatagridConfiguratorInterface::class)
             ->addTag('planb.admin.configurator', ['type' => DatagridConfiguratorInterface::TYPE]);
 
-        $container->registerForAutoconfiguration(AdminInterface::class)
-            ->addTag('planb.admin');
+        $container->registerForAutoconfiguration(Admin::class)
+            ->addTag('planb.admin')
+            ->addMethodCall('setSerializer', [new Reference('serializer')]);
 
         $loader = new YamlFileLoader(
             $container,

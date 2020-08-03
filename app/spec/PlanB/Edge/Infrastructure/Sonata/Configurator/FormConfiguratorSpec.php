@@ -3,8 +3,10 @@
 namespace spec\PlanB\Edge\Infrastructure\Sonata\Configurator;
 
 use PhpSpec\ObjectBehavior;
+use PlanB\Edge\Domain\Entity\Dto;
 use PlanB\Edge\Domain\Entity\EntityBuilder;
-use PlanB\Edge\Infrastructure\Sonata\Admin\AdminInterface;
+use PlanB\Edge\Domain\Entity\EntityId;
+use PlanB\Edge\Infrastructure\Sonata\Admin\Admin;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\ConfiguratorInterface;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfigurator;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfiguratorInterface;
@@ -14,20 +16,16 @@ use PlanB\Edge\Infrastructure\Symfony\Form\FormSerializerInterface;
 use Prophecy\Argument;
 use Sonata\AdminBundle\Form\FormMapper;
 use stdClass;
-use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Validator\ConstraintViolationList;
 
 class FormConfiguratorSpec extends ObjectBehavior
 {
-    public function let(CompositeDataMapperInterface $dataMapper,
-                        FormMapper $formMapper,
-                        AdminInterface $admin,
+    public function let(FormMapper $formMapper,
+                        Admin $admin,
                         FormBuilderInterface $formBuilder)
     {
-        $dataMapper->attach(Argument::any())->willReturn($dataMapper);
+
 
         $formMapper->getAdmin()->willReturn($admin);
         $formMapper->getFormBuilder()->willReturn($formBuilder);
@@ -42,7 +40,7 @@ class FormConfiguratorSpec extends ObjectBehavior
         $formBuilder->getOptions()->willReturn([]);
 
         $this->beAnInstanceOf(ConcreteFormConfigurator::class);
-        $this->setDataMapper($dataMapper);
+
 
     }
 
@@ -59,7 +57,7 @@ class FormConfiguratorSpec extends ObjectBehavior
         $formMapper->hasOpenTab()->willReturn(true, false);
         $this->handle($formMapper, null);
 
-        $formBuilder->setDataMapper(Argument::type(CompositeDataMapperInterface::class))
+        $formBuilder->addModelTransformer($this)
             ->shouldHaveBeenCalledOnce();
 
         $formMapper->add('name', TextType::class, Argument::type('array'), Argument::type('array'))
@@ -80,54 +78,64 @@ class FormConfiguratorSpec extends ObjectBehavior
         $formMapper->end()
             ->shouldHaveBeenCalledTimes(2);
 
-
     }
 
-    public function it_is_able_to_normalize_data(FormSerializerInterface $serializer)
+    public function it_is_able_to_transform_an_entity_in_a_dto()
     {
-        $data = [];
-        $response = Argument::any();
-        $serializer->normalize($data)->willReturn($response);
-
-        $this->normalize($serializer, $data)->shouldReturn($response);
-        $serializer->normalize($data)->shouldBeCalled();
+        $this->transform(ConcreteEntity::withId())->shouldBeAnInstanceOf(Dto::class);
     }
 
-    public function it_is_able_to_denormalize_data(FormSerializerInterface $serializer)
+    public function it_returns_null_when_transform_a_null_value()
     {
-        $data = [];
+        $this->transform(null)->shouldReturn(null);
+    }
+
+    public function it_returns_null_when_transform_a_non_initialized_entity()
+    {
+        $this->transform(ConcreteEntity::withoutId())->shouldReturn(null);
+    }
+
+    public function it_is_able_to_reverse_transform_a_value()
+    {
         $subject = new stdClass();
-        $response = Argument::any();
-
-        $serializer->denormalize($data, $subject, 'className')->willReturn($response);
-
-        $this->denormalize($serializer, $data, $subject)->shouldReturn($response);
-        $serializer->denormalize($data, $subject, 'className')->shouldBeCalled();
+        $this->reverseTransform($subject)->shouldReturn($subject);
     }
-
-    public function it_throws_an_exception_when_denormalize_fails(FormSerializerInterface $serializer)
-    {
-        $data = [];
-        $subject = new stdClass();
-
-        $serializer->denormalize(Argument::any(), Argument::any(), Argument::any())
-            ->willThrow(\Exception::class);
-
-        $this->shouldThrow(TransformationFailedException::class)->during('denormalize', [$serializer, $data, $subject]);
-
-        $serializer->denormalize($data, $subject, 'className')->shouldBeCalled();
-    }
-
-    public function it_returns_a_constraint_violations_list()
-    {
-        $this->validate($data = [])
-            ->shouldBeAnInstanceOf(ConstraintViolationList::class);
-    }
+//
+//    public function it_is_able_to_denormalize_data(FormSerializerInterface $serializer)
+//    {
+//        $data = [];
+//        $subject = new stdClass();
+//        $response = Argument::any();
+//
+//        $serializer->denormalize($data, $subject, 'className')->willReturn($response);
+//
+//        $this->denormalize($serializer, $data, $subject)->shouldReturn($response);
+//        $serializer->denormalize($data, $subject, 'className')->shouldBeCalled();
+//    }
+//
+//    public function it_throws_an_exception_when_denormalize_fails(FormSerializerInterface $serializer)
+//    {
+//        $data = [];
+//        $subject = new stdClass();
+//
+//        $serializer->denormalize(Argument::any(), Argument::any(), Argument::any())
+//            ->willThrow(\Exception::class);
+//
+//        $this->shouldThrow(TransformationFailedException::class)->during('denormalize', [$serializer, $data, $subject]);
+//
+//        $serializer->denormalize($data, $subject, 'className')->shouldBeCalled();
+//    }
+//
+//    public function it_returns_a_constraint_violations_list()
+//    {
+//        $this->validate($data = [])
+//            ->shouldBeAnInstanceOf(ConstraintViolationList::class);
+//    }
 }
 
 class ConcreteFormConfigurator extends FormConfigurator
 {
-    protected string $className = 'className';
+    protected string $dataClass = 'className';
 
     public function attachTo(): string
     {
@@ -156,4 +164,48 @@ class ConcreteFormConfigurator extends FormConfigurator
             ]);
 
     }
+
+    protected function toDto($entity): Dto
+    {
+        return new ConcreteDto();
+    }
+}
+
+class ConcreteDto extends Dto
+{
+
+    public function update($entity): object
+    {
+        // TODO: Implement update() method.
+    }
+
+    public function create(): object
+    {
+        // TODO: Implement create() method.
+    }
+}
+
+class ConcreteEntity
+{
+    private EntityId  $id;
+
+    static public function withId(): self
+    {
+        return new static(new EntityId());
+    }
+
+    static public function withoutId(): self
+    {
+        return new static();
+    }
+
+    private function __construct(EntityId $id = null)
+    {
+        if (null === $id) {
+            return;
+        }
+        $this->id = $id;
+
+    }
+
 }

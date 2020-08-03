@@ -25,6 +25,7 @@ use PlanB\Edge\Domain\Entity\Traits\NotifyEvents;
 class Tag implements EntityInterface
 {
     use NotifyEvents;
+
     private TagId $id;
     private string $tag;
     private Collection $words;
@@ -41,7 +42,7 @@ class Tag implements EntityInterface
 
     public function update(string $tag): self
     {
-        $this->tag = $tag;
+        $this->tag = strtoupper($tag);
         $this->notify(new TagHasBeenUpdated($this));
         return $this;
     }

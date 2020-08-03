@@ -15,7 +15,6 @@ namespace LearnWords\Application\Word\UseCase;
 
 
 use LearnWords\Domain\Word\TagRepository;
-use LearnWords\Domain\Word\WordRepository;
 use PlanB\Edge\Application\UseCase\UseCaseInterface;
 
 final class SaveTagUseCase implements UseCaseInterface

@@ -23,7 +23,6 @@ final class Question implements EntityInterface
 
     private string $wording;
 
-
     public function __construct(Word $word, string $wording)
     {
         $this->id = new QuestionId();
@@ -33,7 +32,7 @@ final class Question implements EntityInterface
 
     public function update(string $wording): self
     {
-        if($this->wording == $wording){
+        if ($this->wording == $wording) {
             return $this;
         }
 

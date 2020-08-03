@@ -16,7 +16,7 @@ namespace LearnWords\Domain\Word;
 
 interface WordRepository
 {
-    public function persist(Word $word): void ;
+    public function persist(Word $word): void;
 
-    public function delete(Word $word): void ;
+    public function delete(Word $word): void;
 }
