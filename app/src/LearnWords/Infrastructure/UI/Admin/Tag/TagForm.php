@@ -13,12 +13,14 @@ declare(strict_types=1);
 
 namespace LearnWords\Infrastructure\UI\Admin\Tag;
 
-use LearnWords\Domain\Word\Tag;
-use LearnWords\Infrastructure\Domain\Word\Dto\TagDto;
-use PlanB\Edge\Domain\Entity\Dto;
+
+use LearnWords\Domain\Dictionary\Tag;
+use LearnWords\Infrastructure\Domain\Dictionary\Dto\TagDto;
+use LearnWords\Infrastructure\UI\Web\Form\RelevanceType;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfigurator;
-use PlanB\Edge\Infrastructure\Sonata\Doctrine\ManagerCommandFactoryInterface;
-use PlanB\Edge\Infrastructure\Symfony\Validator\ConstraintBuilderFactory;
+use PlanB\Edge\Infrastructure\Symfony\Form\FormInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+
 
 final class TagForm extends FormConfigurator
 {
@@ -27,13 +29,16 @@ final class TagForm extends FormConfigurator
         return TagAdmin::class;
     }
 
-    public function configure(Tag $tag = null): void
+    public function configure(Tag $word = null): void
     {
-        $this->add('tag');
+        $this->add('tag', TextType::class);
     }
 
-    protected function toDto($entity): Dto
+    public function transform(?object $data)
     {
-        return TagDto::fromObject($entity);
+        if (null === $data) {
+            return null;
+        }
+        return TagDto::fromObject($data);
     }
 }

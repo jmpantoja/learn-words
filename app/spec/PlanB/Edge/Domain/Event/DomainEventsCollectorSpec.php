@@ -21,6 +21,7 @@ class DomainEventsCollectorSpec extends ObjectBehavior
         $this->getEvents()->shouldHaveCount(1);
 
         $this->handle($event);
+        $this->handle($event);
         $this->getEvents()->shouldHaveCount(2);
     }
 

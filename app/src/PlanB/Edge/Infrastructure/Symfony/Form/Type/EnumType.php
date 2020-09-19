@@ -52,29 +52,36 @@ abstract class EnumType extends SingleType
 
     abstract public function getDataClass(): string;
 
+    public function getConstraints()
+    {
+        return null;
+    }
+
     public function customOptions(OptionsResolver $resolver): void
     {
 
     }
 
     /**
-     * @inheritDoc
+     * @param mixed $data
+     * @return Enum|null
      */
-    public function reverseTransform($value)
+    public function reverse($data): ?Enum
     {
-        if (!forward_static_call([$this->getDataClass(), 'hasKey'], $value)) {
+        if (!forward_static_call([$this->getDataClass(), 'hasKey'], $data)) {
             return null;
         }
 
-        return forward_static_call([$this->getDataClass(), 'make'], $value);
+        return forward_static_call([$this->getDataClass(), 'make'], $data);
     }
 
     /**
-     * @param mixed $data
-     * @return string
+     * @param object|null $value
+     * @return mixed
      */
-    protected function toValue($data)
+    public function transform($value)
     {
-        return (string)$data;
+        return (string)$value;
     }
+
 }

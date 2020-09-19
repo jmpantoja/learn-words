@@ -2,7 +2,7 @@ framework:
     validation:
         mapping:
             paths:
-                - '%kernel.project_dir%/src/LearnWords/Infrastructure/Domain/Word/Mapping/Validation'
+                - '%kernel.project_dir%/src/LearnWords/Infrastructure/Domain/Dictionary/Mapping/Validation'
         email_validation_mode: html5
 
         # Enables validator auto-mapping support.

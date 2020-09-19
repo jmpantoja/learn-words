@@ -44,6 +44,14 @@ class PropertyExtractorSpec extends ObjectBehavior
         $this->id()->shouldReturn(null);
     }
 
+    public function it_returns_false_when_object_has_not_id()
+    {
+        $entity = new DummyWithOutId();
+        $this->beConstructedThrough('fromObject', [$entity]);
+
+        $this->hasIdentifier()->shouldReturn(false);
+    }
+
 
     public function it_returns_null_when_there_is_not_id()
     {
@@ -56,7 +64,7 @@ class PropertyExtractorSpec extends ObjectBehavior
 
 class Dummy
 {
-    private $id;
+    private int $id;
     static int $age = 14;
     private string $name;
     private string $lastName;
@@ -71,3 +79,17 @@ class Dummy
         }
     }
 }
+
+class DummyWithOutId
+{
+    static int $age = 14;
+    private string $name;
+    private string $lastName;
+
+    public function __construct()
+    {
+        $this->name = 'pepe';
+        $this->lastName = 'lopez';
+    }
+}
+

@@ -1,0 +1,7 @@
+Language:
+    type: enum    
+    config:        
+        description: "A word"
+        values:
+            SPANISH: SPANISH
+            ENGLISH: ENGLISH                                 

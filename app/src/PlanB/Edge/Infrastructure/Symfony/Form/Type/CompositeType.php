@@ -14,23 +14,23 @@ declare(strict_types=1);
 namespace PlanB\Edge\Infrastructure\Symfony\Form\Type;
 
 
-use PlanB\Edge\Domain\Entity\Dto;
+use PlanB\Edge\Domain\PropertyExtractor\PropertyExtractor;
 use PlanB\Edge\Domain\Validator\ValidatorAwareInterface;
+use PlanB\Edge\Infrastructure\Symfony\Form\AutoContainedFormTypeInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\FormAwareInterface;
+use PlanB\Edge\Infrastructure\Symfony\Form\Listener\AutoContainedFormSubscriber;
+use PlanB\Edge\Infrastructure\Symfony\Form\SelfValidatedFormTypeInterface;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\Event\PostSubmitEvent;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-abstract class CompositeType extends AbstractType implements DataTransformerInterface, ValidatorAwareInterface
+abstract class CompositeType extends AbstractType implements AutoContainedFormTypeInterface, SelfValidatedFormTypeInterface
 {
-
     private ValidatorInterface $validator;
 
     public function setValidator(ValidatorInterface $validator): ValidatorAwareInterface
@@ -41,12 +41,11 @@ abstract class CompositeType extends AbstractType implements DataTransformerInte
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->addModelTransformer($this);
-        $builder->addEventListener(FormEvents::POST_SUBMIT, [$this, 'validateEvent']);
-
-        $this->customForm($builder, $options);
+        $builder->addEventSubscriber(new AutoContainedFormSubscriber($this));
         $builder->setByReference(false);
         $builder->setCompound(true);
+
+        $this->customForm($builder, $options);
     }
 
     abstract public function customForm(FormBuilderInterface $builder, array $options): void;
@@ -56,51 +55,53 @@ abstract class CompositeType extends AbstractType implements DataTransformerInte
         $this->customOptions($resolver);
     }
 
-    abstract function customOptions(OptionsResolver $resolver): void;
-
-    public function validateEvent(PostSubmitEvent $event): self
+    public function customOptions(OptionsResolver $resolver): void
     {
-        $this->validate($event->getData(), $event->getForm());
-        return $this;
-    }
-
-    private function validate(Dto $dto, FormInterface $form): void
-    {
-        /** @var ConstraintViolation[] $violations */
-        $violations = $this->validator->validate($dto);
-
-        foreach ($violations as $violation) {
-            $path = $violation->getPropertyPath();
-            $message = $violation->getMessage();
-
-            $form->get($path)->addError(new FormError($message));
-        }
     }
 
     /**
-     * @inheritDoc
+     * @return array|null
      */
-    public function transform($value)
+    public function getConstraints()
     {
-        if (null === $value) {
+        return null;
+    }
+
+    /**
+     * @param object|null $data
+     * @return array|null
+     */
+    public function transform(?object $data)
+    {
+        if (null === $data) {
             return null;
         }
-        return $this->toDto($value);
+
+        return PropertyExtractor::fromObject($data)->toArray();
     }
 
     /**
      * @param mixed $data
-     * @return Dto
+     * @param FormInterface $form
      */
-    abstract public function toDto($data): Dto;
-
-    /**
-     * @inheritDoc
-     */
-    public function reverseTransform($value)
+    public function validate($data, FormInterface $form): void
     {
-        return $value;
+        $constraints = $this->getConstraints();
+        $violations = $this->validator->validate($data, $constraints);
+
+        foreach ($violations as $violation) {
+            $this->addError($form, $violation);
+        }
     }
 
-
+    /**
+     * @param FormInterface $form
+     * @param ConstraintViolation $violation
+     */
+    private function addError(FormInterface $form, ConstraintViolation $violation): void
+    {
+        $propertyAccess = new PropertyAccessor();
+        $child = $propertyAccess->getValue($form, $violation->getPropertyPath());
+        $child->addError(new FormError($violation->getMessage()));
+    }
 }

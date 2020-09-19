@@ -42,13 +42,14 @@ schema-update:
 	docker-compose exec php bin/console doctrine:schema:update --env=${env} --force
 
 xdebug-disabled:
-	docker-compose exec php sed -i 's/remote_enable=1/remote_enable=0/g' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+	docker-compose exec php mv /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/disabled/docker-php-ext-xdebug.ini
 	docker-compose restart php
+	docker-compose exec php /etc/init.d/blackfire-agent restart
 
 xdebug-enabled:
-	docker-compose exec php sed -i 's/remote_enable=0/remote_enable=1/g' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+	docker-compose exec php mv /usr/local/etc/php/conf.d/disabled/docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 	docker-compose restart php
-
+	docker-compose exec php /etc/init.d/blackfire-agent restart
 
 terraform-plan: check-env
 	./build/template.py  $(env) .terraform > .terraform

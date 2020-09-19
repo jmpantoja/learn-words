@@ -30,15 +30,23 @@ services:
 #    # please note that last definitions always *replace* previous ones
 #    #
     admin.word:
-        class: LearnWords\Infrastructure\UI\Admin\Word\WordAdmin
-        arguments: [~, LearnWords\Domain\Word\Word, ~]
+        class: LearnWords\Infrastructure\UI\Admin\Entry\EntryAdmin
+        arguments: [~, LearnWords\Domain\Dictionary\Entry, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: admin, label: Palabras }
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Dicionario }
         public: true
 
     admin.tag:
         class: LearnWords\Infrastructure\UI\Admin\Tag\TagAdmin
-        arguments: [~, LearnWords\Domain\Word\Tag, ~]
+        arguments: [~, LearnWords\Domain\Dictionary\Tag, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: admin, label: Tag } 
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Etiquetas }
         public: true
+        
+#    LearnWords\Infrastructure\Domain\Dictionary\Resolver\Resolver:
+#        tags:
+#            - { name: overblog_graphql.resolver }        
+
+#    LearnWords\Infrastructure\Domain\Dictionary\Resolver\QueryResolverMap:
+#        tags:
+#            - { name: overblog_graphql.resolver_map, schema: default }

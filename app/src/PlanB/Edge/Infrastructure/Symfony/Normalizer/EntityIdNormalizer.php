@@ -15,30 +15,26 @@ namespace PlanB\Edge\Infrastructure\Symfony\Normalizer;
 
 
 use PlanB\Edge\Domain\Entity\EntityId;
-use Symfony\Component\Serializer\Normalizer\ContextAwareNormalizerInterface;
+use PlanB\Edge\Domain\Enum\Enum;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-final class EntityIdNormalizer implements ContextAwareNormalizerInterface
+final class EntityIdNormalizer implements NormalizerInterface
 {
-
     /**
-     * @param mixed $data
-     * @param string|null $format
-     * @param mixed[] $context
-     * @return bool
+     * @inheritDoc
      */
-    public function supportsNormalization($data, $format = null, array $context = []): bool
+    public function supportsNormalization($data, $format = null)
     {
         return $data instanceof EntityId;
     }
 
     /**
-     * @param mixed $object
-     * @param string|null $format
-     * @param mixed[] $context
-     * @return string
+     * @inheritDoc
      */
-    public function normalize($object, $format = null, array $context = []): string
+    public function normalize($object, $format = null, array $context = [])
     {
         return (string)$object;
     }
+
 }

@@ -10,9 +10,21 @@ services:
         resource: '../../../Edge'
         exclude: '../../../Edge/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
+
+    event_dispatcher:
+        class: PlanB\Edge\Domain\Event\DomainEventDispatcher
+        factory: ['PlanB\Edge\Domain\Event\DomainEventDispatcher', 'getInstance']
+        public: true
+
+    PlanB\Edge\Domain\DataPersister\DataPersisterInterface:
+        class: PlanB\Edge\Domain\DataPersister\ChainDataPersister
+        tags:
+            - {name: planb.data_persister}
+
     PlanB\Edge\Infrastructure\Sonata\Doctrine\ModelManager:
         alias: sonata.admin.manager.orm
-
+                                     
     sonata.admin.manager.orm:
         class: PlanB\Edge\Infrastructure\Sonata\Doctrine\ModelManager
-        
+
+

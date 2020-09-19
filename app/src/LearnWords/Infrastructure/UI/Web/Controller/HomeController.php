@@ -14,13 +14,14 @@ declare(strict_types=1);
 namespace LearnWords\Infrastructure\UI\Web\Controller;
 
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
-final class HomeController
+final class HomeController extends AbstractController
 {
+
     public function __invoke(): Response
     {
-
-        return new Response('xxxxx');
+        return $this->render('app/index.html.twig');
     }
 }

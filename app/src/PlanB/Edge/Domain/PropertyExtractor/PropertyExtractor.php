@@ -47,10 +47,16 @@ final class PropertyExtractor
 
         $property = $reflection->getProperty('id');
         $property->setAccessible(true);
+
         if (!$property->isInitialized($this->object)) {
             return null;
         }
         return $property->getValue($this->object);
+    }
+
+    public function hasIdentifier(): bool
+    {
+        return $this->id() !== null;
     }
 
     private function getReflection(): ReflectionObject
@@ -93,7 +99,10 @@ final class PropertyExtractor
         $name = $property->name;
         $property->setAccessible(true);
 
-        return [$name => $property->getValue($this->object)];
+        if ($property->isInitialized($this->object)) {
+            return [$name => $property->getValue($this->object)];
+        }
+        return [$name => null];
     }
 
 }

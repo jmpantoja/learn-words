@@ -4,7 +4,7 @@ ARG VARNISH_VERSION=6.0
 # build for production
 ARG APP_ENV=prod
 
-FROM jmpantoja/php7.4.6:1.0 as planb_php
+FROM jmpantoja/php7.4.6:1.2 as planb_php
 
 COPY etc/php/rclone.conf /root/.config/rclone/rclone.conf
 COPY etc/php/crontab /srv/cron.crontab
@@ -18,15 +18,20 @@ COPY app/composer.json app/composer.lock app/symfony.lock ./
 COPY app/public public/
 COPY app/src src/
 
-
 FROM nginx:${NGINX_VERSION}-alpine AS planb_nginx
 RUN rm /etc/nginx/conf.d/default.conf
 COPY etc/nginx/conf.d/ /etc/nginx/conf.d/
-WORKDIR /srv/app
-COPY --from=planb_php /srv/app/public public
+#WORKDIR /srv/app
+COPY --from=planb_php /srv/app/public /srv/app/public
+#COPY client /srv/client
 
 FROM cooptilleuls/varnish:${VARNISH_VERSION}-alpine AS planb_varnish
 COPY etc/varnish/conf/default.vcl /usr/local/etc/varnish/default.vcl
 
+FROM node:10-alpine AS planb_nuxt
+WORKDIR /srv/client
+ADD ./client /srv/client
+RUN yarn install
+ENV HOST 0.0.0.0
 
 

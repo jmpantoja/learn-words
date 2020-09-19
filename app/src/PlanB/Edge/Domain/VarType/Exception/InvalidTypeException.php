@@ -23,12 +23,12 @@ class InvalidTypeException extends InvalidArgumentException
     /**
      * InvalidTypeException constructor.
      * @param mixed $value
-     * @param string $expectedTypes
+     * @param string $expectedType
      */
-    public function __construct($value, string $expectedTypes)
+    public function __construct($value, string $expectedType)
     {
         $type = is_object($value) ? get_class($value) : gettype($value);
-        $message = sprintf('Se esperaba un argumento de tipo "%s", pero se ha pasado un "%s"', $expectedTypes, $type);
+        $message = sprintf('Se esperaba un argumento de tipo "%s", pero se ha pasado un "%s"', $expectedType, $type);
 
         parent::__construct($message);
     }

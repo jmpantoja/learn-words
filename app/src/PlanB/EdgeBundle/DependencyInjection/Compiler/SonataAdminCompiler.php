@@ -41,7 +41,7 @@ final class SonataAdminCompiler implements CompilerPassInterface
      */
     private function addConfiguratorAliases(ContainerBuilder $container): void
     {
-        foreach ($container->findTaggedServiceIds('planb.admin.configurator') as $id => $tags) {
+        foreach ($container->findTaggedServiceIds('planb.sonata.admin.configurator') as $id => $tags) {
             $definition = $container->getDefinition($id);
             $alias = $this->configuratorAlias($definition, $tags);
             $aliases = $this->sanitizeAliases($id, $alias);
@@ -88,7 +88,7 @@ final class SonataAdminCompiler implements CompilerPassInterface
      */
     private function addToConfiguratorSetters(ContainerBuilder $container): void
     {
-        foreach ($container->findTaggedServiceIds('planb.admin') as $id => $tags) {
+        foreach ($container->findTaggedServiceIds('planb.sonata.admin') as $id => $tags) {
             CallToSetter::form($container, $id)
                 ->apply();
 

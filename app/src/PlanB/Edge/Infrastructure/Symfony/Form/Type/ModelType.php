@@ -16,18 +16,29 @@ namespace PlanB\Edge\Infrastructure\Symfony\Form\Type;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Sonata\AdminBundle\Form\Type\ModelType as SonataModelType;
 use Sonata\DoctrineORMAdminBundle\Admin\FieldDescription;
+use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-abstract class ModelType extends SonataModelType
+abstract class ModelType extends SonataModelType implements DataTransformerInterface
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder->setByReference(false);
+        parent::buildForm($builder, $options);
+
+        $builder->addModelTransformer($this);
+    }
+
+
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
-        $resolver->setDefaults([
-            'by_reference' => false,
-        ]);
-
-        $resolver->setNormalizer('multiple', function (OptionsResolver $resolver, $value) {
+        $resolver->setNormalizer('multiple', function (OptionsResolver $resolver) {
             return $this->isToMany($resolver['sonata_field_description']);
         });
 
@@ -41,4 +52,30 @@ abstract class ModelType extends SonataModelType
     }
 
     abstract public function customOptions(OptionsResolver $resolver): void;
+
+    /**
+     * @inheritDoc
+     */
+    public function transform($value)
+    {
+        if (null === $value) {
+            return null;
+        }
+
+        return $value;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function reverseTransform($value)
+    {
+        return $this->reverse($value);
+    }
+
+    /**
+     * @param mixed $value
+     * @return object
+     */
+    abstract public function reverse($value): object;
 }

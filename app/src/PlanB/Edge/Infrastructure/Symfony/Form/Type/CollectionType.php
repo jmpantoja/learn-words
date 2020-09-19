@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace PlanB\Edge\Infrastructure\Symfony\Form\Type;
 
+use LearnWords1\Domain\Word\QuestionList;
 use PlanB\Edge\Domain\Collection\SnapshotList;
 use PlanB\Edge\Infrastructure\Symfony\Form\FormSerializerInterface;
 use Sonata\AdminBundle\Form\Type\CollectionType as SonataCollectionType;
@@ -22,17 +23,27 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class CollectionType extends SingleType
 {
+    /**
+     * @return string
+     */
     final public function getParent(): string
     {
         return SonataCollectionType::class;
     }
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
         $builder->setCompound(true);
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $this->customOptions($resolver);
@@ -44,18 +55,10 @@ abstract class CollectionType extends SingleType
     }
 
     /**
-     * @inheritDoc
+     * @param object|null $value
+     * @return object|SnapshotList|null
      */
     public function transform($value)
-    {
-        $value = $value ?? [];
-        return $this->toValue($value);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function toValue($value)
     {
         $value = $value ?? [];
 
@@ -63,6 +66,23 @@ abstract class CollectionType extends SingleType
             return SnapshotList::collect($value);
         }
         return null;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getConstraints()
+    {
+        return null;
+    }
+
+    /**
+     * @param mixed $data
+     * @return SnapshotList
+     */
+    public function reverse($data): SnapshotList
+    {
+        return $data;
     }
 
 

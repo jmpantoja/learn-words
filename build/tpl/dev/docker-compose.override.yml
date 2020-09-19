@@ -4,10 +4,26 @@ version: '3.4'
 services:
   php:
     environment:
-      - APP_ENV=dev
-      - APP_DEBUG=true
-      - PHP_IDE_CONFIG=serverName=symfony-demo
-      - XDEBUG_CONFIG=remote_host=192.168.1.128
+      APP_ENV: dev
+      APP_DEBUG: "true"
+      BLACKFIRE_CLIENT_ID: {{BLACKFIRE_CLIENT_ID}}
+      BLACKFIRE_CLIENT_TOKEN: {{BLACKFIRE_CLIENT_TOKEN}}
+      BLACKFIRE_SERVER_ID: {{BLACKFIRE_SERVER_ID}}
+      BLACKFIRE_SERVER_TOKEN: {{BLACKFIRE_SERVER_TOKEN}}      
+      
+      PHP_IDE_CONFIG: serverName=symfony-demo
+      XDEBUG_CONFIG: remote_host=172.17.0.1 #ifconfig -- docker0
+      #https://brunopaz.dev/blog/docker-phpstorm-and-xdebug-the-definitive-guide
+
+  blackfire:
+    image: blackfire/blackfire
+    ports: ["8707"]
+    environment:
+      # Exposes BLACKFIRE_* environment variables from the host
+      BLACKFIRE_CLIENT_ID: {{BLACKFIRE_CLIENT_ID}}
+      BLACKFIRE_CLIENT_TOKEN: {{BLACKFIRE_CLIENT_TOKEN}}
+      BLACKFIRE_SERVER_ID: {{BLACKFIRE_SERVER_ID}}
+      BLACKFIRE_SERVER_TOKEN: {{BLACKFIRE_SERVER_TOKEN}}
 
   db:
     ports:
@@ -17,3 +33,9 @@ services:
     environment:
       CLIENT_MAX_BODY_SIZE: 64M 
       DOMAINS: "{{ macros.domains(APP_HOST, sites, 'local') }}"
+
+  nuxt:
+    ports:
+      - 3000:3000
+    command:
+      "yarn dev"

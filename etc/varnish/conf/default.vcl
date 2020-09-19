@@ -83,7 +83,7 @@ sub vcl_deliver {
   # Don't send cache tags related headers to the client
   unset resp.http.url;
   # Comment the following line to send the "Cache-Tags" header to the client (e.g. to use CloudFlare cache tags)
-  unset resp.http.Cache-Tags;
+  #unset resp.http.Cache-Tags;
 }
 
 sub vcl_backend_response {

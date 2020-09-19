@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace PlanB\Edge\Domain\Event;
 
 use BadMethodCallException;
+use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcher as BaseEventDispatcher;
 
 class DomainEventDispatcher extends BaseEventDispatcher
@@ -30,7 +31,7 @@ class DomainEventDispatcher extends BaseEventDispatcher
     public static function getInstance(): self
     {
         if (static::$instance === null) {
-            static::$instance = new static();
+            static::$instance = new self();
         }
 
         return static::$instance;
@@ -50,13 +51,18 @@ class DomainEventDispatcher extends BaseEventDispatcher
         return $this->eventsCollector;
     }
 
-    public function dispatch($event)
+    /**
+     * @param object $event
+     * @param null $eventName
+     * @return object|Event|\Symfony\Contracts\EventDispatcher\Event
+     */
+    public function dispatch($event, $eventName = null)
     {
         if ($event instanceof DomainEventInterface) {
-            $this->eventsCollector->handle($event, get_class($event));
+            $this->eventsCollector->handle($event);
         }
 
-        return parent::dispatch($event);
+        return parent::dispatch($event, $eventName);
     }
 
     public function __clone()

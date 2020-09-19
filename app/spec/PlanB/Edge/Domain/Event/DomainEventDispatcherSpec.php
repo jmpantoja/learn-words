@@ -28,9 +28,11 @@ class DomainEventDispatcherSpec extends ObjectBehavior
         $this->getInstance()->shouldReturn($instance);
     }
 
-    public function it_deals_domain_events_by_event_collector(DomainEventsCollector $eventsCollector, DomainEventInterface $domainEvent, Event $event)
+    public function it_deals_domain_events_by_event_collector(DomainEventsCollector $eventsCollector,
+                                                              DomainEventInterface $domainEvent,
+                                                              Event $event)
     {
-        $eventsCollector->handle(Argument::any(), Argument::any())->willReturn($eventsCollector);
+        $eventsCollector->handle(Argument::any())->willReturn($eventsCollector);
 
         $this->setDomainEventsCollector($eventsCollector);
         $this->getEventsCollector()->shouldReturn($eventsCollector);
@@ -38,8 +40,11 @@ class DomainEventDispatcherSpec extends ObjectBehavior
         $this->dispatch($domainEvent);
         $this->dispatch($event);
 
-        $eventsCollector->handle($domainEvent, Argument::type('string'))->shouldHaveBeenCalledOnce();
-        $eventsCollector->handle($event, Argument::type('string'))->shouldNotHaveBeenCalled();
+        $eventsCollector->handle($domainEvent)
+            ->shouldHaveBeenCalledOnce();
+
+        $eventsCollector->handle($event)
+            ->shouldNotHaveBeenCalled();
     }
 
     public function it_throws_an_exception_when_try_to_clone_the_singleton()

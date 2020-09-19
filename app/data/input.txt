@@ -1,0 +1,9 @@
+hello,,saludos,a1,basico
+goodbye,,saludos,a1,basico
+good night,cuando vamos a dormir,saludos,a1
+good afternoon,hasta la hora de la cena,saludos,a1,basico
+car,,transporte,a1
+boat,,transporte,b1
+plane,,transporte,a1
+hand,,human body,a1
+arm,,human body,a1

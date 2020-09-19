@@ -14,27 +14,22 @@ declare(strict_types=1);
 namespace PlanB\Edge\Infrastructure\Sonata\Admin;
 
 
-use PlanB\Edge\Domain\Entity\Dto;
+use PlanB\Edge\Domain\Dto\AbstractDto;
+use PlanB\Edge\Domain\Dto\DtoInterface;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\DatagridConfiguratorInterface;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfiguratorInterface;
 use PlanB\Edge\Infrastructure\Sonata\Doctrine\ManagerCommandFactoryInterface;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Symfony\Component\Serializer\SerializerInterface;
 
 abstract class Admin extends AbstractAdmin implements AdminInterface
 {
-    private SerializerInterface $serializer;
 
     private FormConfiguratorInterface $formConfigurator;
 
     private DatagridConfiguratorInterface $datagridConfigurator;
 
-    public function setSerializer(SerializerInterface $serializer): void
-    {
-        $this->serializer = $serializer;
-    }
 
     /**
      * @inheritDoc
@@ -56,7 +51,7 @@ abstract class Admin extends AbstractAdmin implements AdminInterface
 
     public function getFormBuilder()
     {
-        $this->formOptions['data_class'] = $this->getDtoClass();
+        //    $this->formOptions['data_class'] = DtoInterface::class;
 
         $formBuilder = $this->getFormContractor()->getFormBuilder(
             $this->getUniqid(),
@@ -66,8 +61,6 @@ abstract class Admin extends AbstractAdmin implements AdminInterface
         $this->defineFormBuilder($formBuilder);
         return $formBuilder;
     }
-
-    abstract public function getDtoClass(): string;
 
     /**
      * @param FormConfiguratorInterface $formConfigurator
@@ -85,43 +78,6 @@ abstract class Admin extends AbstractAdmin implements AdminInterface
         return $this;
     }
 
-    public function id($model)
-    {
-        if ($model instanceof Dto) {
-            $model = $this->getSubject();
-        }
-
-        return $this->getNormalizedIdentifier($model);
-    }
-
-    public function setSubject($subject): void
-    {
-        if (!is_a($subject, $this->getClass())) {
-            return;
-        }
-
-        parent::setSubject($subject);
-    }
-
-    public function create($object)
-    {
-        $entity = $object;
-        if ($object instanceof Dto) {
-            $entity = $object->create();
-        }
-        return parent::create($entity);
-
-    }
-
-    public function update($object)
-    {
-        $entity = $object;
-        if ($object instanceof Dto) {
-            $entity = $object->update($this->getSubject());
-        }
-        return parent::update($entity);
-    }
-
     public function toString($object)
     {
         $pieces = explode('\\', $this->getClass());
@@ -131,7 +87,7 @@ abstract class Admin extends AbstractAdmin implements AdminInterface
     protected function configureFormFields(FormMapper $formMapper): void
     {
         $this->formConfigurator
-            ->handle($formMapper, $this->getSubject());
+            ->handle($formMapper, $this->getClass(), $this->getSubject());
     }
 
     protected function configureListFields(ListMapper $listMapper): void

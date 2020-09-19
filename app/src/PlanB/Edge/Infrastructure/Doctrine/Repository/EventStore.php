@@ -20,11 +20,13 @@ use PlanB\Edge\Domain\Entity\Event;
 use PlanB\Edge\Domain\Event\DomainEventInterface;
 use PlanB\Edge\Domain\PropertyExtractor\PropertyExtractor;
 use PlanB\Edge\Domain\Repository\EventStoreInterface;
+use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactoryInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 
 final class EventStore extends ServiceEntityRepository implements EventStoreInterface
 {
+    private ClassMetadataFactoryInterface $classMetadataFactory;
     /**
      * @var SerializerInterface
      */
@@ -52,13 +54,10 @@ final class EventStore extends ServiceEntityRepository implements EventStoreInte
      */
     public function createEventObject(DomainEventInterface $domainEvent): Event
     {
-        $properties = PropertyExtractor::fromObject($domainEvent)
-            ->toArray();
+        $values = $this->extractValues($domainEvent);
 
-        unset($properties['when']);
-
-        $data = $this->serializer->serialize($properties, 'json', [
-            ObjectNormalizer::GROUPS => ['read'],
+        $data = $this->serializer->serialize($values, 'json', [
+            ObjectNormalizer::GROUPS => ['event.store']
         ]);
 
         return new Event(...[
@@ -66,5 +65,18 @@ final class EventStore extends ServiceEntityRepository implements EventStoreInte
             $data,
             $domainEvent->getWhen()
         ]);
+    }
+
+    /**
+     * @param DomainEventInterface $domainEvent
+     * @return array
+     */
+    private function extractValues(DomainEventInterface $domainEvent): array
+    {
+        $values = PropertyExtractor::fromObject($domainEvent)
+            ->toArray();
+
+        unset($values['when']);
+        return $values;
     }
 }

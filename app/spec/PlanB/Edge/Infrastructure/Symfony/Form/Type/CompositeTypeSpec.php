@@ -2,23 +2,24 @@
 
 namespace spec\PlanB\Edge\Infrastructure\Symfony\Form\Type;
 
-use ArrayIterator;
 use PhpSpec\ObjectBehavior;
-use PlanB\Edge\Domain\Entity\Dto;
+use PlanB\Edge\Domain\Dto\Dto;
+use PlanB\Edge\Infrastructure\Symfony\Constraints\Collection;
 use PlanB\Edge\Infrastructure\Symfony\Form\CompositeDataMapperInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\FormSerializerInterface;
+use PlanB\Edge\Infrastructure\Symfony\Form\Listener\AutoContainedFormSubscriber;
 use PlanB\Edge\Infrastructure\Symfony\Form\Type\CompositeType;
 use Prophecy\Argument;
 use stdClass;
-use Symfony\Component\Form\Event\PostSubmitEvent;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\ConstraintViolation;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Validator\ValidatorBuilder;
 
 class CompositeTypeSpec extends ObjectBehavior
 {
@@ -39,8 +40,8 @@ class CompositeTypeSpec extends ObjectBehavior
     {
 
         $builder->add('field', Argument::cetera())->shouldBeCalled();
-        $builder->addModelTransformer($this)->shouldBeCalled();
-        $builder->addEventListener('form.post_submit', Argument::cetera())->shouldBeCalled();
+        $builder->addEventSubscriber(Argument::type(AutoContainedFormSubscriber::class))->shouldBeCalled();
+
 
         $builder->setByReference(false)->shouldBeCalled();
         $builder->setCompound(true)->shouldBeCalled();
@@ -63,13 +64,13 @@ class CompositeTypeSpec extends ObjectBehavior
     public function it_is_able_to_transform_a_value()
     {
         $subject = new stdClass();
-        $this->transform($subject)->shouldReturnAnInstanceOf(Dto::class);
+        $this->transform($subject)->shouldBeLike([]);
     }
 
     public function it_is_able_to_reverse_transform_a_value()
     {
         $subject = new stdClass();
-        $this->reverseTransform($subject)->shouldReturn($subject);
+        $this->reverse($subject)->shouldReturn($subject);
     }
 
     public function it_returns_null_when_transform_null()
@@ -77,39 +78,24 @@ class CompositeTypeSpec extends ObjectBehavior
         $this->transform(null)->shouldReturn(null);
     }
 
-    public function it_is_able_to_validate_a_submit_form_event(Dto $data,
-                                                               FormInterface $form,
-                                                               ConstraintViolationList $violationList,
-                                                               ConstraintViolation $violation,
-                                                               FormInterface $field
-    )
+    public function it_is_able_to_validate_data(FormInterface $form, FormInterface $child)
     {
-        $event = new PostSubmitEvent(...[
-            $form->getWrappedObject(),
-            $data->getWrappedObject()
-        ]);
+        $form->offsetExists('field')->willReturn(true);
+        $form->offsetGet('field')->willReturn($child);
 
-        $violation->getPropertyPath()->willReturn('key');
-        $violation->getMessage()->willReturn('error message');
+        $validator = (new ValidatorBuilder())->getValidator();
+        $this->setValidator($validator);
+        $this->validate([
+            'field' => 'bad'
+        ], $form);
 
-        $violationList->getIterator()->willReturn(new ArrayIterator([
-            $violation->getWrappedObject()
-        ]));
-
-        $form->get('key')->willReturn($field);
-        $this->validateEvent($event);
-
-        $field->addError(Argument::type(FormError::class))->shouldHaveBeenCalled();
-
-
+        $child->addError(Argument::type(FormError::class))
+            ->shouldBeCalledOnce();
     }
-
-
 }
 
 class ConcreteCompositeType extends CompositeType
 {
-
     public function customForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('field');
@@ -118,7 +104,14 @@ class ConcreteCompositeType extends CompositeType
     function customOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired('option');
+        parent::customOptions($resolver);
     }
+
+    public function getConstraints()
+    {
+        return parent::getConstraints() ?? new ConcreteConstraint();
+    }
+
 
     public function resolve($options = [])
     {
@@ -129,9 +122,26 @@ class ConcreteCompositeType extends CompositeType
     }
 
 
-    public function toDto($data): Dto
+    public function reverse($data)
     {
-        return new DummyDto();
+        return $data;
+    }
+}
+
+class ConcreteConstraint extends Collection
+{
+    public function ignoreWhen($value): bool
+    {
+        return false;
+    }
+
+    protected function getConstraints(): array
+    {
+        return  [
+            'field' => new Length([
+                'min' => 4
+            ])
+        ];
     }
 }
 

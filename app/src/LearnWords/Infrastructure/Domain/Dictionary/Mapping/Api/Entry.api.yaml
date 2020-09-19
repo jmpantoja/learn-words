@@ -1,0 +1,20 @@
+LearnWords\Domain\Dictionary\Entry:
+#    collectionOperations:
+#        get: ~
+#        post: ~
+#    itemOperations:
+#        get: ~
+#        delete: ~
+#        put: ~
+
+    properties:        
+        id:
+            identifier: true
+
+    attributes:
+        input: LearnWords\Infrastructure\Domain\Dictionary\Dto\EntryDto
+        output: LearnWords\Infrastructure\Domain\Dictionary\Dto\EntryDto
+        normalization_context:
+            groups: ['entry', 'entry.read']
+        denormalization_context:
+            groups: ['entry', 'entry.write']

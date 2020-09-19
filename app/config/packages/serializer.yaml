@@ -3,5 +3,5 @@ framework:
         enabled: true
         mapping:
             paths:
-                - '%kernel.project_dir%/src/LearnWords/Infrastructure/Domain/Word/Mapping/Serializer'
-                - '%kernel.project_dir%/src/LearnWords/Infrastructure/Domain/Word/Mapping/Serializer'
+                - '%kernel.project_dir%/src/LearnWords/Infrastructure/Domain/Dictionary/Mapping/Serializer'
+                - '%kernel.project_dir%/src/LearnWords/Infrastructure/Domain/Dictionary/Mapping/Serializer'

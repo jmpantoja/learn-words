@@ -6,7 +6,7 @@ use PhpSpec\ObjectBehavior;
 use PlanB\Edge\Application\UseCase\DeleteCommand;
 use PlanB\Edge\Application\UseCase\SaveCommand;
 use PlanB\Edge\Application\UseCase\WriteCommandInterface;
-use PlanB\Edge\Domain\Entity\Dto;
+use PlanB\Edge\Domain\Dto\Dto;
 use PlanB\Edge\Infrastructure\Sonata\Admin\Admin;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\DatagridConfiguratorInterface;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfiguratorInterface;
@@ -23,8 +23,7 @@ class AdminSpec extends ObjectBehavior
 {
     public function let(FormConfiguratorInterface $formConfigurator,
                         DatagridConfiguratorInterface $datagridConfigurator,
-                        ModelManagerInterface $modelManager,
-                        SerializerInterface $serializer)
+                        ModelManagerInterface $modelManager)
     {
         $this->beAnInstanceOf(Dummy::class);
         $this->beConstructedWith('admin.code', 'admin.className');
@@ -33,7 +32,7 @@ class AdminSpec extends ObjectBehavior
         $this->setDatagridConfigurator($datagridConfigurator);
 
         $this->setModelManager($modelManager);
-        $this->setSerializer($serializer);
+
     }
 
     public function it_is_initializable()
@@ -43,7 +42,7 @@ class AdminSpec extends ObjectBehavior
 
     public function it_is_able_to_configure_a_form(FormConfiguratorInterface $formConfigurator, FormMapper $formMapper)
     {
-        $formConfigurator->handle($formMapper, Argument::any())->shouldBeCalled();
+        $formConfigurator->handle($formMapper, Argument::cetera())->shouldBeCalled();
         $this->setFormConfigurator($formConfigurator);
         $this->configureFormFields($formMapper);
     }
@@ -77,14 +76,6 @@ class AdminSpec extends ObjectBehavior
         $this->getBaseRoutePattern()->shouldReturn('stdclass');
     }
 
-    public function it_ignore_subject_when_it_is_not_from_the_correct_type()
-    {
-        $subject = new stdClass();
-        $this->setSubject($subject);
-        $this->setSubject('other type');
-
-        $this->getSubject()->shouldReturn($subject);
-    }
 
     public function it_returns_a_correct_id_when_pass_an_entity(ModelManagerInterface $modelManager)
     {
@@ -93,14 +84,14 @@ class AdminSpec extends ObjectBehavior
         $this->id($entity)->shouldReturn('id');
     }
 
-    public function it_returns_a_correct_id_when_pass_a_dto(ModelManagerInterface $modelManager, Dto $dto)
-    {
-        $entity = new stdClass();
-        $this->setSubject($entity);
-
-        $modelManager->getNormalizedIdentifier($entity)->willReturn('id');
-        $this->id($dto)->shouldReturn('id');
-    }
+//    public function it_returns_a_correct_id_when_pass_a_dto(ModelManagerInterface $modelManager, Dto $dto)
+//    {
+//        $entity = new stdClass();
+//        $this->setSubject($entity);
+//
+//        $modelManager->getNormalizedIdentifier($entity)->willReturn('id');
+//        $this->id($dto)->shouldReturn('id');
+//    }
 
     public function it_is_able_to_create_a_new_entity_from_entity(ModelManagerInterface $modelManager)
     {
@@ -111,16 +102,16 @@ class AdminSpec extends ObjectBehavior
         $this->create($entity);
     }
 
-    public function it_is_able_to_create_a_new_entity_from_dto(Dto $dto, ModelManagerInterface $modelManager)
-    {
-
-        $entity = new stdClass();
-        $dto->create()->willReturn($entity);
-
-        $modelManager->create($entity)->shouldBeCalled();
-
-        $this->create($dto);
-    }
+//    public function it_is_able_to_create_a_new_entity_from_dto(Dto $dto, ModelManagerInterface $modelManager)
+//    {
+//
+//        $entity = new stdClass();
+//        $dto->create()->willReturn($entity);
+//
+//        $modelManager->create($entity)->shouldBeCalled();
+//
+//        $this->create($dto);
+//    }
 
     public function it_is_able_to_create_a_new_update_from_entity(ModelManagerInterface $modelManager)
     {
@@ -130,17 +121,17 @@ class AdminSpec extends ObjectBehavior
 
         $this->update($entity);
     }
-
-    public function it_is_able_to_update_a_new_entity_from_dto(Dto $dto, ModelManagerInterface $modelManager)
-    {
-
-        $entity = new stdClass();
-        $dto->update(Argument::cetera())->willReturn($entity);
-
-        $modelManager->update($entity)->shouldBeCalled();
-
-        $this->update($dto);
-    }
+//
+//    public function it_is_able_to_update_a_new_entity_from_dto(Dto $dto, ModelManagerInterface $modelManager)
+//    {
+//
+//        $entity = new stdClass();
+//        $dto->update(Argument::cetera())->willReturn($entity);
+//
+//        $modelManager->update($entity)->shouldBeCalled();
+//
+//        $this->update($dto);
+//    }
 
     public function it_returns_the_last_word_of_the_classname_like_to_string(){
 

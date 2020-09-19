@@ -1,4 +1,4 @@
 home:
-    path: /
+    path: /home
     defaults:
         _controller: \LearnWords\Infrastructure\UI\Web\Controller\HomeController

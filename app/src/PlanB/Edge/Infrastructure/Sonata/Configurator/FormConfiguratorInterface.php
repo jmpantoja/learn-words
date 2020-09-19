@@ -12,19 +12,20 @@ declare(strict_types=1);
 
 namespace PlanB\Edge\Infrastructure\Sonata\Configurator;
 
+use PlanB\Edge\Infrastructure\Symfony\Form\AutoContainedFormTypeInterface;
 use Sonata\AdminBundle\Form\FormMapper;
-use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Serializer\SerializerAwareInterface;
 
-interface FormConfiguratorInterface extends ConfiguratorInterface, DataTransformerInterface
+interface FormConfiguratorInterface extends ConfiguratorInterface, SerializerAwareInterface, AutoContainedFormTypeInterface
 {
     public const TYPE = 'form';
 
     /**
      * @param FormMapper $formMapper
-     * @param object|null $subject
+     * @param string $className
+     * @param object|null $subjet
      * @return $this
      */
-    public function handle(FormMapper $formMapper, ?object $subject): self;
-
+    public function handle(FormMapper $formMapper, string $className, ?object $subjet): self;
 }
 

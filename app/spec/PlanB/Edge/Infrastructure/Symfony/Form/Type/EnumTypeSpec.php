@@ -46,11 +46,15 @@ class EnumTypeSpec extends ObjectBehavior
     }
 
     public function it_transforms_a_string_in_a_enum(){
-        $this->reverseTransform('RED')->shouldBeLike(ConcreteEnum::RED());
+        $this->reverse('RED')->shouldBeLike(ConcreteEnum::RED());
     }
 
     public function it_returns_null_when_try_to_transform_an_invalid_string(){
-        $this->reverseTransform('REDXXX')->shouldReturn(null);
+        $this->reverse('REDXXX')->shouldReturn(null);
+    }
+
+    public function it_does_not_have_any_constraint(){
+        $this->getConstraints()->shouldBe(null);
     }
 }
 

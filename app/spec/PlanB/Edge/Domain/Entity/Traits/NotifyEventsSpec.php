@@ -15,7 +15,6 @@ class NotifyEventsSpec extends ObjectBehavior
     public function let(DomainEventsCollector $eventsCollector)
     {
         $eventsCollector->handle(Argument::cetera())->willReturn($eventsCollector);
-
         $this->beAnInstanceOf(Aggregate::class);
 
         DomainEventDispatcher::getInstance()
@@ -30,14 +29,10 @@ class NotifyEventsSpec extends ObjectBehavior
     public function it_is_able_to_registry_an_event(DomainEventsCollector $eventsCollector,
                                                     DomainEvent $event)
     {
-
         $this->notify($event);
-
-        $eventsCollector->handle($event, Argument::type('string'))
+        $eventsCollector->handle($event)
             ->shouldHaveBeenCalledOnce();
     }
-
-
 }
 
 class Aggregate

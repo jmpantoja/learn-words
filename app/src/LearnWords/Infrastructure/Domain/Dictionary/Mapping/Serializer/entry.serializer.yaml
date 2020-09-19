@@ -1,0 +1,22 @@
+LearnWords\Infrastructure\Domain\Dictionary\Dto\EntryDto:
+#LearnWords\Domain\Dictionary\Dictionary:
+    attributes:
+        id:
+            groups: ['entry.read', 'event.store']
+        word:
+            groups: ['entry', 'event.store']
+#        tags:
+#            groups: ['entry', 'event.store']
+            
+LearnWords\Domain\Dictionary\Tag:
+    attributes:
+        tag:
+            groups: ['entry', 'event.store']
+
+
+LearnWords\Domain\Dictionary\Word:
+    attributes:
+        word:
+            groups: ['entry', 'event.store']
+        lang:
+            groups: ['entry', 'event.store']        

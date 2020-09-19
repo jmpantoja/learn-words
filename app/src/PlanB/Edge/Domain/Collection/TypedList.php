@@ -25,12 +25,17 @@ abstract class TypedList extends AbstractLazyCollection
 {
     final private function __construct(Collection $input)
     {
+        while ($input instanceof AbstractLazyCollection) {
+            $input = $input->collection;
+        }
+
         foreach ($input as $value) {
             $this->ensureValueIsValid($value);
         }
 
         $this->initialize();
-        $this->collection = $input;
+
+        $this->collection = clone $input;
     }
 
     /**
@@ -56,12 +61,9 @@ abstract class TypedList extends AbstractLazyCollection
      * @param iterable $input
      * @return static
      */
-    public static function collect(iterable $input): self
+    public static function collect(?iterable $input): self
     {
-        if ($input instanceof Collection) {
-            return new static($input);
-        }
-
+        $input = $input ?? [];
         if ($input instanceof Traversable) {
             $input = iterator_to_array($input);
         }
@@ -108,6 +110,7 @@ abstract class TypedList extends AbstractLazyCollection
      */
     protected function doInitialize()
     {
+        $this->collection = new ArrayCollection();
     }
 
 }

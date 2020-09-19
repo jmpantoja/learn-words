@@ -3,45 +3,41 @@
 namespace spec\PlanB\Edge\Infrastructure\Sonata\Configurator;
 
 use PhpSpec\ObjectBehavior;
-use PlanB\Edge\Domain\Entity\Dto;
+use PlanB\Edge\Domain\Dto\Dto;
 use PlanB\Edge\Domain\Entity\EntityBuilder;
 use PlanB\Edge\Domain\Entity\EntityId;
-use PlanB\Edge\Infrastructure\Sonata\Admin\Admin;
+use PlanB\Edge\Domain\VarType\Exception\InvalidTypeException;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\ConfiguratorInterface;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfigurator;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfiguratorInterface;
 use PlanB\Edge\Infrastructure\Sonata\Doctrine\ManagerCommandFactoryInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\CompositeDataMapperInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\FormSerializerInterface;
+use PlanB\Edge\Infrastructure\Symfony\Form\Listener\AutoContainedFormSubscriber;
 use Prophecy\Argument;
 use Sonata\AdminBundle\Form\FormMapper;
 use stdClass;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class FormConfiguratorSpec extends ObjectBehavior
 {
     public function let(FormMapper $formMapper,
-                        Admin $admin,
                         FormBuilderInterface $formBuilder)
     {
-
-
-        $formMapper->getAdmin()->willReturn($admin);
         $formMapper->getFormBuilder()->willReturn($formBuilder);
 
         $formMapper->hasOpenTab()->willReturn(false);
         $formMapper->with('tab', Argument::any())->willReturn();
         $formMapper->with('group', Argument::any())->willReturn();
-        $formMapper->add('name', TextType::class, Argument::type('array'), Argument::type('array'))
+        $formMapper->add('name', TextType::class, Argument::cetera())
             ->willReturn();
 
-        $admin->getClass()->willReturn('className');
         $formBuilder->getOptions()->willReturn([]);
 
         $this->beAnInstanceOf(ConcreteFormConfigurator::class);
-
-
     }
 
     public function it_is_initializable()
@@ -51,86 +47,75 @@ class FormConfiguratorSpec extends ObjectBehavior
         $this->shouldHaveType(ConfiguratorInterface::class);
     }
 
+    public function it_is_able_to_set_the_subject_and_data_class(){
+        $subject = ConcreteEntity::withId();
+        $className = 'className';
+
+        $this->initSubject($subject, $className);
+
+        $this->getSubject()->shouldReturn($subject);
+        $this->getDataClass()->shouldReturn($className);
+    }
+
+    public function it_is_able_to_set_the_subject_as_null_when_it_have_not_and_id(){
+        $subject = ConcreteEntity::withoutId();
+        $className = 'className';
+
+        $this->initSubject($subject, $className);
+
+        $this->getSubject()->shouldReturn(null);
+        $this->getDataClass()->shouldReturn($className);
+    }
+
+
     public function it_is_able_to_add_a_field_to_a_form_mapper(FormMapper $formMapper,
                                                                FormBuilderInterface $formBuilder)
     {
         $formMapper->hasOpenTab()->willReturn(true, false);
-        $this->handle($formMapper, null);
+        $this->handle($formMapper, ConcreteEntity::class, null);
 
-        $formBuilder->addModelTransformer($this)
+        $formBuilder->addEventSubscriber(Argument::type(AutoContainedFormSubscriber::class))
             ->shouldHaveBeenCalledOnce();
 
-        $formMapper->add('name', TextType::class, Argument::type('array'), Argument::type('array'))
+        $formMapper->add('lastName1', TextType::class, Argument::cetera())
             ->shouldHaveBeenCalledOnce();
 
-        $formMapper->add('lastName1', TextType::class, Argument::type('array'), Argument::type('array'))
+        $formMapper->add('lastName2', TextType::class, Argument::cetera())
             ->shouldHaveBeenCalledOnce();
 
-        $formMapper->add('lastName2', TextType::class, Argument::type('array'), Argument::type('array'))
-            ->shouldHaveBeenCalledOnce();
-
-        $formMapper->with(Argument::containingString('tab'), Argument::any())
+        $formMapper->with(Argument::containingString('tab'), Argument::cetera())
             ->shouldHaveBeenCalled(2);
 
-        $formMapper->with('group', Argument::any())
+        $formMapper->with('group', Argument::cetera())
             ->shouldHaveBeenCalledTimes(3);
 
         $formMapper->end()
             ->shouldHaveBeenCalledTimes(2);
-
     }
 
     public function it_is_able_to_transform_an_entity_in_a_dto()
     {
-        $this->transform(ConcreteEntity::withId())->shouldBeAnInstanceOf(Dto::class);
+        $this->transform(ConcreteEntity::withId())->shouldBeAnInstanceOf(stdClass::class);
     }
 
-    public function it_returns_null_when_transform_a_null_value()
-    {
-        $this->transform(null)->shouldReturn(null);
-    }
 
-    public function it_returns_null_when_transform_a_non_initialized_entity()
-    {
-        $this->transform(ConcreteEntity::withoutId())->shouldReturn(null);
-    }
-
-    public function it_is_able_to_reverse_transform_a_value()
+    public function it_is_able_to_reverse_transform_a_value(SerializerInterface $serializer)
     {
         $subject = new stdClass();
-        $this->reverseTransform($subject)->shouldReturn($subject);
+
+        $serializer->beADoubleOf(DenormalizerInterface::class);
+        $serializer->denormalize($subject, get_class($subject), Argument::cetera())->willReturn($subject);
+
+        $this->setSerializer($serializer);
+        $this->initSubject($subject, get_class($subject));
+
+        $this->reverse($subject)->shouldReturn($subject);
     }
-//
-//    public function it_is_able_to_denormalize_data(FormSerializerInterface $serializer)
-//    {
-//        $data = [];
-//        $subject = new stdClass();
-//        $response = Argument::any();
-//
-//        $serializer->denormalize($data, $subject, 'className')->willReturn($response);
-//
-//        $this->denormalize($serializer, $data, $subject)->shouldReturn($response);
-//        $serializer->denormalize($data, $subject, 'className')->shouldBeCalled();
-//    }
-//
-//    public function it_throws_an_exception_when_denormalize_fails(FormSerializerInterface $serializer)
-//    {
-//        $data = [];
-//        $subject = new stdClass();
-//
-//        $serializer->denormalize(Argument::any(), Argument::any(), Argument::any())
-//            ->willThrow(\Exception::class);
-//
-//        $this->shouldThrow(TransformationFailedException::class)->during('denormalize', [$serializer, $data, $subject]);
-//
-//        $serializer->denormalize($data, $subject, 'className')->shouldBeCalled();
-//    }
-//
-//    public function it_returns_a_constraint_violations_list()
-//    {
-//        $this->validate($data = [])
-//            ->shouldBeAnInstanceOf(ConstraintViolationList::class);
-//    }
+
+    public function it_throws_an_exception_when_serializer_is_not_denormalizer(SerializerInterface $serializer){
+
+        $this->shouldThrow(InvalidTypeException::class)->duringSetSerializer($serializer);
+    }
 }
 
 class ConcreteFormConfigurator extends FormConfigurator
@@ -165,25 +150,12 @@ class ConcreteFormConfigurator extends FormConfigurator
 
     }
 
-    protected function toDto($entity): Dto
+    public function transform(?object $data)
     {
-        return new ConcreteDto();
+        return new stdClass();
     }
 }
 
-class ConcreteDto extends Dto
-{
-
-    public function update($entity): object
-    {
-        // TODO: Implement update() method.
-    }
-
-    public function create(): object
-    {
-        // TODO: Implement create() method.
-    }
-}
 
 class ConcreteEntity
 {

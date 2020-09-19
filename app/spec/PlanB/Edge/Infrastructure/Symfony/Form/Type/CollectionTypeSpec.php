@@ -6,9 +6,12 @@ use PhpSpec\ObjectBehavior;
 use PlanB\Edge\Domain\Collection\SnapshotList;
 use PlanB\Edge\Domain\Collection\TypedList;
 use PlanB\Edge\Infrastructure\Symfony\Form\FormSerializerInterface;
+use PlanB\Edge\Infrastructure\Symfony\Form\Listener\AutoContainedFormSubscriber;
 use PlanB\Edge\Infrastructure\Symfony\Form\SingleDataMapperInterface;
 use PlanB\Edge\Infrastructure\Symfony\Form\Type\CollectionType;
+use Prophecy\Argument;
 use Sonata\AdminBundle\Form\Type\CollectionType as SonataCollectionType;
+use stdClass;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -31,7 +34,7 @@ class CollectionTypeSpec extends ObjectBehavior
 
     public function it_is_able_to_build_the_form(FormBuilderInterface $builder)
     {
-        $builder->addModelTransformer($this)->shouldBeCalled();
+        $builder->addEventSubscriber(Argument::type(AutoContainedFormSubscriber::class))->shouldBeCalled();
 
         $builder->setCompound(false)->shouldBeCalled();
         $builder->setCompound(true)->shouldBeCalled();
@@ -62,6 +65,16 @@ class CollectionTypeSpec extends ObjectBehavior
     public function it_returns_a_snapshot_list_when_transform_a_not_iterable()
     {
         $this->transform('otra-cosa')->shouldReturn(null);
+    }
+
+    public function it_returns_the_right_constraints()
+    {
+        $this->getConstraints()->shouldReturn(null);
+    }
+
+    public function it_is_able_to_reverse_data(SnapshotList $snapshotList)
+    {
+        $this->reverse($snapshotList)->shouldReturn($snapshotList);
     }
 }
 

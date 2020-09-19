@@ -15,6 +15,7 @@ namespace PlanB\EdgeBundle\DependencyInjection;
 
 use Exception;
 use PlanB\Edge\Application\UseCase\UseCaseInterface;
+use PlanB\Edge\Domain\DataPersister\DataPersisterInterface;
 use PlanB\Edge\Domain\Validator\ValidatorAwareInterface;
 use PlanB\Edge\Infrastructure\Sonata\Admin\Admin;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\DatagridConfiguratorInterface;
@@ -28,6 +29,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\Serializer\SerializerAwareInterface;
 use Symfony\Component\Yaml\Yaml;
 
 class PlanBEdgeExtension extends Extension implements PrependExtensionInterface
@@ -48,18 +50,24 @@ class PlanBEdgeExtension extends Extension implements PrependExtensionInterface
                 'typehints' => true
             ]);
 
+
+        $container->registerForAutoconfiguration(DataPersisterInterface::class)
+            ->addTag('planb.data_persister');
+
         $container->registerForAutoconfiguration(ValidatorAwareInterface::class)
             ->addMethodCall('setValidator', [new Reference('validator')]);
 
+        $container->registerForAutoconfiguration(SerializerAwareInterface::class)
+            ->addMethodCall('setSerializer', [new Reference('serializer')]);
+
         $container->registerForAutoconfiguration(FormConfiguratorInterface::class)
-            ->addTag('planb.admin.configurator', ['type' => FormConfiguratorInterface::TYPE]);
+            ->addTag('planb.sonata.admin.configurator', ['type' => FormConfiguratorInterface::TYPE]);
 
         $container->registerForAutoconfiguration(DatagridConfiguratorInterface::class)
-            ->addTag('planb.admin.configurator', ['type' => DatagridConfiguratorInterface::TYPE]);
+            ->addTag('planb.sonata.admin.configurator', ['type' => DatagridConfiguratorInterface::TYPE]);
 
         $container->registerForAutoconfiguration(Admin::class)
-            ->addTag('planb.admin')
-            ->addMethodCall('setSerializer', [new Reference('serializer')]);
+            ->addTag('planb.sonata.admin');
 
         $loader = new YamlFileLoader(
             $container,

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace LearnWords\Infrastructure\UI\Admin\Tag;
 
 
+use LearnWords\Infrastructure\UI\Admin\Entry\EntryAdmin;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\DatagridConfigurator;
 
 final class TagDatagrid extends DatagridConfigurator

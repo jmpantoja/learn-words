@@ -1,0 +1,16 @@
+RootQuery:
+    type: object
+    config:
+        description: 'root query'
+        fields:
+            all_articles:
+                type: '[Dictionary]'
+                resolve: "@=resolver('all_entries', [args])"
+            
+            find_article:
+                type: 'Dictionary'
+                args: 
+                    id: 
+                        description: 'by id'
+                        type: 'Int'
+                resolve: "@=resolver('find_entry', [args])"

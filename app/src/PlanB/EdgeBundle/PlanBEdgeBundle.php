@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace PlanB\EdgeBundle;
 
 
+use PlanB\EdgeBundle\DependencyInjection\Compiler\DataPersisterCompiler;
 use PlanB\EdgeBundle\DependencyInjection\Compiler\DBALTypesCompiler;
 use PlanB\EdgeBundle\DependencyInjection\Compiler\FormDataMapperCompiler;
 use PlanB\EdgeBundle\DependencyInjection\Compiler\SonataAdminCompiler;
@@ -26,5 +27,6 @@ final class PlanBEdgeBundle extends Bundle
     public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new SonataAdminCompiler(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 10);
+        $container->addCompilerPass(new DataPersisterCompiler(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 10);
     }
 }

@@ -2,8 +2,9 @@
 
 namespace spec\PlanB\Edge\Infrastructure\Sonata\Doctrine;
 
-use ApiPlatform\Core\DataPersister\DataPersisterInterface;
+
 use PhpSpec\ObjectBehavior;
+use PlanB\Edge\Domain\DataPersister\DataPersisterInterface;
 use PlanB\Edge\Infrastructure\Sonata\Doctrine\ModelManager;
 use Prophecy\Argument;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
@@ -32,6 +33,13 @@ class ModelManagerSpec extends ObjectBehavior
         $this->shouldThrow(\RuntimeException::class)
             ->during('getModelInstance', [AbstractEntity::class]);
     }
+
+    public function it_returns_an_entity_id()
+    {
+        $entity = new ConcreteEntity('name');
+        $this->getNormalizedIdentifier($entity)->shouldReturn(null);
+    }
+
 
     public function it_is_able_to_create_a_new_entity(DataPersisterInterface $dataPersister)
     {

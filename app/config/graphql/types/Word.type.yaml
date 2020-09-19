@@ -1,0 +1,11 @@
+Word:
+    type: object
+    config:
+        description: "A word"
+        fields:
+            word:
+                type: "String!"
+                description: "the word"
+            lang:
+                type: "Language!"
+                description: "the language"                                

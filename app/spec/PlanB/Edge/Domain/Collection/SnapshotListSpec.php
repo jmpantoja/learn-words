@@ -84,8 +84,8 @@ class SnapshotListSpec extends ObjectBehavior
             1 => 'e'
         ]);
 
-        $callback->__invoke('d', 0)->shouldBeCalledTimes(1);
-        $callback->__invoke('e', 1)->shouldBeCalledTimes(1);
+        $callback->__invoke(0, 'd')->shouldBeCalledTimes(1);
+        $callback->__invoke(1, 'e')->shouldBeCalledTimes(1);
         $this->eachUpdate($callback);
     }
 
@@ -108,7 +108,8 @@ class SnapshotListSpec extends ObjectBehavior
         $this->eachDelete($callback);
     }
 
-    public function it_clones_correctly(){
+    public function it_clones_correctly()
+    {
         $this->clone()->shouldNotReturn($this);
         $this->clone()->shouldBeLike($this);
 

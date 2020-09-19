@@ -1,0 +1,20 @@
+LearnWords\Domain\Dictionary\Tag:
+#    collectionOperations:
+#        get: ~
+#        post: ~
+#    itemOperations:
+#        get: ~
+#        delete: ~
+#        put: ~
+
+    properties:
+        id:
+            identifier: true
+
+    attributes:
+        input: LearnWords\Infrastructure\Domain\Dictionary\Dto\TagDto
+        output: LearnWords\Infrastructure\Domain\Dictionary\Dto\TagDto
+        normalization_context:
+            groups: ['tag', 'tag.read']
+        denormalization_context:
+            groups: ['tag', 'tag.write']

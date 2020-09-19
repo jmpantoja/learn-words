@@ -1,0 +1,16 @@
+[
+  {
+    "name": "sandbox",
+    "path": "/sandbox",
+    "component": "/srv/client/pages/sandbox.vue",
+    "chunkName": "pages/sandbox",
+    "_name": "_492f2361"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "/srv/client/pages/index.vue",
+    "chunkName": "pages/index",
+    "_name": "_6e72086c"
+  }
+]

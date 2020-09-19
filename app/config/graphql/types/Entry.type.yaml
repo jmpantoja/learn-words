@@ -1,0 +1,12 @@
+Entry:
+    type: object
+    config:
+        description: "An entry"
+        fields:
+            id:
+                type: "String!"
+                description: "The ID of the entry."
+            word:
+                type: "Dictionary!"
+                description: "the word"
+                                

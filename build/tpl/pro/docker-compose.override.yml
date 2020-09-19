@@ -9,3 +9,8 @@ services:
     environment:
       CLIENT_MAX_BODY_SIZE: 64M
       DOMAINS: "{{ macros.domains(APP_HOST, sites, 'production') }}"
+
+
+  nuxt:
+    command:
+      "yarn build && yarn start"

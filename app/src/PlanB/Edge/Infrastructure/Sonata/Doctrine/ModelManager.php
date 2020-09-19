@@ -14,8 +14,9 @@ declare(strict_types=1);
 namespace PlanB\Edge\Infrastructure\Sonata\Doctrine;
 
 
-use ApiPlatform\Core\DataPersister\DataPersisterInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use PlanB\Edge\Domain\DataPersister\DataPersisterInterface;
+use PlanB\Edge\Domain\PropertyExtractor\PropertyExtractor;
 use ReflectionClass;
 use RuntimeException;
 use Sonata\DoctrineORMAdminBundle\Model\ModelManager as SonataModelManager;
@@ -46,6 +47,12 @@ final class ModelManager extends SonataModelManager
         }
 
         return $r->newInstanceWithoutConstructor();
+    }
+
+
+    public function getNormalizedIdentifier($entity)
+    {
+        return PropertyExtractor::fromObject($entity)->id();
     }
 
     /**

@@ -7,6 +7,8 @@ use PhpSpec\ObjectBehavior;
 use PlanB\Edge\Infrastructure\Symfony\Form\Type\ModelType;
 use Sonata\AdminBundle\Model\ModelManagerInterface;
 use Sonata\DoctrineORMAdminBundle\Admin\FieldDescription;
+use stdClass;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
@@ -23,6 +25,22 @@ class ModelTypeSpec extends ObjectBehavior
         $this->shouldHaveType(ModelType::class);
     }
 
+    public function it_builds_a_form_correctly(FormBuilderInterface $builder,
+                                               ModelManagerInterface $modelManager,
+                                               FieldDescription $fieldDescription)
+    {
+        $response = $this->resolve([
+            'model_manager' => $modelManager,
+            'sonata_field_description' => $fieldDescription
+        ]);
+
+        $options = $response->getWrappedObject();
+        $this->buildForm($builder, $options);
+
+        $builder->addModelTransformer($this)->shouldBeCalledOnce();
+    }
+
+
     public function it_resolve_options_by_default_correctly(ModelManagerInterface $modelManager,
                                                             FieldDescription $fieldDescription)
     {
@@ -32,7 +50,6 @@ class ModelTypeSpec extends ObjectBehavior
         ]);
 
         $response['model_manager']->shouldReturn($modelManager);
-        $response['by_reference']->shouldReturn(false);
         $response['multiple']->shouldReturn(false);
     }
 
@@ -87,6 +104,17 @@ class ModelTypeSpec extends ObjectBehavior
 
         $response['multiple']->shouldReturn(true);
     }
+
+    public function it_is_able_to_transform_a_value()
+    {
+        $this->transform(null)->shouldReturn(null);
+        $this->transform('value')->shouldReturn('value');
+    }
+
+    public function it_is_able_to_reverse_a_value()
+    {
+        $this->reverseTransform('value')->shouldBeAnInstanceOf(stdClass::class);
+    }
 }
 
 class ConcreteModelType extends ModelType
@@ -103,5 +131,13 @@ class ConcreteModelType extends ModelType
         $this->configureOptions($resolver);
 
         return $resolver->resolve($data);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function reverse($value): object
+    {
+        return new stdClass();
     }
 }

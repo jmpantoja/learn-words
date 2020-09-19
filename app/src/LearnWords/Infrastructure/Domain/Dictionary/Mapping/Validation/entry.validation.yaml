@@ -1,0 +1,4 @@
+LearnWords\Infrastructure\Domain\Dictionary\Dto\EntryDto:
+    properties:
+        word:
+            -   LearnWords\Domain\Dictionary\Constraints\Word: ~

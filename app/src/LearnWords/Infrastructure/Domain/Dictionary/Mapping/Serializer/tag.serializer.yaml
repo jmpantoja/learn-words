@@ -1,0 +1,6 @@
+LearnWords\Domain\Dictionary\Tag:
+    attributes:
+        id:
+            groups: ['tag.read', 'event.store']        
+        tag:
+            groups: ['tag', 'event.store']

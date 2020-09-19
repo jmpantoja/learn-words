@@ -21,7 +21,6 @@ class DomainEventsCollector
     public function handle(DomainEventInterface $event): self
     {
         $this->events[] = $event;
-
         return $this;
     }
 
@@ -30,7 +29,10 @@ class DomainEventsCollector
      */
     public function getEvents(): array
     {
-        return $this->events;
+        $events = $this->events;
+        $this->clear();
+
+        return $events;
     }
 
     public function clear(): self

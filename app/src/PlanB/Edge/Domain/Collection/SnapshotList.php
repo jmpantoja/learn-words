@@ -23,7 +23,8 @@ class SnapshotList extends AbstractLazyCollection
 {
     private array $snapshot;
 
-    final public function __construct(Collection $input)
+
+    private function __construct(Collection $input)
     {
         $this->initialize();
 
@@ -48,6 +49,16 @@ class SnapshotList extends AbstractLazyCollection
         }
 
         return new static(new ArrayCollection($input));
+    }
+
+    public static function init(?iterable $input = null): self
+    {
+        $snapshotList = static::collect();
+        foreach ($input as $item) {
+            $snapshotList->add($item);
+        }
+
+        return $snapshotList;
     }
 
     /**
@@ -115,7 +126,7 @@ class SnapshotList extends AbstractLazyCollection
         $items = $this->getUpdateDiff();
 
         foreach ($items as $key => $item) {
-            call_user_func($callback, $item, $key);
+            call_user_func($callback, $key, $item);
         }
 
         return $this;
