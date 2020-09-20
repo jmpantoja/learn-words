@@ -1,10 +1,17 @@
 [
   {
-    "name": "sandbox",
-    "path": "/sandbox",
-    "component": "/srv/client/pages/sandbox.vue",
-    "chunkName": "pages/sandbox",
-    "_name": "_492f2361"
+    "name": "inspire",
+    "path": "/inspire",
+    "component": "/srv/client/pages/inspire.vue",
+    "chunkName": "pages/inspire",
+    "_name": "_1a3d95f4"
+  },
+  {
+    "name": "test",
+    "path": "/test",
+    "component": "/srv/client/pages/test.vue",
+    "chunkName": "pages/test",
+    "_name": "_5d99afe8"
   },
   {
     "name": "index",
