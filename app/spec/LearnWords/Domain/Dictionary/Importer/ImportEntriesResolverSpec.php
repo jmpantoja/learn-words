@@ -3,6 +3,8 @@
 namespace spec\LearnWords\Domain\Dictionary\Importer;
 
 use ArrayIterator;
+use Generator;
+use LearnWords\Domain\Dictionary\EntryRepository;
 use LearnWords\Domain\Dictionary\Example;
 use LearnWords\Domain\Dictionary\Importer\ImportEntriesResolver;
 use LearnWords\Domain\Dictionary\Importer\Provider\QuestionProviderInterface;
@@ -19,9 +21,8 @@ use Prophecy\Argument;
 class ImportEntriesResolverSpec extends ObjectBehavior
 {
 
-    public function let(QuestionProviderInterface $questionProvider, TagRepository $tagRepository)
+    public function let(QuestionProviderInterface $questionProvider, EntryRepository $entryRepository, TagRepository $tagRepository)
     {
-
         $questionProvider->byWord(Argument::any())->willReturn([
             [
                 'wording' => new Wording('hola', 'greeting'),
@@ -36,7 +37,7 @@ class ImportEntriesResolverSpec extends ObjectBehavior
 
         $tagRepository->createTagList('saludos', 'a1')->willReturn($tagList);
 
-        $this->beConstructedWith($questionProvider, $tagRepository);
+        $this->beConstructedWith($questionProvider, $entryRepository, $tagRepository);
     }
 
     public function it_is_initializable()
@@ -46,11 +47,6 @@ class ImportEntriesResolverSpec extends ObjectBehavior
 
     public function it_is_able_to_create_an_entry_from_a_reader(EntriesReaderInterface $reader, TagRepository $tagRepository)
     {
-        $tagList = TagList::collect([
-            new Tag('saludos'),
-            new Tag('a1'),
-        ]);
-
         $reader->getIterator()->willReturn(new ArrayIterator([
             [
                 'word' => 'hello',
@@ -61,12 +57,14 @@ class ImportEntriesResolverSpec extends ObjectBehavior
 
         $entries = $this->resolve($reader, Lang::ENGLISH());
 
-        $entries[0]->getWord()->shouldBeLike(Word::English('hello'));
+        $entries->shouldBeAnInstanceOf(Generator::class);
 
-        $entries[0]->getTags()->get(0)->getTag()->shouldReturn('saludos');
-        $entries[0]->getTags()->get(1)->getTag()->shouldReturn('a1');
+        $entries->current()->getWord()->shouldBeLike(Word::English('hello'));
 
-        $entries[0]->getQuestions()->get(0)->getWording()->getWording()->shouldReturn('hola');
+        $entries->current()->getTags()->get(0)->getTag()->shouldReturn('saludos');
+        $entries->current()->getTags()->get(1)->getTag()->shouldReturn('a1');
+
+        $entries->current()->getQuestions()->get(0)->getWording()->getWording()->shouldReturn('hola');
 
         $tagRepository->createTagList('saludos', 'a1')->shouldHaveBeenCalled();
 

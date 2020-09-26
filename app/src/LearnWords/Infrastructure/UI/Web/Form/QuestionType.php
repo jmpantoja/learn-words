@@ -21,6 +21,7 @@ final class QuestionType extends CompositeType
 {
     public function customForm(FormBuilderInterface $builder, array $options): void
     {
+        //   $builder->add('relevance', RelevanceType::class);
         $builder->add('wording', WordingType::class);
         $builder->add('example', ExampleType::class);
     }

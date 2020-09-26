@@ -25,4 +25,6 @@ interface TagRepository
     public function findByName(string $string): ?Tag;
 
     public function createTagList(string ...$tags): TagList;
+
+    public function getAll(): TagList;
 }

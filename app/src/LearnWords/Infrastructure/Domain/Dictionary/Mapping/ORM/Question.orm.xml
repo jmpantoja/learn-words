@@ -8,6 +8,7 @@
         <id name="id" column="id" type="QuestionId"/>
         <many-to-one field="entry" target-entity="LearnWords\Domain\Dictionary\Entry"/>
 
+        <field name="relevance" type="Relevance"/>
         <embedded name="wording" class="LearnWords\Domain\Dictionary\Wording" use-column-prefix="false"/>
         <embedded name="example" class="LearnWords\Domain\Dictionary\Example" use-column-prefix="false"/>
 

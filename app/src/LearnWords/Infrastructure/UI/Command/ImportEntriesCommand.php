@@ -69,14 +69,16 @@ final class ImportEntriesCommand extends Command implements SerializerAwareInter
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $entries = $this->resolveEntries($input);
+        $lang = $this->resolveLang($input);
+        $reader = $this->createReader($input);
 
-        $total = count($entries);
+        $entries = $this->resolver->resolve($reader, $lang);
+
+        $total = $reader->count();
         $bar = $this->buildProgressBar($input, $output);
         $bar->setMaxSteps($total);
 
         foreach ($entries as $entry) {
-
             $command = new SaveEntry($entry);
             $this->commandBus->handle($command);
 
@@ -90,18 +92,6 @@ final class ImportEntriesCommand extends Command implements SerializerAwareInter
         return 0;
     }
 
-    /**
-     * @param InputInterface $input
-     * @return mixed
-     */
-    protected function resolveEntries(InputInterface $input)
-    {
-        $lang = $this->resolveLang($input);
-        $fileInfo = $this->resolveFileInfo($input);
-        $reader = new EntriesCSVReader($fileInfo);
-        $entries = $this->resolver->resolve($reader, $lang);
-        return $entries;
-    }
 
     private function resolveLang(InputInterface $input): Lang
     {
@@ -112,6 +102,17 @@ final class ImportEntriesCommand extends Command implements SerializerAwareInter
         } catch (Exception $e) {
             throw InvalidInputException::invalidLang($lang);
         }
+    }
+
+    /**
+     * @param InputInterface $input
+     * @return EntriesCSVReader
+     */
+    protected function createReader(InputInterface $input): EntriesCSVReader
+    {
+        $fileInfo = $this->resolveFileInfo($input);
+        $reader = new EntriesCSVReader($fileInfo);
+        return $reader;
     }
 
     private function resolveFileInfo(InputInterface $input): SplFileInfo
@@ -138,6 +139,8 @@ final class ImportEntriesCommand extends Command implements SerializerAwareInter
         $bar->setFormat('custom');
         return $bar;
     }
+
+
 
 
 }

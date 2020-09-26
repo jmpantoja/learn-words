@@ -32,12 +32,15 @@ class Entry
 
     private Collection $questions;
 
-    public function __construct(Word $word, TagList $tagList, array $questions = [])
+    private ?Mp3Url $mp3Url;
+
+    public function __construct(Word $word, TagList $tagList, array $questions = [], Mp3Url $mp3Url = null)
     {
         $this->id = new EntryId();
         $this->word = $word;
         $this->tags = $tagList;
         $this->questions = new ArrayCollection();
+        $this->mp3Url = $mp3Url;
 
         foreach ($questions as $question) {
             $this->addQuestion($question);
@@ -55,6 +58,7 @@ class Entry
         return $this;
     }
 
+
     /**
      * @return EntryId
      */
@@ -62,7 +66,6 @@ class Entry
     {
         return $this->id;
     }
-
 
     /**
      * @return Word
@@ -88,9 +91,17 @@ class Entry
         return QuestionList::collect($this->questions);
     }
 
+    public function getMp3Url(): ?Mp3Url
+    {
+        return $this->mp3Url;
+    }
+
     public function addQuestion(array $data): self
     {
-        $question = new Question($this, $data['wording'], $data['example']);
+        $total = count($this->questions) + 1;
+        $relevance = new Relevance($total);
+
+        $question = new Question($this, $data['wording'], $data['example'], $relevance);
         $this->questions->add($question);
         return $this;
     }
@@ -98,7 +109,7 @@ class Entry
     public function updateQuestion($key, array $data): self
     {
         $question = $this->questions->get($key);
-        $question->update($data['wording'], $data['example']);
+        $question->update($data['wording'], $data['example'], $data['relevance']);
         return $this;
     }
 
@@ -107,6 +118,4 @@ class Entry
         $this->questions->removeElement($question);
         return $this;
     }
-
-
 }

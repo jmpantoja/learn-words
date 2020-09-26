@@ -1,3 +1,4 @@
+parenthesis,,gramática
 hello,,saludos,a1,basico
 goodbye,,saludos,a1,basico
 good night,cuando vamos a dormir,saludos,a1
@@ -7,3 +8,18 @@ boat,,transporte,b1
 plane,,transporte,a1
 hand,,human body,a1
 arm,,human body,a1
+angry,,adjetives
+happy,,adjetives
+sad,,adjetives
+hungry,,adjetives
+thirsty,,adjetives
+tired,,adjetives
+sleepy,,adjetives
+bored,,adjetives
+excited,,adjetives
+upset,,adjetives
+embarrassed,,adjetives
+grateful,,adjetives
+amused,,adjetives
+outraged,,adjetives
+annoyed,,adjetives

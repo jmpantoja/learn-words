@@ -1,20 +1,80 @@
 {
-  "Card": {
-    "description": "Auto imported from components/Card.vue"
+  "ConfigCards": {
+    "description": "Auto imported from components/ConfigCards.vue"
   },
-  "LazyCard": {
-    "description": "Auto imported from components/Card.vue"
+  "LazyConfigCards": {
+    "description": "Auto imported from components/ConfigCards.vue"
   },
-  "Logo": {
-    "description": "Auto imported from components/Logo.vue"
+  "LayoutCenter": {
+    "description": "Auto imported from components/LayoutCenter.vue"
   },
-  "LazyLogo": {
-    "description": "Auto imported from components/Logo.vue"
+  "LazyLayoutCenter": {
+    "description": "Auto imported from components/LayoutCenter.vue"
   },
-  "VuetifyLogo": {
-    "description": "Auto imported from components/VuetifyLogo.vue"
+  "QuestionAnswer": {
+    "description": "Auto imported from components/Question/QuestionAnswer.vue"
   },
-  "LazyVuetifyLogo": {
-    "description": "Auto imported from components/VuetifyLogo.vue"
+  "LazyQuestionAnswer": {
+    "description": "Auto imported from components/Question/QuestionAnswer.vue"
+  },
+  "QuestionCard": {
+    "description": "Auto imported from components/Question/QuestionCard.vue"
+  },
+  "LazyQuestionCard": {
+    "description": "Auto imported from components/Question/QuestionCard.vue"
+  },
+  "QuestionFavourite": {
+    "description": "Auto imported from components/Question/QuestionFavourite.vue"
+  },
+  "LazyQuestionFavourite": {
+    "description": "Auto imported from components/Question/QuestionFavourite.vue"
+  },
+  "QuestionList": {
+    "description": "Auto imported from components/Question/QuestionList.vue"
+  },
+  "LazyQuestionList": {
+    "description": "Auto imported from components/Question/QuestionList.vue"
+  },
+  "QuestionMark": {
+    "description": "Auto imported from components/Question/QuestionMark.vue"
+  },
+  "LazyQuestionMark": {
+    "description": "Auto imported from components/Question/QuestionMark.vue"
+  },
+  "QuestionNavigation": {
+    "description": "Auto imported from components/Question/QuestionNavigation.vue"
+  },
+  "LazyQuestionNavigation": {
+    "description": "Auto imported from components/Question/QuestionNavigation.vue"
+  },
+  "QuestionReply": {
+    "description": "Auto imported from components/Question/QuestionReply.vue"
+  },
+  "LazyQuestionReply": {
+    "description": "Auto imported from components/Question/QuestionReply.vue"
+  },
+  "QuestionResult": {
+    "description": "Auto imported from components/Question/QuestionResult.vue"
+  },
+  "LazyQuestionResult": {
+    "description": "Auto imported from components/Question/QuestionResult.vue"
+  },
+  "QuestionSpeaker": {
+    "description": "Auto imported from components/Question/QuestionSpeaker.vue"
+  },
+  "LazyQuestionSpeaker": {
+    "description": "Auto imported from components/Question/QuestionSpeaker.vue"
+  },
+  "QuestionToolbar": {
+    "description": "Auto imported from components/Question/QuestionToolbar.vue"
+  },
+  "LazyQuestionToolbar": {
+    "description": "Auto imported from components/Question/QuestionToolbar.vue"
+  },
+  "QuestionWording": {
+    "description": "Auto imported from components/Question/QuestionWording.vue"
+  },
+  "LazyQuestionWording": {
+    "description": "Auto imported from components/Question/QuestionWording.vue"
   }
 }

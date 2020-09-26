@@ -51,9 +51,9 @@ export default {
           to: '/',
         },
         {
-          icon: 'mdi-rocket-launch-outline',
-          title: 'Test your self',
-          to: '/test',
+          icon: 'mdi-cards',
+          title: 'Flash Cards',
+          to: '/config',
         },
       ],
       miniVariant: false,

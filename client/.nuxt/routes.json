@@ -1,17 +1,24 @@
 [
   {
-    "name": "inspire",
-    "path": "/inspire",
-    "component": "/srv/client/pages/inspire.vue",
-    "chunkName": "pages/inspire",
-    "_name": "_1a3d95f4"
+    "name": "config",
+    "path": "/config",
+    "component": "/srv/client/pages/config.vue",
+    "chunkName": "pages/config",
+    "_name": "_67769f18"
   },
   {
-    "name": "test",
-    "path": "/test",
-    "component": "/srv/client/pages/test.vue",
-    "chunkName": "pages/test",
-    "_name": "_5d99afe8"
+    "name": "exam",
+    "path": "/exam",
+    "component": "/srv/client/pages/exam.vue",
+    "chunkName": "pages/exam",
+    "_name": "_156494f5"
+  },
+  {
+    "name": "study",
+    "path": "/study",
+    "component": "/srv/client/pages/study.vue",
+    "chunkName": "pages/study",
+    "_name": "_2a0899e3"
   },
   {
     "name": "index",

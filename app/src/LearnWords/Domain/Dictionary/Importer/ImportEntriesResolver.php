@@ -14,8 +14,10 @@ declare(strict_types=1);
 namespace LearnWords\Domain\Dictionary\Importer;
 
 
+use Generator;
 use LearnWords\Domain\Dictionary\Entry;
 use LearnWords\Domain\Dictionary\EntryRepository;
+use LearnWords\Domain\Dictionary\Importer\Provider\Mp3UrlProviderInteface;
 use LearnWords\Domain\Dictionary\Importer\Provider\QuestionProviderInterface;
 use LearnWords\Domain\Dictionary\Importer\Reader\EntriesReaderInterface;
 use LearnWords\Domain\Dictionary\Lang;
@@ -31,29 +33,33 @@ final class ImportEntriesResolver implements ImportEntriesResolverInterface
      * @var EntryRepository
      */
     private EntryRepository $entryRepository;
+    /**
+     * @var Mp3UrlProviderInteface
+     */
+    private Mp3UrlProviderInteface $mp3UrlProvider;
 
     public function __construct(QuestionProviderInterface $questionProvider,
+                                Mp3UrlProviderInteface $mp3UrlProvider,
                                 EntryRepository $entryRepository,
                                 TagRepository $tagRepository)
     {
         $this->questionProvider = $questionProvider;
+        $this->mp3UrlProvider = $mp3UrlProvider;
         $this->entryRepository = $entryRepository;
         $this->tagRepository = $tagRepository;
+
     }
 
     /**
      * @param EntriesReaderInterface $reader
      * @param Lang $lang
-     * @return ImportEntryResponse[]
+     * @return Generator
      */
-    public function resolve(EntriesReaderInterface $reader, Lang $lang): array
+    public function resolve(EntriesReaderInterface $reader, Lang $lang): Generator
     {
-        $entries = [];
         foreach ($reader as $row) {
-            $entries[] = $this->buildEntry($row, $lang);
+            yield $this->buildEntry($row, $lang);
         }
-
-        return $entries;
     }
 
     protected function buildEntry(array $row, Lang $lang): Entry
@@ -77,8 +83,8 @@ final class ImportEntriesResolver implements ImportEntriesResolverInterface
         }
 
         $questions = $this->questionProvider->byWord($word);
+        $mp3Url = $this->mp3UrlProvider->byWord($word);
 
-        return new Entry($word, $tags, $questions);
+        return new Entry($word, $tags, $questions, $mp3Url);
     }
-
 }

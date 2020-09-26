@@ -3,14 +3,13 @@ RootQuery:
     config:
         description: 'root query'
         fields:
-            all_articles:
-                type: '[Dictionary]'
-                resolve: "@=resolver('all_entries', [args])"
-            
-            find_article:
-                type: 'Dictionary'
-                args: 
-                    id: 
-                        description: 'by id'
-                        type: 'Int'
-                resolve: "@=resolver('find_entry', [args])"
+            all_tags:
+                type: '[Tag]'
+                resolve: "@=resolver('all_tags', [args])"            
+            questions_by_tag:
+                type: '[Question]'
+                args:
+                    tags: 
+                        type: '[String]'
+                resolve: "@=resolver('questions_by_tag', [args])"
+

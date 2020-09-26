@@ -6,12 +6,16 @@ doctrine:
         #server_version: '5.8'
 
         types:
-            Lang: LearnWords\Infrastructure\Domain\Dictionary\DBAL\LangType             
+            Lang: LearnWords\Infrastructure\Domain\Dictionary\DBAL\LangType
+            Relevance: LearnWords\Infrastructure\Domain\Dictionary\DBAL\RelevanceType
+            Mp3Url: LearnWords\Infrastructure\Domain\Dictionary\DBAL\Mp3UrlType
             EntryId: LearnWords\Infrastructure\Domain\Dictionary\DBAL\EntryIdType
             TagId: LearnWords\Infrastructure\Domain\Dictionary\DBAL\TagIdType
             QuestionId: LearnWords\Infrastructure\Domain\Dictionary\DBAL\QuestionIdType
 
         mapping_types:
+            Relevance: integer
+            Mp3Url: string
             EntryId: string
             TagId: string
             QuestionId: string

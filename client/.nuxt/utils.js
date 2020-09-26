@@ -150,7 +150,7 @@ export async function setContext (app, context) {
       payload: context.payload,
       error: context.error,
       base: '/',
-      env: {}
+      env: {"API_ENDPOINT":"https://admin.learn-words.local/graphql/"}
     }
     // Only set once
     if (!process.static && context.req) {

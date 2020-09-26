@@ -29,6 +29,12 @@ final class TagDoctrineRepository extends ServiceEntityRepository implements Tag
         parent::__construct($registry, Tag ::class);
     }
 
+    public function getAll(): TagList
+    {
+        return TagList::collect($this->findAll());
+    }
+
+
     public function findByName(string $name): ?Tag
     {
         $name = trim($name);
@@ -64,7 +70,6 @@ final class TagDoctrineRepository extends ServiceEntityRepository implements Tag
     public function persist(Tag $tag): void
     {
         $this->getEntityManager()->persist($tag);
-        $this->getEntityManager()->flush();
     }
 
     public function delete(Tag $tag): void

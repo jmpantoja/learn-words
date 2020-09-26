@@ -3,9 +3,6 @@ Tag:
     config:
         description: "A tag"
         fields:
-            id:
-                type: "String"
-                description: "The ID of the tag."
             tag:
                 type: "String"
                 description: "the tag"

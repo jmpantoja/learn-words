@@ -16,7 +16,7 @@ namespace LearnWords\Domain\Dictionary;
 
 use PlanB\Edge\Domain\Validator\ValidableTrait;
 
-final class Relevance
+class Relevance
 {
     use ValidableTrait;
 
@@ -33,13 +33,8 @@ final class Relevance
         return new Constraints\Relevance();
     }
 
-    /**
-     * @return int
-     */
     public function getRelevance(): int
     {
         return $this->relevance;
     }
-
-
 }

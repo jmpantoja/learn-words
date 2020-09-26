@@ -7,6 +7,7 @@ use LearnWords\Domain\Dictionary\EntryId;
 use LearnWords\Domain\Dictionary\Example;
 use LearnWords\Domain\Dictionary\Lang;
 use LearnWords\Domain\Dictionary\Question;
+use LearnWords\Domain\Dictionary\Relevance;
 use LearnWords\Domain\Dictionary\Tag;
 use LearnWords\Domain\Dictionary\TagList;
 use LearnWords\Domain\Dictionary\Word;
@@ -72,6 +73,7 @@ class EntrySpec extends ObjectBehavior
         $this->getQuestions()->get(0)->beAnInstanceOf(Question::class);
         $this->getQuestions()->get(0)->getWording()->shouldReturn($wording);
         $this->getQuestions()->get(0)->getExample()->shouldReturn($example);
+        $this->getQuestions()->get(0)->getRelevance()->shouldBeLike(new Relevance(1));
     }
 
     public function it_is_able_to_update_questions()
@@ -85,14 +87,17 @@ class EntrySpec extends ObjectBehavior
 
         $newWording = new Wording('wording', 'description');
         $newExample = new Example('sample', 'translation');
+        $newRelevance = new Relevance(4);
 
         $this->updateQuestion(0, [
             'wording' => $newWording,
             'example' => $newExample,
+            'relevance' => $newRelevance,
         ]);
 
         $this->getQuestions()->get(0)->getWording()->shouldReturn($newWording);
         $this->getQuestions()->get(0)->getExample()->shouldReturn($newExample);
+        $this->getQuestions()->get(0)->getRelevance()->shouldReturn($newRelevance);
     }
 
     public function it_is_able_to_delete_questions()

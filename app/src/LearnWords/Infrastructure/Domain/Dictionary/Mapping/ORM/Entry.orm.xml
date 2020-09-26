@@ -8,10 +8,11 @@
         <id name="id" column="id" type="EntryId"/>
         <embedded name="word" class="LearnWords\Domain\Dictionary\Word" use-column-prefix="false"/>
 
-        <!--        <unique-constraints>-->
-        <!--            <unique-constraint columns="word,lang"></unique-constraint>-->
-        <!--        </unique-constraints>-->
+        <unique-constraints>
+            <unique-constraint columns="word,lang"></unique-constraint>
+        </unique-constraints>
 
+        <field name="mp3Url" type="Mp3Url" length="512" nullable="true"/>
         <one-to-many field="questions" target-entity="LearnWords\Domain\Dictionary\Question" mapped-by="entry"
                      orphan-removal="true">
             <cascade>

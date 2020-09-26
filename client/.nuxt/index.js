@@ -14,7 +14,9 @@ import { setContext, getLocation, getRouteData, normalizeError } from './utils'
 
 import nuxt_plugin_plugin_5341eec8 from 'nuxt_plugin_plugin_5341eec8' // Source: ./components/plugin.js (mode: 'all')
 import nuxt_plugin_plugin_f40b3e5c from 'nuxt_plugin_plugin_f40b3e5c' // Source: ./vuetify/plugin.js (mode: 'all')
+import nuxt_plugin_apollomodule_3f019104 from 'nuxt_plugin_apollomodule_3f019104' // Source: ./apollo-module.js (mode: 'all')
 import nuxt_plugin_axios_5b97849c from 'nuxt_plugin_axios_5b97849c' // Source: ./axios.js (mode: 'all')
+import nuxt_plugin_string_3a68e9f2 from 'nuxt_plugin_string_3a68e9f2' // Source: ../plugins/string (mode: 'all')
 
 // Component: <ClientOnly>
 Vue.component(ClientOnly.name, ClientOnly)
@@ -175,8 +177,16 @@ async function createApp(ssrContext, config = {}) {
     await nuxt_plugin_plugin_f40b3e5c(app.context, inject)
   }
 
+  if (typeof nuxt_plugin_apollomodule_3f019104 === 'function') {
+    await nuxt_plugin_apollomodule_3f019104(app.context, inject)
+  }
+
   if (typeof nuxt_plugin_axios_5b97849c === 'function') {
     await nuxt_plugin_axios_5b97849c(app.context, inject)
+  }
+
+  if (typeof nuxt_plugin_string_3a68e9f2 === 'function') {
+    await nuxt_plugin_string_3a68e9f2(app.context, inject)
   }
 
   // Lock enablePreview in context

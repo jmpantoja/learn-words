@@ -23,8 +23,17 @@ final class RelevanceType extends SingleType
         return Relevance::getConstraints();
     }
 
+    public function transform(?object $relevance)
+    {
+        if ($relevance instanceof Relevance) {
+            return $relevance->getRelevance();
+        }
+
+        return null;
+    }
+
     public function reverse($data): Relevance
     {
-        return new Relevance(5);
+        return new Relevance((int)$data);
     }
 }

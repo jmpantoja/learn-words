@@ -60,4 +60,9 @@ final class EntriesCSVReader implements EntriesReaderInterface
             'tags' => $row,
         ];
     }
+
+    public function count(): int
+    {
+        return count($this->rows);
+    }
 }

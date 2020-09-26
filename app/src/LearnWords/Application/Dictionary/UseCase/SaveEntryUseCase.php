@@ -21,15 +21,14 @@ final class SaveEntryUseCase implements UseCaseInterface
 {
     private EntryRepository $entryRepository;
 
-    public function __construct(EntryRepository $wordRepository)
+    public function __construct(EntryRepository $entryRepository)
     {
-        $this->entryRepository = $wordRepository;
+        $this->entryRepository = $entryRepository;
     }
 
     public function handle(SaveEntry $command): void
     {
         $entry = $command->getEntry();
-
         $this->entryRepository->persist($entry);
     }
 }

@@ -1,0 +1,23 @@
+Question:
+    type: object
+    config:
+        description: "A question"
+        fields:
+            word:
+                type: "String"
+                description: "the word"
+            wording:
+                type: "String"
+                description: "the wording"
+            description:
+                type: "String"
+                description: "the description"
+            sample:
+                type: "String"
+                description: "the sample"
+            translation:
+                type: "String"
+                description: "the translation"
+            sound:
+                type: "String"
+                description: "the sound"                                                            

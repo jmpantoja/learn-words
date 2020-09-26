@@ -21,20 +21,28 @@ final class Question
     private Entry $entry;
     private Wording $wording;
     private Example $example;
+    private Relevance $relevance;
 
-    public function __construct(Entry $entry, Wording $wording, Example $example)
+    public function __construct(Entry $entry, Wording $wording, Example $example, Relevance $relevance)
     {
         $this->id = new QuestionId();
         $this->entry = $entry;
         $this->wording = $wording;
         $this->example = $example;
+        $this->relevance = $relevance;
     }
 
-    public function update(Wording $wording, Example $example): self
+    public function update(Wording $wording, Example $example, Relevance $relevance): self
     {
         $this->wording = $wording;
         $this->example = $example;
+        $this->relevance = $relevance;
         return $this;
+    }
+
+    public function getEntry(): Entry
+    {
+        return $this->entry;
     }
 
     public function getWording(): Wording
@@ -47,4 +55,8 @@ final class Question
         return $this->example;
     }
 
+    public function getRelevance(): Relevance
+    {
+        return $this->relevance;
+    }
 }

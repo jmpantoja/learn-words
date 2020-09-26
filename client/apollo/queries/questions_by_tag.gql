@@ -1,0 +1,10 @@
+query($tags: [String]){
+  questions_by_tag (tags:$tags){
+    word
+    wording
+    description
+    sample
+    translation
+    sound
+  }
+}
