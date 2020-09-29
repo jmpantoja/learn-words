@@ -12,6 +12,8 @@ doctrine:
             EntryId: LearnWords\Infrastructure\Domain\Dictionary\DBAL\EntryIdType
             TagId: LearnWords\Infrastructure\Domain\Dictionary\DBAL\TagIdType
             QuestionId: LearnWords\Infrastructure\Domain\Dictionary\DBAL\QuestionIdType
+            
+            UserId: LearnWords\Infrastructure\Domain\User\DBAL\UserIdType
 
         mapping_types:
             Relevance: integer
@@ -19,13 +21,20 @@ doctrine:
             EntryId: string
             TagId: string
             QuestionId: string
+
+            UserId: string
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         auto_mapping: true
         mappings:
-            Word:
+            Dictionary:
                 is_bundle: false
                 type: xml
                 dir: '%kernel.project_dir%/src/LearnWords/Infrastructure/Domain/Dictionary/Mapping/ORM'
                 prefix: 'LearnWords\Domain\Dictionary'
+            User:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/LearnWords/Infrastructure/Domain/User/Mapping/ORM'
+                prefix: 'LearnWords\Domain\User'

@@ -23,26 +23,33 @@ services:
     #    # as action arguments even if you don't extend any base controller class
     LearnWords\Infrastructure\UI\Web\Controller\:
         resource: '../src/LearnWords/Infrastructure/UI/Web/Controller'
-        tags: ['controller.service_arguments']
+        tags: [ 'controller.service_arguments' ]
 
-#
-#    # add more service definitions when explicit configuration is needed
-#    # please note that last definitions always *replace* previous ones
-#    #
+    #
+    #    # add more service definitions when explicit configuration is needed
+    #    # please note that last definitions always *replace* previous ones
+    #    #
     admin.word:
         class: LearnWords\Infrastructure\UI\Admin\Entry\EntryAdmin
-        arguments: [~, LearnWords\Domain\Dictionary\Entry, ~]
+        arguments: [ ~, LearnWords\Domain\Dictionary\Entry, ~ ]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: admin, label: Dicionario }
+            - { name: sonata.admin, manager_type: orm, group: Dicionario, label: Entradas }
         public: true
 
     admin.tag:
         class: LearnWords\Infrastructure\UI\Admin\Tag\TagAdmin
-        arguments: [~, LearnWords\Domain\Dictionary\Tag, ~]
+        arguments: [ ~, LearnWords\Domain\Dictionary\Tag, ~ ]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: admin, label: Etiquetas }
+            - { name: sonata.admin, manager_type: orm, group: Dicionario, label: Etiquetas }
         public: true
-        
+
+    admin.user:
+        class: LearnWords\Infrastructure\UI\Admin\User\UserAdmin
+        arguments: [ ~, LearnWords\Domain\User\User, ~ ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Usuarios, label: Usuarios }
+        public: true
+
 #    LearnWords\Infrastructure\Domain\Dictionary\Resolver\Resolver:
 #        tags:
 #            - { name: overblog_graphql.resolver }        
