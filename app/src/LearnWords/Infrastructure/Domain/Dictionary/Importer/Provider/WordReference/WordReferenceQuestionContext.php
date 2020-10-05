@@ -95,7 +95,7 @@ final class WordReferenceQuestionContext
 
     public function getQuestion(): ?array
     {
-        if (is_null($this->wording) or is_null($this->example)) {
+        if (is_null($this->wording)) {
             return null;
         }
 

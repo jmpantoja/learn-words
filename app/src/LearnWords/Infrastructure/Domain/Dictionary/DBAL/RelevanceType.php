@@ -28,7 +28,7 @@ final class RelevanceType extends Type
             throw new InvalidTypeException($value, Relevance::class);
         }
 
-        return $value->getRelevance();
+        return $value->toInt();
     }
 
     public function convertToPHPValue($value, AbstractPlatform $platform)

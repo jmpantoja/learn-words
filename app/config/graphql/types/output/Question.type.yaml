@@ -3,6 +3,9 @@ Question:
     config:
         description: "A question"
         fields:
+            id:
+                type: "String"
+                description: "the id"                
             word:
                 type: "String"
                 description: "the word"

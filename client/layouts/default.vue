@@ -47,13 +47,8 @@ export default {
       items: [
         {
           icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/',
-        },
-        {
-          icon: 'mdi-cards',
           title: 'Flash Cards',
-          to: '/config',
+          to: '/',
         },
       ],
       miniVariant: false,

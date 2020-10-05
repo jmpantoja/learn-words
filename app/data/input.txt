@@ -1,25 +1,2058 @@
-parenthesis,,gramática
-hello,,saludos,a1,basico
-goodbye,,saludos,a1,basico
-good night,cuando vamos a dormir,saludos,a1
-good afternoon,hasta la hora de la cena,saludos,a1,basico
-car,,transporte,a1
-boat,,transporte,b1
-plane,,transporte,a1
-hand,,human body,a1
-arm,,human body,a1
-angry,,adjetives
-happy,,adjetives
-sad,,adjetives
-hungry,,adjetives
-thirsty,,adjetives
-tired,,adjetives
-sleepy,,adjetives
-bored,,adjetives
-excited,,adjetives
-upset,,adjetives
-embarrassed,,adjetives
-grateful,,adjetives
-amused,,adjetives
-outraged,,adjetives
-annoyed,,adjetives
+abandon,,b2
+a bite to eat,,b2
+above all,,b2
+abruptly,,b2
+absence,,b2
+absent-minded,,b2
+absolutely,,b2
+abstract,,b2
+abusive,,b2
+access,,b2
+accessible,,b2
+account,,b2
+accuse,,b2
+accuse of,,b2
+accustomed,,b2
+achievement,,b2
+aching,,b2
+acknowledgement,,b2
+acquire,,b2
+action,,b2
+activist,,b2
+adaptation,,b2
+add,,b2
+addicted to,,b2
+addictive,,b2
+additional,,b2
+admire,,b2
+admission,,b2
+admit,,b2
+adoptive,,b2
+adrenalin,,b2
+adulthood,,b2
+adventurous,,b2
+advertise,,b2
+aerial,,b2
+affect,,b2
+aggressive,,b2
+aging,,b2
+airline,,b2
+aisle,,b2
+alarming,,b2
+alien,,b2
+alike,,b2
+all along,,b2
+allegedly,,b2
+alley,,b2
+all in all,,b2
+all of a sudden,,b2
+alongside,,b2
+aloud,,b2
+alternate,,b2
+alternative,,b2
+amateur,,b2
+ambition,,b2
+ambitious,,b2
+amount,,b2
+anaemic,,b2
+analysis,,b2
+ancestor,,b2
+ancient,,b2
+angel,,b2
+ankle,,b2
+announce,,b2
+annual,,b2
+anthropologist,,b2
+anticipate,,b2
+antisocial,,b2
+anxious,,b2
+apart,,b2
+ape,,b2
+apologize,,b2
+apology,,b2
+apparatus,,b2
+apparent,,b2
+apparently,,b2
+appealing,,b2
+appeal to,,b2
+appearance,,b2
+appetising,,b2
+appetite,,b2
+applicable,,b2
+application,,b2
+apprenticed to,,b2
+approach,,b2
+approximately,,b2
+archaeological,,b2
+archbishop,,b2
+arch criminal,,b2
+architect,,b2
+architecture,,b2
+argumentative,,b2
+argument,,b2
+arrest,,b2
+arrogant,,b2
+articulated lorry,,b2
+artificial intelligence,,b2
+ascent,,b2
+ash,,b2
+aside from,,b2
+aspect,,b2
+assembled,,b2
+assert,,b2
+assess,,b2
+assumption,,b2
+astonished,,b2
+astonishing,,b2
+at all,,b2
+at a loss,,b2
+at first,,b2
+at last,,b2
+at least,,b2
+at once,,b2
+at peace,,b2
+at present,,b2
+at random,,b2
+at rest,,b2
+attached to,,b2
+attachment,,b2
+at the forefront,,b2
+at the same time,,b2
+attic,,b2
+attitude,,b2
+at war,,b2
+at your fingertips,,b2
+audience,,b2
+audition,,b2
+aura,,b2
+autopsy,,b2
+avalanche,,b2
+awake,,b2
+award,,b2
+aware,,b2
+awesome,,b2
+back,,b2
+background,,b2
+backlash,,b2
+backpacker,,b2
+bad influence,,b2
+bad-tempered,,b2
+baggage,,b2
+bait,,b2
+baked,,b2
+ballerina,,b2
+bandage,,b2
+bank,,b2
+bank balance,,b2
+bar,,b2
+barbecued,,b2
+bare,,b2
+barely,,b2
+bargain,,b2
+barge,,b2
+barrier,,b2
+based,,b2
+bat,,b2
+battery,,b2
+battlefield,,b2
+battle it out,,b2
+be a bad/ good,,b2
+beak,,b2
+be at a loose end,,b2
+be better off,,b2
+be dying to,,b2
+beg,,b2
+behalf,,b2
+behave,,b2
+bellow,,b2
+benefit,,b2
+be set to,,b2
+bestseller,,b2
+binoculars,,b2
+biodiesel,,b2
+biography,,b2
+bit of a handful,,b2
+bitter,,b2
+blade,,b2
+blame,,b2
+blast off,,b2
+blind,,b2
+blink,,b2
+blister,,b2
+block,,b2
+blow,,b2
+blush,,b2
+board,,b2
+boarding pass,,b2
+boast,,b2
+boo,,b2
+book into,,b2
+boost,,b2
+boot,,b2
+bossy,,b2
+bracelet,,b2
+brain scan,,b2
+brand,,b2
+break a record,,b2
+break,,b2
+break down,,b2
+breakdown,,b2
+break off,,b2
+break off sth or,,b2
+break out,,b2
+break sth off,,b2
+breakthrough,,b2
+breathtaking,,b2
+breed,,b2
+breeze,,b2
+breezy,,b2
+brief,,b2
+broadcast,,b2
+broken-down,,b2
+brontosaurus,,b2
+bronze,,b2
+bruise,,b2
+budget,,b2
+bug,,b2
+buggy,,b2
+burglar,,b2
+burn an album,,b2
+burn,,b2
+burst of laughter,,b2
+bushy,,b2
+business,,b2
+by consequence,,b2
+cabin,,b2
+cabinet,,b2
+cadet,,b2
+calculator,,b2
+calf,,b2
+call centre,,b2
+call off,,b2
+calm down,,b2
+calm down(sb) or,,b2
+calm (sb) down),,b2
+camcorder,,b2
+campaigner,,b2
+campsite,,b2
+canal,,b2
+candidate,,b2
+candle,,b2
+canned,,b2
+cant stand,,b2
+capable,,b2
+capture,,b2
+card,,b2
+cardboard,,b2
+career,,b2
+carer,,b2
+carnival,,b2
+carpenter,,b2
+carry out,,b2
+cart,,b2
+cartoon,,b2
+case,,b2
+cashpoint,,b2
+casserole,,b2
+casual,,b2
+catch up on,,b2
+cause a stir,,b2
+cause,,b2
+cave,,b2
+celebrity,,b2
+cellar,,b2
+cell,,b2
+central to,,b2
+chain,,b2
+chalk,,b2
+challenge,,b2
+change your mind,,b2
+chapter,,b2
+character,,b2
+characteristic,,b2
+charge,,b2
+chart,,b2
+chat show,,b2
+chauvinism,,b2
+check in,,b2
+check-in,,b2
+check out,,b2
+cheer,,b2
+cheerful,,b2
+cheer up,,b2
+chest,,b2
+chest of drawers,,b2
+chewy,,b2
+chilli,,b2
+chimpanzee,,b2
+choir,,b2
+cholesterol,,b2
+chord,,b2
+choreography,,b2
+chronologically,,b2
+chuck,,b2
+chuckle,,b2
+chunk,,b2
+circuit board,,b2
+circulation,,b2
+circus,,b2
+civilisation,,b2
+claim,,b2
+clap,,b2
+classical,,b2
+claw,,b2
+clearing,,b2
+click your fingers,,b2
+client,,b2
+cliff,,b2
+climax,,b2
+clip,,b2
+close-up,,b2
+clown,,b2
+clue,,b2
+cluttered,,b2
+coast,,b2
+code,,b2
+coincidence,,b2
+collapse,,b2
+collection,,b2
+collector,,b2
+collide with,,b2
+colonise,,b2
+coma,,b2
+combat,,b2
+come across something,,b2
+come across sth,,b2
+comedian,,b2
+come down,,b2
+comedy,,b2
+come forward,,b2
+come out,,b2
+come upon,,b2
+come up to scratch,,b2
+come up with,,b2
+coming,,b2
+commentator,,b2
+commercial,,b2
+commit,,b2
+commitment,,b2
+committed,,b2
+community,,b2
+commute,,b2
+companion,,b2
+comparison,,b2
+compassion,,b2
+compel,,b2
+competitive,,b2
+compile,,b2
+complacent,,b2
+complaint,,b2
+complex,,b2
+composer,,b2
+composition,,b2
+computer-generated,,b2
+con,,b2
+conceal,,b2
+concede,,b2
+conceivably,,b2
+concentrate,,b2
+concentration,,b2
+concept,,b2
+conceptual art,,b2
+concerned,,b2
+conclusion,,b2
+condition,,b2
+conduct,,b2
+conductor,,b2
+confess,,b2
+confidence,,b2
+confident,,b2
+congestion,,b2
+connection,,b2
+connect with,,b2
+conscientious,,b2
+consecutive,,b2
+consequence,,b2
+conservation,,b2
+conserve,,b2
+considerate,,b2
+consistent,,b2
+consistent with,,b2
+consist of,,b2
+constitute,,b2
+construct,,b2
+consultant,,b2
+consume,,b2
+consumer,,b2
+contact,,b2
+contain,,b2
+contemplate,,b2
+content,,b2
+contented,,b2
+contestant,,b2
+contest,,b2
+contradict,,b2
+contrast,,b2
+contribution,,b2
+control,,b2
+controversial,,b2
+conventional,,b2
+converted,,b2
+convey,,b2
+convict,,b2
+convinced,,b2
+cooperation,,b2
+cope,,b2
+coriander,,b2
+cornflakes,,b2
+corpse,,b2
+correspond with,,b2
+cosmopolitan,,b2
+costume,,b2
+cot,,b2
+cough,,b2
+cough mixture,,b2
+count,,b2
+countless,,b2
+course,,b2
+court,,b2
+crack,,b2
+crackdown,,b2
+cramped,,b2
+crawl,,b2
+creature,,b2
+creeping,,b2
+crew,,b2
+criminal,,b2
+critical,,b2
+critic,,b2
+crockery,,b2
+crossfire,,b2
+crossing,,b2
+crouch,,b2
+crow,,b2
+cruise,,b2
+crunchy,,b2
+cub,,b2
+cumin,,b2
+curious,,b2
+curly,,b2
+current,,b2
+customs,,b2
+cut,,b2
+cut down,,b2
+cutlery,,b2
+cut off,,b2
+cynical,,b2
+daily grind,,b2
+dairy,,b2
+damage,,b2
+dam,,b2
+damp,,b2
+dangle,,b2
+dare,,b2
+data,,b2
+database,,b2
+dawn,,b2
+deadline,,b2
+deadly,,b2
+deal with,,b2
+dear,,b2
+debate,,b2
+debunk,,b2
+decade,,b2
+deceive,,b2
+decipher,,b2
+decision,,b2
+deck,,b2
+declare,,b2
+decline,,b2
+dedicate,,b2
+deed,,b2
+defence,,b2
+deliberately,,b2
+delicate,,b2
+delighted,,b2
+delightful,,b2
+demanding,,b2
+demolish,,b2
+demonstrate,,b2
+demonstration,,b2
+dense,,b2
+deny,,b2
+departure lounge,,b2
+deputy,,b2
+deserted,,b2
+desirable,,b2
+desperate,,b2
+destination,,b2
+destroy,,b2
+destruction,,b2
+detect,,b2
+detective,,b2
+deteriorate,,b2
+determine,,b2
+determined,,b2
+device,,b2
+devise,,b2
+diagnose,,b2
+diagram,,b2
+diamond,,b2
+differ,,b2
+dig,,b2
+digit,,b2
+dilemma,,b2
+diner,,b2
+dinosaur,,b2
+diploma,,b2
+direct,,b2
+disability,,b2
+disagree,,b2
+disappointed,,b2
+disapprove,,b2
+disarmingly,,b2
+disaster,,b2
+discourage,,b2
+disease,,b2
+disguise,,b2
+disgusting,,b2
+dishonest,,b2
+disillusioned,,b2
+disorganized,,b2
+dispense,,b2
+disposable culture,,b2
+dissatisfied,,b2
+dissuade,,b2
+distant cousin,,b2
+distinction,,b2
+distinctly,,b2
+distinguish,,b2
+distraction,,b2
+disturb,,b2
+divide,,b2
+DNA,,b2
+documentary,,b2
+domestic,,b2
+dominant,,b2
+dominate,,b2
+donate,,b2
+dose,,b2
+dot,,b2
+doubt,,b2
+dough,,b2
+dove,,b2
+do without,,b2
+download,,b2
+dozen,,b2
+drag away,,b2
+drag,,b2
+dramatic,,b2
+draught,,b2
+draw the line,,b2
+draw up,,b2
+dredge up,,b2
+dress up,,b2
+drift,,b2
+drive,,b2
+drought,,b2
+drown,,b2
+duck,,b2
+dull,,b2
+dune,,b2
+duplicate,,b2
+dusk,,b2
+dye,,b2
+eager,,b2
+earnings,,b2
+earthquake,,b2
+easy-going,,b2
+eccentric,,b2
+eco friendly,,b2
+ecologically,,b2
+economical,,b2
+edge,,b2
+edible,,b2
+educate,,b2
+educated,,b2
+educational,,b2
+eel,,b2
+eerily,,b2
+effective,,b2
+elaborate,,b2
+elbow,,b2
+election,,b2
+electrical appliance,,b2
+elegant,,b2
+element,,b2
+embarrassed,,b2
+emerge,,b2
+emigrate,,b2
+emission,,b2
+emotion,,b2
+employer,,b2
+encircle,,b2
+enclosure,,b2
+encyclopaedia,,b2
+endangered,,b2
+ending,,b2
+end up,,b2
+endurance,,b2
+engaged,,b2
+engineer,,b2
+enhance,,b2
+enlarge,,b2
+enthusiasm,,b2
+enthusiastic,,b2
+entirely,,b2
+environmental,,b2
+environmentalist,,b2
+environmentally,,b2
+environment,,b2
+epic,,b2
+epidemic,,b2
+episode,,b2
+equally,,b2
+equipped,,b2
+era,,b2
+erect,,b2
+erupt,,b2
+eruption,,b2
+essence,,b2
+essential,,b2
+establish,,b2
+estate agent,,b2
+estimate,,b2
+ethnic,,b2
+evacuate,,b2
+evaluate,,b2
+even,,b2
+evidence,,b2
+evolve,,b2
+exaggerate,,b2
+excavate,,b2
+excel,,b2
+exceptional,,b2
+exclude,,b2
+excursion,,b2
+exercise,,b2
+exhausted,,b2
+exhaustive,,b2
+exotic location,,b2
+expansion,,b2
+expedition,,b2
+experiment,,b2
+exploitation,,b2
+exploit,,b2
+expression,,b2
+extend,,b2
+extinction,,b2
+extract,,b2
+extremely,,b2
+extreme sport,,b2
+extroversion,,b2
+eyebrow,,b2
+eye-catching,,b2
+eye contact,,b2
+fabric,,b2
+face,,b2
+face-lift,,b2
+face up,,b2
+facilities,,b2
+facility,,b2
+factor,,b2
+factory farming,,b2
+faddy,,b2
+faint,,b2
+fair trade,,b2
+fake,,b2
+fall apart,,b2
+fall asleep,,b2
+fall for sb,,b2
+fall for somebody,,b2
+fall in love,,b2
+fall out,,b2
+fall through,,b2
+fame,,b2
+familiar,,b2
+famine,,b2
+fanatic,,b2
+fancy dress,,b2
+fare,,b2
+far-fetched,,b2
+far from,,b2
+fascinating,,b2
+fatal,,b2
+fatty,,b2
+favourable,,b2
+favour,,b2
+fearless,,b2
+fearsome,,b2
+feast,,b2
+feat,,b2
+feather,,b2
+feathers,,b2
+feature,,b2
+fed up,,b2
+feel,,b2
+fellow,,b2
+feral,,b2
+ferry,,b2
+festival,,b2
+fete,,b2
+fictional,,b2
+field,,b2
+figure out,,b2
+figure skating,,b2
+fill in,,b2
+filling station,,b2
+fill up,,b2
+finding,,b2
+findings,,b2
+find out,,b2
+fine,,b2
+fingerprint,,b2
+fire,,b2
+fire brigade,,b2
+firewood,,b2
+firm evidence,,b2
+first aid kit,,b2
+first-rate,,b2
+fit in,,b2
+fit in with,,b2
+fitness,,b2
+fizzy,,b2
+fjord,,b2
+flash,,b2
+flat,,b2
+flat tyre,,b2
+flavour,,b2
+flee,,b2
+flexible,,b2
+floating,,b2
+flock,,b2
+flood,,b2
+florist,,b2
+flow,,b2
+fluent,,b2
+flutter,,b2
+focus on,,b2
+foggy,,b2
+fold,,b2
+folklore,,b2
+following,,b2
+fool,,b2
+forbid,,b2
+forbidden,,b2
+forensic,,b2
+forgery,,b2
+form,,b2
+fort,,b2
+for the time being,,b2
+fortune,,b2
+forward,,b2
+fossil,,b2
+foundation,,b2
+founder,,b2
+fraud,,b2
+freezing,,b2
+friend,,b2
+friendly,,b2
+friendship,,b2
+frightened,,b2
+frog,,b2
+from time to time,,b2
+frustrated,,b2
+fuel,,b2
+fuel consumption,,b2
+fulfil,,b2
+fun,,b2
+function,,b2
+fund,,b2
+fur,,b2
+furious,,b2
+fuse,,b2
+gadget,,b2
+gag,,b2
+gain an edge,,b2
+gain,,b2
+gap year,,b2
+garlic,,b2
+gas,,b2
+gasp,,b2
+gate,,b2
+gather,,b2
+gaze,,b2
+gazelle,,b2
+gear,,b2
+generalise,,b2
+generation,,b2
+generator,,b2
+genetically,,b2
+genius,,b2
+genuine,,b2
+germ,,b2
+get away,,b2
+get hold of,,b2
+get in,,b2
+get on,,b2
+get on with,,b2
+get rid of,,b2
+get something over with,,b2
+get sth over with,,b2
+get through,,b2
+gift,,b2
+gig,,b2
+giggle,,b2
+gill,,b2
+ginger,,b2
+give away,,b2
+give it a go,,b2
+give sb the sack,,b2
+glacier,,b2
+global warming,,b2
+gloomy,,b2
+glove,,b2
+glow,,b2
+glue,,b2
+go ahead,,b2
+goal,,b2
+go back,,b2
+go by,,b2
+go for,,b2
+go halves with,,b2
+go into a decline,,b2
+good influence,,b2
+go off,,b2
+go on about,,b2
+go on,,b2
+go on strike,,b2
+go out,,b2
+go over,,b2
+gorilla,,b2
+go so far as to,,b2
+gossip,,b2
+goth,,b2
+go through,,b2
+go to extraordinary lengths,,b2
+go up,,b2
+grab,,b2
+graffiti,,b2
+grape,,b2
+graphics,,b2
+gravestone,,b2
+graveyard,,b2
+gravity,,b2
+graze,,b2
+greasy,,b2
+grief-stricken,,b2
+grill,,b2
+gripping,,b2
+groceries,,b2
+ground,,b2
+grounded,,b2
+grunt,,b2
+guarantee,,b2
+guess,,b2
+guide dog,,b2
+guilt,,b2
+guilty,,b2
+gunfire,,b2
+gust,,b2
+gutter,,b2
+gym,,b2
+gymnastics,,b2
+habitat,,b2
+hallmark,,b2
+halt,,b2
+hand in your notice,,b2
+handlebars,,b2
+handset,,b2
+handy,,b2
+hang around with,,b2
+hang up,,b2
+harbour,,b2
+harm,,b2
+have got the makings of,,b2
+hayfever,,b2
+hazel,,b2
+headline,,b2
+head off to,,b2
+headquarters,,b2
+heartbroken,,b2
+heart-warming,,b2
+heated,,b2
+hedge,,b2
+heel,,b2
+helmet,,b2
+herb,,b2
+herbivore,,b2
+herd,,b2
+highlight,,b2
+high-profile,,b2
+hilarious,,b2
+hip,,b2
+hippy,,b2
+hoax,,b2
+hood,,b2
+hoof,,b2
+hooked,,b2
+hooked on,,b2
+hopeless,,b2
+host,,b2
+host of,,b2
+household,,b2
+housework,,b2
+hover,,b2
+hovercraft,,b2
+huge,,b2
+humid,,b2
+humiliate,,b2
+humorous,,b2
+humour,,b2
+hunt,,b2
+hurricane,,b2
+hurt,,b2
+hysteria,,b2
+ice skate,,b2
+identical,,b2
+identify,,b2
+identity,,b2
+ignition,,b2
+ignore,,b2
+ill,,b2
+illegal,,b2
+illusion,,b2
+image,,b2
+immigration,,b2
+immoral,,b2
+immortality,,b2
+immune system,,b2
+impact,,b2
+impatient,,b2
+impersonal,,b2
+impersonate,,b2
+implication,,b2
+imposter,,b2
+impress,,b2
+impressed,,b2
+impression,,b2
+impressive,,b2
+inappropriate,,b2
+incident,,b2
+inconvenient,,b2
+incorporate,,b2
+incurable,,b2
+indicate,,b2
+individual,,b2
+induct,,b2
+indulgent,,b2
+inevitable,,b2
+inexperienced,,b2
+in favour of,,b2
+infect,,b2
+infection,,b2
+inferior,,b2
+influence,,b2
+influence on,,b2
+infuriating,,b2
+ingredient,,b2
+inhabitant,,b2
+inherit,,b2
+inhibition,,b2
+inhospitable,,b2
+initial,,b2
+in its infancy,,b2
+injure,,b2
+injury,,b2
+inappropriate,,b2
+innocent,,b2
+input,,b2
+inquiring,,b2
+in short,,b2
+in single file,,b2
+insist,,b2
+inspiration,,b2
+inspire,,b2
+install,,b2
+instance,,b2
+instant,,b2
+instinctive,,b2
+institution,,b2
+insulated,,b2
+integral,,b2
+intelligence,,b2
+intend,,b2
+intense,,b2
+interact with,,b2
+in terms of,,b2
+in the long term,,b2
+in the process,,b2
+intimacy,,b2
+in time,,b2
+intriguingly,,b2
+invade,,b2
+invaluable,,b2
+inventor,,b2
+invest,,b2
+involve,,b2
+ironically,,b2
+irregular,,b2
+irrelevant,,b2
+irresponsible,,b2
+irritable,,b2
+irritated,,b2
+isolated,,b2
+issue,,b2
+itch,,b2
+jam,,b2
+janitor,,b2
+jaw,,b2
+jealous,,b2
+jeep,,b2
+jet-lagged,,b2
+jigsaw,,b2
+juicy,,b2
+junction,,b2
+jungle,,b2
+jury,,b2
+justify,,b2
+kayaking,,b2
+keep away,,b2
+keep in,,b2
+keep on,,b2
+keep to,,b2
+keep up,,b2
+keep up with,,b2
+key,,b2
+key in,,b2
+key ring,,b2
+kid,,b2
+kidnap,,b2
+knee,,b2
+label,,b2
+laboratory,,b2
+labour-saving,,b2
+lack,,b2
+lack of demand,,b2
+lagoon,,b2
+lake,,b2
+land,,b2
+landfill,,b2
+landing,,b2
+landlord,,b2
+landmark,,b2
+landscape,,b2
+lane,,b2
+lap,,b2
+laptop,,b2
+last chance,,b2
+launch,,b2
+laundrette,,b2
+layer,,b2
+lazy,,b2
+leak,,b2
+leap,,b2
+leave a lot to be desired,,b2
+legitimate,,b2
+lens,,b2
+leopard,,b2
+lessen,,b2
+let down,,b2
+let off,,b2
+level,,b2
+lifelong,,b2
+life raft,,b2
+lifestyle,,b2
+lighting,,b2
+lightning,,b2
+like,,b2
+line,,b2
+lines,,b2
+litter,,b2
+livelihood,,b2
+lively,,b2
+live up to,,b2
+living,,b2
+load,,b2
+lobby,,b2
+location,,b2
+loft,,b2
+log off,,b2
+long haul,,b2
+long-standing,,b2
+look after,,b2
+look at,,b2
+look for,,b2
+look forward to,,b2
+look into,,b2
+Look out!,,b2
+look up,,b2
+look up to,,b2
+loose,,b2
+lorry,,b2
+lose out,,b2
+lose touch with,,b2
+lottery,,b2
+loudspeaker,,b2
+loyal,,b2
+lumpy,,b2
+lyrics,,b2
+mainly,,b2
+maintain,,b2
+maintenance,,b2
+major,,b2
+make a fortune,,b2
+make for,,b2
+make friends with,,b2
+make out,,b2
+make up for,,b2
+make up your mind,,b2
+mall,,b2
+mannerism,,b2
+manual,,b2
+marathon,,b2
+mask,,b2
+massive,,b2
+mast,,b2
+mate,,b2
+matter,,b2
+mature,,b2
+meaningful,,b2
+melody,,b2
+melt,,b2
+memorable,,b2
+memorise,,b2
+memory,,b2
+menial,,b2
+mention,,b2
+message,,b2
+mess,,b2
+mess things up,,b2
+messy,,b2
+meteor,,b2
+meteorological,,b2
+migraine,,b2
+mild,,b2
+milk tooth,,b2
+mind you,,b2
+mind your head,,b2
+minimise,,b2
+misbehave,,b2
+misery,,b2
+misfortune,,b2
+misguide,,b2
+mission,,b2
+misunderstand,,b2
+mix,,b2
+mixture,,b2
+model,,b2
+modem,,b2
+modesty,,b2
+moisture,,b2
+monarchy,,b2
+monorail,,b2
+monument,,b2
+mood,,b2
+moody,,b2
+moorland,,b2
+mortality,,b2
+mosquito,,b2
+motivational,,b2
+mould,,b2
+mountain range,,b2
+mouth-watering,,b2
+moving,,b2
+muddy,,b2
+mug,,b2
+multiply,,b2
+mumble,,b2
+murmur,,b2
+musician,,b2
+mussel,,b2
+mutual,,b2
+naked,,b2
+nanny,,b2
+napkin,,b2
+narrow,,b2
+narrow-minded,,b2
+nationwide,,b2
+native people,,b2
+natural habitat,,b2
+need,,b2
+needle,,b2
+neighbourhood,,b2
+nerve-racking,,b2
+net,,b2
+network,,b2
+neuroticism,,b2
+news bulletin,,b2
+next to worthless,,b2
+nickname,,b2
+nocturnal,,b2
+nod off,,b2
+nomadic,,b2
+no mean achievement,,b2
+notably,,b2
+notion,,b2
+no trace of,,b2
+nourishing,,b2
+novel,,b2
+novelty,,b2
+nursery rhyme,,b2
+object,,b2
+obsession,,b2
+occur,,b2
+odd,,b2
+odour,,b2
+odyssey,,b2
+offence,,b2
+offend,,b2
+offended,,b2
+official,,b2
+olive,,b2
+on all fours,,b2
+on average,,b2
+on balance,,b2
+on behalf of,,b2
+on condition that,,b2
+on duty,,b2
+one at a time,,b2
+ongoing,,b2
+onlooker,,b2
+only child,,b2
+on offer,,b2
+on purpose,,b2
+on the cards,,b2
+on the condition that,,b2
+on the contrary,,b2
+on the spur of the moment,,b2
+on top of the world,,b2
+open-minded,,b2
+open-plan,,b2
+opponent,,b2
+opportunity,,b2
+oppose,,b2
+optimistic,,b2
+option,,b2
+orchestra,,b2
+orchestral,,b2
+organizer,,b2
+originality,,b2
+ornament,,b2
+orphanage,,b2
+otherwise,,b2
+outcry,,b2
+outfit,,b2
+out of,,b2
+outrageous,,b2
+outrun,,b2
+outweigh,,b2
+overall,,b2
+overcharge,,b2
+overcrowded,,b2
+overestimate,,b2
+overhear,,b2
+overshadow,,b2
+overtake,,b2
+overthrow,,b2
+overwhelming,,b2
+ownership,,b2
+own up,,b2
+oyster,,b2
+pace,,b2
+packaging,,b2
+pack,,b2
+pad,,b2
+paella,,b2
+palm,,b2
+pan,,b2
+pane,,b2
+panic,,b2
+paprika,,b2
+parachute,,b2
+paranormal,,b2
+parcel,,b2
+parrot,,b2
+partially,,b2
+participant,,b2
+participate,,b2
+partnership,,b2
+passage,,b2
+passion,,b2
+pass (the) time,,b2
+patent,,b2
+pattern,,b2
+paw,,b2
+pay in full,,b2
+peak,,b2
+peanut,,b2
+peck,,b2
+pedal power,,b2
+pedestrian,,b2
+peel,,b2
+peer,,b2
+penalty,,b2
+penniless,,b2
+perfectly,,b2
+performance,,b2
+performance-enhancing drug,,b2
+perform,,b2
+performer,,b2
+period,,b2
+permanent,,b2
+persistence,,b2
+personable,,b2
+personality,,b2
+personally,,b2
+perspective,,b2
+petition,,b2
+petrified,,b2
+phase out,,b2
+phenomenon,,b2
+philanthropist,,b2
+phobia,,b2
+pickpocket,,b2
+pick up,,b2
+pie,,b2
+piercing,,b2
+pigeon,,b2
+pile,,b2
+pillow,,b2
+pine,,b2
+pioneer,,b2
+pitch,,b2
+plain,,b2
+planet,,b2
+plant,,b2
+plaster,,b2
+platform,,b2
+play on words,,b2
+plot,,b2
+plug,,b2
+plus,,b2
+pointless,,b2
+poisonous,,b2
+poker,,b2
+polar bear,,b2
+police custody,,b2
+policy,,b2
+pollute,,b2
+pollution,,b2
+pond,,b2
+ponder,,b2
+pool,,b2
+popularity,,b2
+porridge,,b2
+port,,b2
+portion,,b2
+portrait,,b2
+pose a problem,,b2
+pose as,,b2
+posh,,b2
+position,,b2
+possessed,,b2
+postmark,,b2
+postpone,,b2
+potent,,b2
+potential,,b2
+pour,,b2
+power cable,,b2
+powerful,,b2
+precaution,,b2
+precious,,b2
+precise,,b2
+preconception,,b2
+predator,,b2
+predictable,,b2
+pregnancy,,b2
+preserve,,b2
+press,,b2
+press conference,,b2
+pressure,,b2
+prey,,b2
+priceless,,b2
+primitive,,b2
+principle,,b2
+printable,,b2
+printing press,,b2
+priority,,b2
+privacy,,b2
+pro,,b2
+probe,,b2
+process,,b2
+prodigy,,b2
+production,,b2
+progress,,b2
+promise,,b2
+promote,,b2
+proof,,b2
+prop,,b2
+propeller,,b2
+proper,,b2
+property,,b2
+proposal,,b2
+prospect,,b2
+protection,,b2
+protest march,,b2
+proud,,b2
+prove,,b2
+provide,,b2
+publicity,,b2
+publicity stunt,,b2
+public speaking,,b2
+pudding,,b2
+pull away,,b2
+pull on something,,b2
+pull on sth,,b2
+pull out of,,b2
+pull up,,b2
+pump,,b2
+punch,,b2
+punctual,,b2
+puncture,,b2
+punishment,,b2
+punk,,b2
+purchase,,b2
+pursue,,b2
+put off,,b2
+put out,,b2
+put together,,b2
+put up,,b2
+puzzled,,b2
+qualification,,b2
+query,,b2
+question,,b2
+raise,,b2
+ranch,,b2
+random,,b2
+range,,b2
+ransom,,b2
+rapids,,b2
+rash of,,b2
+ratings,,b2
+rational,,b2
+raw,,b2
+razor,,b2
+reach a conclusion,,b2
+react to,,b2
+realise an ambition,,b2
+rear its ugly head,,b2
+reassurance,,b2
+rebellious,,b2
+reckon,,b2
+recognise,,b2
+recollect,,b2
+record,,b2
+recovery,,b2
+recreation,,b2
+recycle,,b2
+redouble your efforts,,b2
+reduce,,b2
+redundant,,b2
+re-emerge,,b2
+referee,,b2
+reference,,b2
+reflect,,b2
+refund,,b2
+refuse,,b2
+regarded as,,b2
+regardless of,,b2
+regiment,,b2
+regional,,b2
+region,,b2
+register,,b2
+regret,,b2
+regulation,,b2
+rehearsal,,b2
+rehearse,,b2
+reject,,b2
+relative,,b2
+release,,b2
+relevant,,b2
+reliable,,b2
+relieved,,b2
+relocate,,b2
+reluctant,,b2
+remarkable,,b2
+remind,,b2
+remote,,b2
+remove,,b2
+renewal,,b2
+renew,,b2
+renowned,,b2
+rent,,b2
+replace,,b2
+represent,,b2
+reproduced,,b2
+reputation,,b2
+requirement,,b2
+rescue,,b2
+research,,b2
+researcher,,b2
+resemble,,b2
+resent,,b2
+reserved,,b2
+reservoir,,b2
+residence,,b2
+resident,,b2
+resolve,,b2
+resort,,b2
+resort to,,b2
+respectable,,b2
+respect,,b2
+respond,,b2
+responsibility,,b2
+responsible,,b2
+restore,,b2
+resulting,,b2
+resurface,,b2
+retain,,b2
+reunite,,b2
+reveal,,b2
+review,,b2
+revise,,b2
+rich,,b2
+ridicule,,b2
+right angle,,b2
+ripe,,b2
+risk,,b2
+risk-taking,,b2
+ritual,,b2
+rival,,b2
+river,,b2
+robbery,,b2
+rock chick,,b2
+rocket,,b2
+rock face,,b2
+role,,b2
+roll back,,b2
+rook,,b2
+rope,,b2
+rotten,,b2
+route,,b2
+router,,b2
+routine,,b2
+row,,b2
+rub,,b2
+rubber,,b2
+rubbish,,b2
+ruins,,b2
+rule,,b2
+rumbling,,b2
+run up against,,b2
+runway,,b2
+rural,,b2
+ruthless,,b2
+sabotage,,b2
+saddle,,b2
+sane,,b2
+satisfied,,b2
+save up,,b2
+savoury,,b2
+saying,,b2
+sb’s days are numbered,,b2
+scale,,b2
+scandal,,b2
+scar,,b2
+Scare,,b2
+scared,,b2
+scary,,b2
+scenery,,b2
+sceptical,,b2
+science fiction,,b2
+scientific,,b2
+scoop,,b2
+scooter,,b2
+scores of,,b2
+scorpion,,b2
+screenplay,,b2
+script,,b2
+seal,,b2
+seaweed,,b2
+second-hand,,b2
+secret,,b2
+secure,,b2
+security,,b2
+segment,,b2
+seize the chance,,b2
+selection,,b2
+self-centred,,b2
+self-confident,,b2
+self-disciplined,,b2
+self-esteem,,b2
+selfish,,b2
+selfless,,b2
+self-righteous,,b2
+send off,,b2
+sensational,,b2
+sensation,,b2
+sense,,b2
+senseless,,b2
+sense of humour,,b2
+sensible,,b2
+sensitive,,b2
+sensor,,b2
+sensory,,b2
+sentence,,b2
+seriously,,b2
+serve,,b2
+session,,b2
+set a record,,b2
+set,,b2
+setback,,b2
+set down,,b2
+set off,,b2
+setting,,b2
+set-top box,,b2
+set up,,b2
+shadow,,b2
+shake,,b2
+shallow,,b2
+shape,,b2
+share,,b2
+shark-infested,,b2
+sheer,,b2
+sheet,,b2
+shelter,,b2
+shepherd,,b2
+sheriff,,b2
+shield,,b2
+shin,,b2
+shiver,,b2
+shoot,,b2
+shooting star,,b2
+shopaholic,,b2
+shoplift,,b2
+shoplifting,,b2
+shortage,,b2
+shorten,,b2
+short-lived,,b2
+shot,,b2
+sibling,,b2
+side effect,,b2
+sigh,,b2
+sight,,b2
+sighting,,b2
+signal,,b2
+significant,,b2
+similarity,,b2
+similar to,,b2
+simulated,,b2
+simultaneously,,b2
+singe,,b2
+single-minded,,b2
+single out,,b2
+sinister,,b2
+sink,,b2
+sitcom,,b2
+ski,,b2
+skinny,,b2
+skin tone,,b2
+slap,,b2
+sleeve,,b2
+slice,,b2
+slightly,,b2
+slip,,b2
+slip on,,b2
+slogan,,b2
+smart,,b2
+smash a record,,b2
+snack,,b2
+snail,,b2
+snort,,b2
+soak,,b2
+so far,,b2
+soggy,,b2
+sole,,b2
+solid,,b2
+solitary,,b2
+solo,,b2
+solution,,b2
+solve,,b2
+somebody,,b2
+something,,b2
+soothing,,b2
+sophisticated,,b2
+soundtrack,,b2
+souvenir,,b2
+space,,b2
+spare part,,b2
+speak your mind,,b2
+specialize,,b2
+species,,b2
+specification,,b2
+specific,,b2
+specimen,,b2
+spectacular,,b2
+spectator,,b2
+spellbound,,b2
+spicy,,b2
+spill,,b2
+spiral out of control,,b2
+split up,,b2
+sponsor,,b2
+spot,,b2
+spotless,,b2
+sprain,,b2
+sprawling,,b2
+spray paint,,b2
+spread,,b2
+spread to,,b2
+sprinkle,,b2
+sprinter,,b2
+spur,,b2
+spy,,b2
+squash,,b2
+squeeze in,,b2
+squid,,b2
+stable,,b2
+stage a protest,,b2
+stage,,b2
+stale,,b2
+stall,,b2
+stall (selling),,b2
+stamp,,b2
+standard,,b2
+stand out,,b2
+star,,b2
+start out,,b2
+starving,,b2
+state,,b2
+steady,,b2
+steal,,b2
+steam,,b2
+steep,,b2
+steer,,b2
+stereotype,,b2
+stewed,,b2
+stick,,b2
+stick by,,b2
+stiff,,b2
+stimulate,,b2
+sting,,b2
+stinging,,b2
+stir,,b2
+stitch,,b2
+stodgy,,b2
+stop,,b2
+stop over,,b2
+store,,b2
+storey,,b2
+storm,,b2
+strained,,b2
+stream,,b2
+strength,,b2
+strengthen,,b2
+stress,,b2
+stretch your legs,,b2
+strict,,b2
+strike sb,,b2
+string,,b2
+strip,,b2
+struggle,,b2
+stubborn,,b2
+stuff,,b2
+stunning,,b2
+stunt,,b2
+stylish,,b2
+subjective,,b2
+submit,,b2
+substance,,b2
+substantial,,b2
+subtract,,b2
+suburban,,b2
+suburb,,b2
+suffer,,b2
+sufficient,,b2
+suit you down to the ground,,b2
+summon,,b2
+summon the nerve,,b2
+sum up,,b2
+supply,,b2
+supply depot,,b2
+support,,b2
+supporter,,b2
+suppress,,b2
+surface,,b2
+surgeon,,b2
+surgery,,b2
+surreal,,b2
+surrounded by,,b2
+surroundings,,b2
+surveillance,,b2
+survival,,b2
+suspect,,b2
+suspicion,,b2
+suspicious,,b2
+swallow,,b2
+swan,,b2
+swap,,b2
+swear,,b2
+sweat,,b2
+sweatshirt,,b2
+sweaty,,b2
+swell,,b2
+swerve,,b2
+swift,,b2
+symbol,,b2
+symptom,,b2
+syrup,,b2
+system,,b2
+tackle,,b2
+tactic,,b2
+tail,,b2
+take account,,b2
+take after sb,,b2
+take after somebody,,b2
+take back,,b2
+take charge,,b2
+take for granted,,b2
+take it easy,,b2
+take it for granted,,b2
+take off,,b2
+take out,,b2
+take place,,b2
+take sb up on,,b2
+take some to court,,b2
+take sth for granted,,b2
+take the blame for,,b2
+take turns,,b2
+take your mind off something,,b2
+talent,,b2
+talk back,,b2
+talk sb into,,b2
+talk show,,b2
+talk somebody into,,b2
+tank,,b2
+tanned,,b2
+tap,,b2
+target,,b2
+taste,,b2
+taste for,,b2
+tasteless,,b2
+team,,b2
+team player,,b2
+technique,,b2
+technological,,b2
+technology,,b2
+telegraph wire,,b2
+telepathic,,b2
+tell a lie,,b2
+tell apart,,b2
+tell a story,,b2
+tell off,,b2
+temporary,,b2
+tend,,b2
+tender,,b2
+tense,,b2
+terminal,,b2
+terminal building,,b2
+terrain,,b2
+terrified,,b2
+testify,,b2
+texture,,b2
+the former,,b2
+theft,,b2
+the latter,,b2
+the look of,,b2
+theme,,b2
+theory,,b2
+the press,,b2
+therapy,,b2
+thick and fast,,b2
+thief,,b2
+thigh,,b2
+thirst-quenching,,b2
+thorough,,b2
+thought-provoking,,b2
+threat,,b2
+threaten,,b2
+three-dimensional,,b2
+thriller,,b2
+thrill-seeker,,b2
+throw doubt on,,b2
+thump,,b2
+thunder,,b2
+thunderstorm,,b2
+tide,,b2
+tie in with,,b2
+time-consuming,,b2
+time keeper,,b2
+times,,b2
+tinker around,,b2
+to cap it all,,b2
+tolerant,,b2
+tomb,,b2
+tongue,,b2
+tool,,b2
+torch,,b2
+tortoise,,b2
+totally,,b2
+tough,,b2
+tournament,,b2
+tower block,,b2
+trace,,b2
+track,,b2
+track down,,b2
+tracksuit,,b2
+traffic,,b2
+traffic jam,,b2
+traffic warden,,b2
+tragic,,b2
+trail,,b2
+trait,,b2
+tram,,b2
+transform,,b2
+trapped,,b2
+travel agent,,b2
+treat,,b2
+treatment,,b2
+trek,,b2
+tremble,,b2
+trendy,,b2
+trial,,b2
+trickle,,b2
+tricky,,b2
+trip over,,b2
+triumph,,b2
+troops,,b2
+tropical,,b2
+troubled,,b2
+truffle,,b2
+truly,,b2
+trumpet,,b2
+trust,,b2
+tube,,b2
+turmeric,,b2
+turned up,,b2
+turn on,,b2
+turn up,,b2
+twin,,b2
+twitch,,b2
+UFO,,b2
+unbeatable,,b2
+uncertain,,b2
+unconventional,,b2
+underestimate,,b2
+undergo,,b2
+understandable,,b2
+undertake,,b2
+undo,,b2
+uneasy,,b2
+unfasten,,b2
+ungrateful,,b2
+unhelpful,,b2
+unidentifiable,,b2
+unique,,b2
+unmanned,,b2
+unmissable,,b2
+unnervingly,,b2
+unpopular,,b2
+unpredictable,,b2
+unreliable,,b2
+unsuccessful,,b2
+untie,,b2
+unveil,,b2
+unwitting,,b2
+unwrap,,b2
+upbringing,,b2
+update,,b2
+upright,,b2
+up to date,,b2
+urban,,b2
+urge,,b2
+utterly,,b2
+vacation,,b2
+valley,,b2
+value,,b2
+van,,b2
+vandalise,,b2
+vast,,b2
+vegan,,b2
+vegetation,,b2
+venison,,b2
+venture,,b2
+venue,,b2
+version,,b2
+via,,b2
+victim,,b2
+victorious,,b2
+view,,b2
+villain,,b2
+vinegar,,b2
+vineyard,,b2
+violent,,b2
+violin,,b2
+virtual,,b2
+virus,,b2
+visa,,b2
+visibly,,b2
+vision,,b2
+visual,,b2
+visualise,,b2
+vivid,,b2
+volcano,,b2
+volume,,b2
+volunteer,,b2
+wade,,b2
+wages,,b2
+waist,,b2
+wallpaper,,b2
+ward,,b2
+wardrobe,,b2
+warn,,b2
+waterfall,,b2
+weapon,,b2
+wearable,,b2
+wear off,,b2
+wear on,,b2
+weather forecast,,b2
+webbed feet,,b2
+weird,,b2
+welfare,,b2
+well-being,,b2
+western,,b2
+wetsuit,,b2
+whale,,b2
+what,,b2
+wheelchair,,b2
+when it comes to,,b2
+whet your appetite,,b2
+whip out,,b2
+whistle,,b2
+white lie,,b2
+wholeheartedly,,b2
+widespread,,b2
+wig,,b2
+wild,,b2
+wilderness,,b2
+wildlife,,b2
+willing,,b2
+windscreen,,b2
+wing,,b2
+wipe,,b2
+wisdom,,b2
+wish,,b2
+witch,,b2
+withstand,,b2
+with your bare hands,,b2
+witness,,b2
+witty,,b2
+wondrous,,b2
+woods,,b2
+word of caution,,b2
+work on,,b2
+work out,,b2
+worm,,b2
+worried,,b2
+worth,,b2
+worthwhile,,b2
+wounded,,b2
+wrap,,b2
+wrestle,,b2
+wrist,,b2
+writer’s block,,b2
+yacht,,b2
+yawn,,b2
+yoghurt,,b2
+youngster,,b2

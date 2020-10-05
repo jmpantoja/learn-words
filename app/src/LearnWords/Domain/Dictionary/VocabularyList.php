@@ -14,7 +14,14 @@ declare(strict_types=1);
 namespace LearnWords\Domain\Dictionary;
 
 
-interface QuestionRepository
+use PlanB\Edge\Domain\Collection\TypedList;
+
+final class VocabularyList extends TypedList
 {
-    public function findByTag(string ...$tags): array;
+
+    public function getType(): string
+    {
+        return Vocabulary::class;
+    }
+
 }

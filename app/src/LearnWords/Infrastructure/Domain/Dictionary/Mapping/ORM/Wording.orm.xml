@@ -5,6 +5,6 @@
 
     <embeddable name="LearnWords\Domain\Dictionary\Wording">
         <field name="wording"/>
-        <field name="description"/>
+        <field name="description" nullable="true"/>
     </embeddable>
 </doctrine-mapping>

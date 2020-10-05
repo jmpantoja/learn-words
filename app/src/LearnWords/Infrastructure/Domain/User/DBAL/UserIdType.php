@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace LearnWords\Infrastructure\Domain\User\DBAL;
 
 
-use LearnWords\Domain\Dictionary\EntryId;
+use LearnWords\Domain\User\UserId;
 use PlanB\Edge\Infrastructure\Doctrine\DBAL\Type\EntityIdType;
 
 final class UserIdType extends EntityIdType
@@ -27,7 +27,7 @@ final class UserIdType extends EntityIdType
         return 'UserId';
     }
 
-    protected function fromString(string $value): EntryId
+    protected function fromString(string $value): UserId
     {
         // @phpstan-ignore-next-line
         return UserId::fromString($value);

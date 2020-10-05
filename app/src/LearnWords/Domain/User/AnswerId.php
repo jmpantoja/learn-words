@@ -11,16 +11,12 @@
 
 declare(strict_types=1);
 
-namespace LearnWords\Domain\Dictionary;
+namespace LearnWords\Domain\User;
 
 
-use PlanB\Edge\Domain\Collection\TypedList;
+use PlanB\Edge\Domain\Entity\EntityId;
 
-final class QuestionList extends TypedList
+final class AnswerId extends EntityId
 {
 
-    public function getType(): string
-    {
-        return Question::class;
-    }
 }

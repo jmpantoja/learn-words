@@ -2,7 +2,7 @@ overblog_graphql:
     definitions:
         schema:
             query: RootQuery
-            mutation: ~
+            mutation: RootMutation
         mappings:
             auto_discover: false
             types:

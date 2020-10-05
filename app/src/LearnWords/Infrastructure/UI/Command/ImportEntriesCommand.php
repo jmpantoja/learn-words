@@ -17,6 +17,7 @@ namespace LearnWords\Infrastructure\UI\Command;
 use Exception;
 use League\Tactician\CommandBus;
 use LearnWords\Application\Dictionary\UseCase\SaveEntry;
+use LearnWords\Domain\Dictionary\Importer\EntryOrFail;
 use LearnWords\Domain\Dictionary\Importer\ImportEntriesResolverInterface;
 use LearnWords\Domain\Dictionary\Lang;
 use LearnWords\Domain\Dictionary\Provider\QuestionImporter;
@@ -25,6 +26,7 @@ use LearnWords\Infrastructure\UI\Command\Exception\InvalidInputException;
 use SplFileInfo;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -43,6 +45,11 @@ final class ImportEntriesCommand extends Command implements SerializerAwareInter
      * @var ImportEntriesResolverInterface
      */
     private ImportEntriesResolverInterface $resolver;
+
+    /**
+     * @var string[]
+     */
+    private array $failures;
 
     public function __construct(ImportEntriesResolverInterface $resolver, CommandBus $commandBus)
     {
@@ -69,6 +76,7 @@ final class ImportEntriesCommand extends Command implements SerializerAwareInter
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $this->failures = [];
         $lang = $this->resolveLang($input);
         $reader = $this->createReader($input);
 
@@ -78,18 +86,32 @@ final class ImportEntriesCommand extends Command implements SerializerAwareInter
         $bar = $this->buildProgressBar($input, $output);
         $bar->setMaxSteps($total);
 
-        foreach ($entries as $entry) {
-            $command = new SaveEntry($entry);
-            $this->commandBus->handle($command);
+        foreach ($entries as $entryOrFail) {
+            $this->process($entryOrFail);
 
-            $bar->setMessage((string)$entry->getWord());
+            $bar->setMessage($entryOrFail->getWord());
             $bar->advance(1);
         }
 
         $bar->setMessage('done!');
         $bar->finish();
 
+
+        $this->showErrorsList($output);
+
         return 0;
+    }
+
+    private function process(EntryOrFail $entryOrFail)
+    {
+        if (!$entryOrFail->isSuccess()) {
+            $this->failures[] = $entryOrFail->getFailure();
+            return;
+        }
+
+        $entry = $entryOrFail->getEntry();
+        $command = new SaveEntry($entry);
+        $this->commandBus->handle($command);
     }
 
 
@@ -140,7 +162,17 @@ final class ImportEntriesCommand extends Command implements SerializerAwareInter
         return $bar;
     }
 
+    protected function showErrorsList(OutputInterface $output)
+    {
+        $rows = array_map(function (string $failure) {
+            return [$failure];
+        }, $this->failures);
 
+        $table = new Table($output);
+        $table
+            ->setHeaders(['Failures'])
+            ->setRows($rows);
 
-
+        $table->render();
+    }
 }

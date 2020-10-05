@@ -1,5 +1,6 @@
-query($tags: [String]){
-  questions_by_tag (tags:$tags){
+query($userId: String, $limit: Int, $level: Int, $tags: [String]){
+  questions_by_tag (userId:$userId, limit:$limit, level:$level, tags:$tags){
+    id
     word
     wording
     description

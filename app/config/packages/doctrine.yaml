@@ -12,8 +12,10 @@ doctrine:
             EntryId: LearnWords\Infrastructure\Domain\Dictionary\DBAL\EntryIdType
             TagId: LearnWords\Infrastructure\Domain\Dictionary\DBAL\TagIdType
             QuestionId: LearnWords\Infrastructure\Domain\Dictionary\DBAL\QuestionIdType
-            
+
             UserId: LearnWords\Infrastructure\Domain\User\DBAL\UserIdType
+            AnswerId: LearnWords\Infrastructure\Domain\User\DBAL\AnswerIdType
+            Leitner: LearnWords\Infrastructure\Domain\User\DBAL\LeitnerType
 
         mapping_types:
             Relevance: integer
@@ -21,8 +23,9 @@ doctrine:
             EntryId: string
             TagId: string
             QuestionId: string
-
+            
             UserId: string
+            AnswerId: string
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware

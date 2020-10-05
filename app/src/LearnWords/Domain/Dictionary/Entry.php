@@ -86,9 +86,9 @@ class Entry
         return $this;
     }
 
-    public function getQuestions(): QuestionList
+    public function getQuestions(): VocabularyList
     {
-        return QuestionList::collect($this->questions);
+        return VocabularyList::collect($this->questions);
     }
 
     public function getMp3Url(): ?Mp3Url
@@ -99,17 +99,26 @@ class Entry
     public function addQuestion(array $data): self
     {
         $total = count($this->questions) + 1;
+
         $relevance = new Relevance($total);
 
-        $question = new Question($this, $data['wording'], $data['example'], $relevance);
+        $question = new Vocabulary($this, $data['wording'], $relevance, $data['example']);
+
         $this->questions->add($question);
         return $this;
     }
 
     public function updateQuestion($key, array $data): self
     {
+
         $question = $this->questions->get($key);
-        $question->update($data['wording'], $data['example'], $data['relevance']);
+
+        if (is_null($question)) {
+            return $this->addQuestion($data);
+        }
+
+
+        $question->update($data['wording'], $data['relevance'], $data['example']);
         return $this;
     }
 

@@ -33,7 +33,7 @@ class Relevance
         return new Constraints\Relevance();
     }
 
-    public function getRelevance(): int
+    public function toInt(): int
     {
         return $this->relevance;
     }

@@ -5,6 +5,18 @@
   "LazyConfigCards": {
     "description": "Auto imported from components/ConfigCards.vue"
   },
+  "ConfigForm": {
+    "description": "Auto imported from components/ConfigForm.vue"
+  },
+  "LazyConfigForm": {
+    "description": "Auto imported from components/ConfigForm.vue"
+  },
+  "DailyReview": {
+    "description": "Auto imported from components/DailyReview.vue"
+  },
+  "LazyDailyReview": {
+    "description": "Auto imported from components/DailyReview.vue"
+  },
   "LayoutCenter": {
     "description": "Auto imported from components/LayoutCenter.vue"
   },

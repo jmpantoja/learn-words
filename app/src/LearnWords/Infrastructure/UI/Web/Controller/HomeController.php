@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 final class HomeController extends AbstractController
 {
 
+
     public function __invoke(): Response
     {
         return $this->render('app/index.html.twig');

@@ -1,0 +1,11 @@
+query($userId: String){
+  daily_review (userId:$userId){
+    id
+    word
+    wording
+    description
+    sample
+    translation
+    sound
+  }
+}

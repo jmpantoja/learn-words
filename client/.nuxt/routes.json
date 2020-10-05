@@ -1,17 +1,17 @@
 [
   {
-    "name": "config",
-    "path": "/config",
-    "component": "/srv/client/pages/config.vue",
-    "chunkName": "pages/config",
-    "_name": "_67769f18"
-  },
-  {
     "name": "exam",
     "path": "/exam",
     "component": "/srv/client/pages/exam.vue",
     "chunkName": "pages/exam",
     "_name": "_156494f5"
+  },
+  {
+    "name": "review",
+    "path": "/review",
+    "component": "/srv/client/pages/review.vue",
+    "chunkName": "pages/review",
+    "_name": "_763bcfa4"
   },
   {
     "name": "study",

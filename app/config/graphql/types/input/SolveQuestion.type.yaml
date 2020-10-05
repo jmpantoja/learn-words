@@ -1,0 +1,10 @@
+SolveQuestion:
+    type: input-object
+    config:
+        fields:
+            user:
+                type: "String"
+            question:
+                type: "String"
+            successful:
+                type: "Boolean"                

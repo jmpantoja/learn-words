@@ -1,6 +1,6 @@
 <template>
   <layout-center>
-    <question-list :tags="tags" :num="num" />
+    <question-list :tags="tags" :num="num" :level="level" />
   </layout-center>
 </template>
 
@@ -10,6 +10,7 @@ export default {
     return {
       tags: this.$route.query.tags.split(','),
       num: this.$route.query.number * 1,
+      level: this.$route.query.level * 1,
     }
   },
 }

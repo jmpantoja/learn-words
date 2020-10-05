@@ -19,7 +19,7 @@ use LearnWords\Domain\Dictionary\TagRepository;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 
-final class TagResolver implements ResolverInterface, AliasedInterface
+final class TagQuery implements ResolverInterface, AliasedInterface
 {
 
     private TagRepository $repository;
@@ -36,11 +36,6 @@ final class TagResolver implements ResolverInterface, AliasedInterface
         return array_map(function (Tag $tag) {
             return ['tag' => $tag->getTag()];
         }, $tagList->toArray());
-
-        return [
-            ['tag' => 'aaa'],
-            ['tag' => 'bbb'],
-        ];
     }
 
     public static function getAliases(): array

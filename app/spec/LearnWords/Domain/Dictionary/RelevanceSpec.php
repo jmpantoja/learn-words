@@ -17,7 +17,7 @@ class RelevanceSpec extends ObjectBehavior
     public function it_is_initializable()
     {
         $this->shouldHaveType(Relevance::class);
-        $this->getRelevance()->shouldReturn(10);
+        $this->toInt()->shouldReturn(10);
     }
 
     public function it_throws_an_exception_when_input_data_is_wrong()

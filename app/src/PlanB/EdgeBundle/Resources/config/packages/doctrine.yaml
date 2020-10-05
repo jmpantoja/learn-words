@@ -1,7 +1,17 @@
 doctrine:
     dbal:
         types:
+            date: PlanB\Edge\Infrastructure\Doctrine\DBAL\Type\CarbonDateType
+            date_immutable: PlanB\Edge\Infrastructure\Doctrine\DBAL\Type\CarbonDateImmutableType
+            datetime: PlanB\Edge\Infrastructure\Doctrine\DBAL\Type\CarbonDateTimeType
+            datetime_immutable: PlanB\Edge\Infrastructure\Doctrine\DBAL\Type\CarbonDateTimeImmutableType
+
+            time: PlanB\Edge\Infrastructure\Doctrine\DBAL\Type\CarbonTimeType
+            time_immutable: PlanB\Edge\Infrastructure\Doctrine\DBAL\Type\CarbonTimeImmutableType
+
             uuid_binary_ordered_time: Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType
+
+
         mapping_types:
             uuid_binary_ordered_time: binary
     orm:

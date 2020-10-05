@@ -26,7 +26,7 @@ final class RelevanceType extends SingleType
     public function transform(?object $relevance)
     {
         if ($relevance instanceof Relevance) {
-            return $relevance->getRelevance();
+            return $relevance->toInt();
         }
 
         return null;

@@ -28,6 +28,7 @@ class Wording
     public function __construct(string $wording, string $description)
     {
         $wording = $this->normalize($wording);
+
         $description = $this->normalize($description);
 
         $this->ensure(get_defined_vars());

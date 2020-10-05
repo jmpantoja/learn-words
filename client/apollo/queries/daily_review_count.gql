@@ -1,0 +1,3 @@
+query($userId: String){
+  daily_review_count(userId: $userId)
+}

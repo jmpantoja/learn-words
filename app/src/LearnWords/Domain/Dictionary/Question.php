@@ -14,30 +14,27 @@ declare(strict_types=1);
 namespace LearnWords\Domain\Dictionary;
 
 
-final class Question
+abstract class Question
 {
+    protected QuestionId $id;
+    protected Entry $entry;
+    protected Wording $wording;
+    protected int $random;
 
-    private QuestionId $id;
-    private Entry $entry;
-    private Wording $wording;
-    private Example $example;
-    private Relevance $relevance;
-
-    public function __construct(Entry $entry, Wording $wording, Example $example, Relevance $relevance)
+    public function __construct(Entry $entry, Wording $wording)
     {
         $this->id = new QuestionId();
         $this->entry = $entry;
         $this->wording = $wording;
-        $this->example = $example;
-        $this->relevance = $relevance;
+        $this->random = random_int(1, 100000);
     }
 
-    public function update(Wording $wording, Example $example, Relevance $relevance): self
+    /**
+     * @return QuestionId
+     */
+    public function getId(): QuestionId
     {
-        $this->wording = $wording;
-        $this->example = $example;
-        $this->relevance = $relevance;
-        return $this;
+        return $this->id;
     }
 
     public function getEntry(): Entry
@@ -48,15 +45,5 @@ final class Question
     public function getWording(): Wording
     {
         return $this->wording;
-    }
-
-    public function getExample(): Example
-    {
-        return $this->example;
-    }
-
-    public function getRelevance(): Relevance
-    {
-        return $this->relevance;
     }
 }

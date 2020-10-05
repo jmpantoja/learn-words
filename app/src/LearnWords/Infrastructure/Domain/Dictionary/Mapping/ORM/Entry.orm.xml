@@ -13,7 +13,7 @@
         </unique-constraints>
 
         <field name="mp3Url" type="Mp3Url" length="512" nullable="true"/>
-        <one-to-many field="questions" target-entity="LearnWords\Domain\Dictionary\Question" mapped-by="entry"
+        <one-to-many field="questions" target-entity="LearnWords\Domain\Dictionary\Vocabulary" mapped-by="entry"
                      orphan-removal="true">
             <cascade>
                 <cascade-persist/>
@@ -28,7 +28,7 @@
             <cascade>
                 <cascade-persist/>
             </cascade>
-            <join-table name="word_x_tags">
+            <join-table name="entries_x_tags">
                 <join-columns>
                     <join-column/>
                 </join-columns>

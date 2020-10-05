@@ -1,4 +1,6 @@
 export { default as ConfigCards } from '../../components/ConfigCards.vue'
+export { default as ConfigForm } from '../../components/ConfigForm.vue'
+export { default as DailyReview } from '../../components/DailyReview.vue'
 export { default as LayoutCenter } from '../../components/LayoutCenter.vue'
 export { default as QuestionAnswer } from '../../components/Question/QuestionAnswer.vue'
 export { default as QuestionCard } from '../../components/Question/QuestionCard.vue'
@@ -13,6 +15,8 @@ export { default as QuestionToolbar } from '../../components/Question/QuestionTo
 export { default as QuestionWording } from '../../components/Question/QuestionWording.vue'
 
 export const LazyConfigCards = import('../../components/ConfigCards.vue' /* webpackChunkName: "components/ConfigCards" */).then(c => c.default || c)
+export const LazyConfigForm = import('../../components/ConfigForm.vue' /* webpackChunkName: "components/ConfigForm" */).then(c => c.default || c)
+export const LazyDailyReview = import('../../components/DailyReview.vue' /* webpackChunkName: "components/DailyReview" */).then(c => c.default || c)
 export const LazyLayoutCenter = import('../../components/LayoutCenter.vue' /* webpackChunkName: "components/LayoutCenter" */).then(c => c.default || c)
 export const LazyQuestionAnswer = import('../../components/Question/QuestionAnswer.vue' /* webpackChunkName: "components/Question/QuestionAnswer" */).then(c => c.default || c)
 export const LazyQuestionCard = import('../../components/Question/QuestionCard.vue' /* webpackChunkName: "components/Question/QuestionCard" */).then(c => c.default || c)

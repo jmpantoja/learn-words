@@ -5,8 +5,9 @@
 
     <entity name="LearnWords\Domain\User\User" table="users">
 
-        <id name="id" column="id" type="EntryId"/>
+        <id name="id" column="id" type="UserId"/>
         <field name="username" length="25" unique="true"/>
         <field name="password" length="64"/>
+
     </entity>
 </doctrine-mapping>

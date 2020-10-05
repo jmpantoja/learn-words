@@ -1,18 +1,17 @@
 <template>
   <v-card-actions style="width: 100%">
-    <v-chip label v-if="resume" class="mr-1" color="success">
+    <v-chip v-if="resume" label class="mr-1" color="success">
       {{ resume.success }}
     </v-chip>
 
-    <v-chip label v-if="resume" class="mr-1" color="error">
+    <v-chip v-if="resume" label class="mr-1" color="error">
       {{ resume.error }}
     </v-chip>
 
     <v-spacer />
-
     <question-reply v-if="reply" />
     <question-favourite v-if="favourite" />
-    <question-speaker v-if="speaker" :word="word" />
+    <question-speaker ref="speaker" :manual="speaker" :word="word" />
   </v-card-actions>
 </template>
 <script>
@@ -34,6 +33,11 @@ export default {
     },
     reply: {
       type: Boolean,
+    },
+  },
+  methods: {
+    play() {
+      this.$refs.speaker.playIfNoMute()
     },
   },
 }

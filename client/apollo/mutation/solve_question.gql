@@ -1,0 +1,3 @@
+mutation($input: SolveQuestion){
+  solve_question(input: $input)
+}

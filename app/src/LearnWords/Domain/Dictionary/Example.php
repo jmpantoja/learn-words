@@ -43,17 +43,17 @@ class Example
     /**
      * @return string
      */
-    public function getSample(): string
+    public function getSample(): ?string
     {
-        return $this->sample;
+        return $this->sample ?? null;
     }
 
     /**
      * @return string
      */
-    public function getTranslation(): string
+    public function getTranslation(): ?string
     {
-        return $this->translation;
+        return $this->translation ?? null;
     }
 
 }

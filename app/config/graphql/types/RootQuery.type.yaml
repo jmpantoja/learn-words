@@ -5,11 +5,31 @@ RootQuery:
         fields:
             all_tags:
                 type: '[Tag]'
-                resolve: "@=resolver('all_tags', [args])"            
+                resolve: "@=resolver('all_tags', [args])"
+            daily_review:
+                type: '[Question]'
+                args:
+                    userId:
+                        type: "String"
+                resolve: "@=resolver('daily_review', [args['userId']])"
+
+            daily_review_count:
+                type: 'Int'
+                args:
+                    userId:
+                        type: "String"
+                resolve: "@=resolver('daily_review_count', [args['userId']])"
+
             questions_by_tag:
                 type: '[Question]'
                 args:
-                    tags: 
+                    userId:
+                        type: "String"
+                    limit:
+                        type: "Int"
+                    level:
+                        type: "Int"
+                    tags:
                         type: '[String]'
-                resolve: "@=resolver('questions_by_tag', [args])"
+                resolve: "@=resolver('questions_by_tag', [args['userId'], args['limit'], args['level'], args['tags']])"
 

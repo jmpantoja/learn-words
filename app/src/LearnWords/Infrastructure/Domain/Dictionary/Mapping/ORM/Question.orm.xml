@@ -3,14 +3,19 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity name="LearnWords\Domain\Dictionary\Question" table="questions">
+    <entity name="LearnWords\Domain\Dictionary\Question" table="questions" inheritance-type="JOINED">
+
+        <discriminator-column name="type" type="string"/>
+        <discriminator-map>
+            <discriminator-mapping value="vocabulary" class="LearnWords\Domain\Dictionary\Vocabulary"/>
+            <discriminator-mapping value="irregular" class="LearnWords\Domain\Dictionary\Irregular"/>
+        </discriminator-map>
 
         <id name="id" column="id" type="QuestionId"/>
         <many-to-one field="entry" target-entity="LearnWords\Domain\Dictionary\Entry"/>
 
-        <field name="relevance" type="Relevance"/>
         <embedded name="wording" class="LearnWords\Domain\Dictionary\Wording" use-column-prefix="false"/>
-        <embedded name="example" class="LearnWords\Domain\Dictionary\Example" use-column-prefix="false"/>
 
+        <field name="random" type="integer" nullable="true"/>
     </entity>
 </doctrine-mapping>

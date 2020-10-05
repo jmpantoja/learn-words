@@ -1,10 +1,5 @@
 <template>
-  <div>sss</div>
+  <layout-center>
+    <config-cards />
+  </layout-center>
 </template>
-
-<script>
-
-export default {
-  components: {},
-}
-</script>

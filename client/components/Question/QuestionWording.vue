@@ -2,7 +2,7 @@
   <div class="face">
     <p class="display-3 text--primary">{{ word }}</p>
     <span class="description">{{ description }}</span>
-    <p v-if="displaySample" class="text-black-50">
+    <p v-if="displaySample" class="sample">
       {{ sample }}
     </p>
   </div>
@@ -33,5 +33,8 @@ span.description {
   color: #c0341d;
   font-style: italic;
   font-size: 1.5em;
+}
+.sample {
+  font-size: 1.3em;
 }
 </style>

@@ -33,13 +33,13 @@ final class Wording extends Collection
             'wording' => [
                 new NotBlank(),
                 new Length([
-                    'min' => 3
+                    'min' => 2
                 ])
             ],
             'description' => [
-                new NotBlank(),
+//                new NotBlank(),
                 new Length([
-                    'min' => 4
+                    'min' => 2
                 ])
             ]
         ];

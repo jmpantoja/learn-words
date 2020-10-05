@@ -1,0 +1,38 @@
+annoyed,,b2,course
+delighted,,b2,course
+disappointed,,b2,course
+shocked,,b2,course
+upset,,b2,course
+worried,,b2,course
+sceptical,,b2,course
+childish,,b2,course
+childish,,b2,course
+freshly,,b2,course
+cucumber,,b2,course
+confident,,b2,course
+overdid,,b2,course
+overweight,,b2,course
+keep track,,b2,course
+keep up,,b2,course
+cut down,,b2,course
+processed,,b2,course
+rate,,b2,course
+uphill,,b2,course
+struggle,,b2,course
+understatement,,b2,course
+understate,,b2,course
+suffer,,b2,course
+suffering,,b2,course
+kidney,,b2,course
+dissertation,,b2,course
+doctorate,,b2,course
+amongst,,b2,course
+confess,,b2,course
+hooked on,,b2,course
+despite,,b2,course
+put down to,,b2,course
+nevertheless,,b2,course
+nevertheless,,b2,course
+slopes,,b2,course
+tough,,b2,course
+slow down,,b2,course
