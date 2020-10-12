@@ -24,5 +24,5 @@ interface AnswerRepository
 
     public function createIfNotExists(User $user, Question $question): Answer;
 
-  //  public function getQuestionsByUserAndCriteria(User $user, QuestionCriteria $criteria): QuestionList;
+    public function currentStat();
 }

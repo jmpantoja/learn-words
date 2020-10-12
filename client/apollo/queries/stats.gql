@@ -1,0 +1,10 @@
+query($userId: String!){
+  stats_by_user(userId: $userId){
+    date
+    eachDay
+    eachThreeDays
+    eachWeek
+    eachTwoWeeks
+    eachMonth
+  }
+}

@@ -6,20 +6,14 @@ RootQuery:
             all_tags:
                 type: '[Tag]'
                 resolve: "@=resolver('all_tags', [args])"
-            daily_review:
-                type: '[Question]'
+
+            stats_by_user:
+                type: '[Stat]'
                 args:
                     userId:
-                        type: "String"
-                resolve: "@=resolver('daily_review', [args['userId']])"
-
-            daily_review_count:
-                type: 'Int'
-                args:
-                    userId:
-                        type: "String"
-                resolve: "@=resolver('daily_review_count', [args['userId']])"
-
+                        type: "String"                
+                resolve: "@=resolver('stats_by_user', [args['userId']])"
+            
             questions_by_tag:
                 type: '[Question]'
                 args:
@@ -33,3 +27,14 @@ RootQuery:
                         type: '[String]'
                 resolve: "@=resolver('questions_by_tag', [args['userId'], args['limit'], args['level'], args['tags']])"
 
+            exam:
+                type: '[Question]'
+                args:
+                    userId:
+                        type: "String"
+                    type:
+                        type: "String"                        
+                    limit:
+                        type: "Int"
+                
+                resolve: "@=resolver('exam', [args['userId'], args['type'], args['limit']])"

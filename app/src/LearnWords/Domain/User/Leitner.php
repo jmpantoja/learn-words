@@ -18,6 +18,7 @@ use Carbon\CarbonImmutable;
 use PlanB\Edge\Domain\Enum\Enum;
 
 /**
+ * @method static self TODAY()
  * @method static self INITIAL()
  * @method static self EACH_DAY()
  * @method static self EACH_THREE_DAYS()
@@ -27,12 +28,13 @@ use PlanB\Edge\Domain\Enum\Enum;
  */
 final class Leitner extends Enum
 {
-    private const INITIAL = 0;
-    private const EACH_DAY = 1;
-    private const EACH_THREE_DAYS = 2;
-    private const EACH_WEEK = 3;
-    private const EACH_TWO_WEEKS = 4;
-    private const EACH_MONTH = 5;
+    private const TODAY = 0;
+    private const INITIAL = 1;
+    private const EACH_DAY = 2;
+    private const EACH_THREE_DAYS = 3;
+    private const EACH_WEEK = 4;
+    private const EACH_TWO_WEEKS = 5;
+    private const EACH_MONTH = 6;
 
     public function next(): Leitner
     {
@@ -56,8 +58,9 @@ final class Leitner extends Enum
     private function calculeIncrement(): int
     {
         switch ($this->getValue()) {
-            case static::INITIAL:
+            case static::TODAY:
                 return 0;
+            case static::INITIAL:
             case static::EACH_DAY:
                 return 1;
             case static::EACH_THREE_DAYS:

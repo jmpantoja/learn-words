@@ -15,54 +15,20 @@ namespace LearnWords\Infrastructure\Domain\Dictionary\Importer\Reader;
 
 
 use ArrayIterator;
-use LearnWords\Domain\Dictionary\Importer\Reader\EntriesReaderInterface;
+use Iterator;
+use LearnWords\Domain\Dictionary\Importer\Reader\ReaderInterface;
 use SplFileInfo;
 use Symfony\Component\Serializer\Encoder\CsvEncoder;
 
-final class EntriesCSVReader implements EntriesReaderInterface
+final class EntriesCSVReader extends CSVReader
 {
-    private SplFileInfo $fileInfo;
 
-    private array $rows;
-
-    public function __construct(SplFileInfo $fileInfo)
-    {
-        $header = str_repeat(',', 50);
-
-        $this->fileInfo = $fileInfo;
-        $encoder = new CsvEncoder([
-            CsvEncoder::NO_HEADERS_KEY => true,
-            CsvEncoder::AS_COLLECTION_KEY => true
-        ]);
-
-        $content = file_get_contents($fileInfo->getRealPath());
-        $content = sprintf("%s\n$content", $header);
-
-        $rows = $encoder->decode($content, 'csv');
-        unset($rows[0]);
-        $rows = array_values($rows);
-
-        $this->rows = array_map(function (array $row) {
-            return $this->rowToData($row);
-        }, $rows);
-    }
-
-    public function getIterator()
-    {
-        return new ArrayIterator($this->rows);
-    }
-
-    private function rowToData(array $row): array
+    protected function rowToData(array $row): array
     {
         return [
             'word' => array_shift($row),
             'notes' => array_shift($row),
             'tags' => $row,
         ];
-    }
-
-    public function count(): int
-    {
-        return count($this->rows);
     }
 }

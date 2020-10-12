@@ -5,6 +5,7 @@
 
     <entity name="LearnWords\Domain\Dictionary\Vocabulary" table="vocabulary">
         <field name="relevance" type="Relevance"/>
+        <embedded name="wording" class="LearnWords\Domain\Dictionary\Wording" use-column-prefix="false"/>
         <embedded name="example" class="LearnWords\Domain\Dictionary\Example" use-column-prefix="false"/>
     </entity>
 </doctrine-mapping>

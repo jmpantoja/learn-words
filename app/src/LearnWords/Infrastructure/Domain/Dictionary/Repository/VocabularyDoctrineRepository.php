@@ -19,6 +19,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use LearnWords\Domain\Dictionary\ExamCriteria;
 use LearnWords\Domain\Dictionary\Vocabulary;
 use LearnWords\Domain\Dictionary\VocabularyCriteria;
 use LearnWords\Domain\Dictionary\VocabularyList;
@@ -63,9 +64,11 @@ final class VocabularyDoctrineRepository extends ServiceEntityRepository impleme
         return $this->createQueryBuilder('V')
             ->innerJoin(Answer::class, 'A', Join::WITH, 'A.question = V.id and A.user = :user')
             ->where('A.next <= :next')
+            ->andWhere('A.leitner = :leitner')
             ->setParameters([
                 'user' => $user,
-                'next' => $next
+                'next' => $next,
+                'leitner' => Leitner::INITIAL()
             ]);
     }
 
@@ -80,9 +83,9 @@ final class VocabularyDoctrineRepository extends ServiceEntityRepository impleme
             ->innerJoin('V.entry', 'E')
             ->leftJoin(Answer::class, 'A', Join::WITH, 'A.question = V.id and A.user = :user')
             ->innerJoin('E.tags', 'T',)
-            ->where('A.leitner = :initial OR A.leitner is null')
-            ->andWhere('V.relevance <= :relevance')
+            ->where('V.relevance <= :relevance')
             ->andWhere('T.tag IN (:tags)')
+            ->andwhere('(A.leitner is null OR (A.leitner = :leitner and A.totalFailures = 0 and A.totalSuccess = 0))')
             ->orderBy('A.leitner', 'DESC')
             ->addOrderBy('V.random', 'ASC')
             ->setMaxResults($limit)
@@ -90,11 +93,65 @@ final class VocabularyDoctrineRepository extends ServiceEntityRepository impleme
                 'user' => $criteria->getUser(),
                 'relevance' => $criteria->getRelevance()->toInt(),
                 'tags' => $criteria->getTags(),
-                'initial' => Leitner::INITIAL()
+                'leitner' => Leitner::TODAY()
             ])
             ->getQuery();
 
+        $questions = array_map(function (array $item) {
+            return $item['vocabulary'];
+        }, $query->execute());
 
+        return VocabularyList::collect($questions);
+    }
+
+    public function getExamByCriteria(ExamCriteria $criteria): VocabularyList
+    {
+
+        $limit = $criteria->getLimit();
+
+        $builder = $this->createQueryBuilder('V')
+            ->distinct()
+            ->select('V as vocabulary, A.leitner, A.totalFailures, A.average, A.lastDate')
+            ->innerJoin(Answer::class, 'A', Join::WITH, 'A.question = V.id and A.user = :user')
+            ->setParameters([
+                'user' => $criteria->getUser(),
+            ]);
+
+        if (!is_null($limit)) {
+            $builder->setMaxResults($limit->toInt());
+        }
+
+        if ($criteria->isToday()) {
+            $builder
+                ->where('A.leitner = :leitner')
+                ->addOrderBy('V.random', 'ASC')
+                ->setParameter('leitner', Leitner::TODAY());
+        }
+
+        if ($criteria->isDaily()) {
+            $next = CarbonImmutable::today()->format('Ymd');
+
+            $builder
+                ->where('A.next <= :next')
+                ->andWhere('A.leitner != :leitner')
+                ->addOrderBy('V.random', 'ASC')
+                ->setParameter('leitner', Leitner::TODAY())
+                ->setParameter('next', $next);
+        }
+
+        if ($criteria->isMostFailed()) {
+            $today = CarbonImmutable::today()->format('Ymd');
+
+            $builder
+                ->where('A.leitner != :leitner')
+                ->andWhere('A.lastDate != :today')
+                ->orderBy('A.average', 'ASC')
+                ->setParameter('leitner', Leitner::TODAY())
+                ->setParameter('today', $today)
+            ;
+        }
+
+        $query = $builder->getQuery();
         $questions = array_map(function (array $item) {
             return $item['vocabulary'];
         }, $query->execute());

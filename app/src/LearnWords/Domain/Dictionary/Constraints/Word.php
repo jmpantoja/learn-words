@@ -27,7 +27,7 @@ final class Word extends Collection
             'word' => [
                 new NotBlank(),
                 new Length([
-                    'min' => 3
+                    'min' => 2
                 ])
             ],
             'lang' => [

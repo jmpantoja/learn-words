@@ -14,12 +14,10 @@ declare(strict_types=1);
 namespace LearnWords\Infrastructure\Domain\User\Repository;
 
 
-use Carbon\CarbonImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use LearnWords\Domain\DailyWork\QuestionCriteria;
 use LearnWords\Domain\Dictionary\Question;
-use LearnWords\Domain\Dictionary\VocabularyList;
 use LearnWords\Domain\User\Answer;
 use LearnWords\Domain\User\AnswerRepository;
 use LearnWords\Domain\User\User;
@@ -51,37 +49,16 @@ final class AnswerDoctrineRepository extends ServiceEntityRepository implements 
 
         return new Answer($user, $question);
     }
-//
-//    public function getQuestionsByUserAndCriteria(User $user, QuestionCriteria $criteria): QuestionList
-//    {
-//        $limit = $criteria->getLimit();
-//        $today = CarbonImmutable::today()->format('Ymd');
-//
-//        $query = $this->createQueryBuilder('A')
-//            ->innerJoin('A.question', 'Q')
-//            ->innerJoin('Q.entry', 'E')
-//            ->innerJoin('E.tags', 'T')
-//            ->where('A.user = :user')
-//            ->andWhere('Q.relevance <= :relevance')
-//            ->andWhere('T.tag IN (:tags)')
-//            ->andWhere('A.next <= :next')
-//            ->setMaxResults($limit)
-//            ->setParameters([
-//                'user' => $user,
-//                'relevance' => $criteria->getRelevance()->toInt(),
-//                'tags' => $criteria->getTags(),
-//                'next' => $today
-//            ])
-//            ->getQuery();
-//
-//        $answers = $query->execute();
-//
-//        $questions = array_map(function (Answer $answer) {
-//            return $answer->getQuestion();
-//        }, $answers);
-//
-//        return QuestionList::collect($questions);
-//    }
 
+    public function currentStat()
+    {
+        $query = $this->createQueryBuilder('A')
+            ->select('count(A) as total, A.leitner, IDENTITY(A.user) as user')
+            ->groupBy('A.user')
+            ->addGroupBy('A.leitner')
+            ->getQuery();
+
+        return $query->execute();
+    }
 
 }

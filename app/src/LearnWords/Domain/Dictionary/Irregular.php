@@ -19,10 +19,28 @@ class Irregular extends Question
     private string $past;
     private string $pastParticiple;
 
-//    public function __construct(Entry $entry, Wording $wording)
-//    {
-//        parent::__construct($entry, $wording);
-//    }
+    public function __construct(Entry $entry, string $past, string $pastParticiple)
+    {
+        $this->past = $past;
+        $this->pastParticiple = $pastParticiple;
 
+        parent::__construct($entry);
+    }
 
+    /**
+     * @return string
+     */
+    public function getPast(): string
+    {
+        return $this->past;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPastParticiple(): string
+    {
+        return $this->pastParticiple;
+    }
+    
 }

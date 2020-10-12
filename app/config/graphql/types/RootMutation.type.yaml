@@ -5,7 +5,7 @@ RootMutation:
         fields:
             solve_question:
                 type: 'Boolean'
-                resolve: "@=mutation('solve_question', [args['input']['user'], args['input']['question'], args['input']['successful']])"
+                resolve: "@=mutation('solve_question', [args['input']['user'], args['input']['question'], args['input']['response'], args['input']['dryRun'] ])"
                 args:
                     #using input object type is optional, we use it here to be iso with relay mutation example.
                     input:

@@ -1,0 +1,21 @@
+<doctrine-mapping xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="LearnWords\Domain\User\Stat" table="stats">
+
+        <id name="id" column="id" type="StatId"/>
+        <many-to-one field="user" target-entity="LearnWords\Domain\User\User"/>
+
+        <field name="date" type="date_immutable"/>
+
+        <field name="today" type="integer"/>
+        <field name="initial" type="integer"/>
+        <field name="eachDay" type="integer"/>
+        <field name="eachThreeDays" type="integer"/>
+        <field name="eachWeek" type="integer"/>
+        <field name="eachTwoWeeks" type="integer"/>
+        <field name="eachMonth" type="integer"/>
+    </entity>
+</doctrine-mapping>

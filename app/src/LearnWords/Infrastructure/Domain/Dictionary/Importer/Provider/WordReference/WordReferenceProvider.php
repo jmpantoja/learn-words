@@ -32,7 +32,6 @@ final class WordReferenceProvider implements QuestionProviderInterface
 
         $table = $crawler->filter('table.WRD')->first();
         $rows = $table->filter('tr');
-
         $total = $rows->count();
 
         $questions = [];
@@ -56,6 +55,5 @@ final class WordReferenceProvider implements QuestionProviderInterface
     private function getQuestionBuilder(array $questions, string $id)
     {
         return $questions[$id] ?? new WordReferenceQuestionContext();
-
     }
 }

@@ -23,7 +23,7 @@ class Wording
     use NormalizerTrait;
 
     private string $wording;
-    private string $description;
+    private ?string $description;
 
     public function __construct(string $wording, string $description)
     {
@@ -53,7 +53,7 @@ class Wording
     /**
      * @return string
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }

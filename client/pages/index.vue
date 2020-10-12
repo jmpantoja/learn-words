@@ -1,5 +1,10 @@
 <template>
-  <layout-center>
-    <config-cards />
-  </layout-center>
+  <card-config />
 </template>
+<script>
+import CardConfig from '@/components/CardConfig'
+
+export default {
+  components: { CardConfig },
+}
+</script>

@@ -1,0 +1,17 @@
+Stat:
+    type: object
+    config:
+        description: "Daily Stat"
+        fields:
+            date:
+                type: "String!"
+            eachDay:
+                type: "Int!"
+            eachThreeDays:
+                type: "Int!"
+            eachWeek:
+                type: "Int!"
+            eachTwoWeeks:
+                type: "Int!"
+            eachMonth:
+                type: "Int!"                                   

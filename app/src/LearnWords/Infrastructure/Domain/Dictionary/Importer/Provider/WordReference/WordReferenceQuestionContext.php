@@ -15,11 +15,13 @@ namespace LearnWords\Infrastructure\Domain\Dictionary\Importer\Provider\WordRefe
 
 
 use LearnWords\Domain\Dictionary\Example;
+use LearnWords\Domain\Dictionary\Traits\NormalizerTrait;
 use LearnWords\Domain\Dictionary\Wording;
 use Symfony\Component\DomCrawler\Crawler;
 
 final class WordReferenceQuestionContext
 {
+    use NormalizerTrait;
 
     private ?Wording $wording = null;
     private ?Example $example = null;
@@ -42,11 +44,15 @@ final class WordReferenceQuestionContext
         }
 
         $columns = $row->filter('td');
-
         $wording = $columns->eq(2)->html();
         $description = $columns->eq(1)->html();
 
-        $this->wording = new Wording($wording, $description);
+        if (Wording::isValid([
+            'wording' => $this->normalize($wording),
+            'description' => $this->normalize($description),
+        ])) {
+            $this->wording = new Wording($wording, $description);
+        }
     }
 
     private function processSample(Crawler $row)

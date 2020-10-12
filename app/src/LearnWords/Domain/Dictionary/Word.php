@@ -78,5 +78,4 @@ final class Word
     {
         return $this->lang->is(Lang::SPANISH());
     }
-
 }

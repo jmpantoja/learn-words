@@ -1,31 +1,23 @@
-export { default as ConfigCards } from '../../components/ConfigCards.vue'
-export { default as ConfigForm } from '../../components/ConfigForm.vue'
-export { default as DailyReview } from '../../components/DailyReview.vue'
-export { default as LayoutCenter } from '../../components/LayoutCenter.vue'
-export { default as QuestionAnswer } from '../../components/Question/QuestionAnswer.vue'
-export { default as QuestionCard } from '../../components/Question/QuestionCard.vue'
-export { default as QuestionFavourite } from '../../components/Question/QuestionFavourite.vue'
-export { default as QuestionList } from '../../components/Question/QuestionList.vue'
-export { default as QuestionMark } from '../../components/Question/QuestionMark.vue'
-export { default as QuestionNavigation } from '../../components/Question/QuestionNavigation.vue'
-export { default as QuestionReply } from '../../components/Question/QuestionReply.vue'
-export { default as QuestionResult } from '../../components/Question/QuestionResult.vue'
-export { default as QuestionSpeaker } from '../../components/Question/QuestionSpeaker.vue'
-export { default as QuestionToolbar } from '../../components/Question/QuestionToolbar.vue'
-export { default as QuestionWording } from '../../components/Question/QuestionWording.vue'
+export { default as BackButton } from '../../components/BackButton.vue'
+export { default as CardConfig } from '../../components/CardConfig.vue'
+export { default as CardPage } from '../../components/CardPage.vue'
+export { default as CardBody } from '../../components/Card/CardBody.vue'
+export { default as CardNavigation } from '../../components/Card/CardNavigation.vue'
+export { default as CardResult } from '../../components/Card/CardResult.vue'
+export { default as CardSide } from '../../components/Card/CardSide.vue'
+export { default as CardToolbar } from '../../components/Card/CardToolbar.vue'
+export { default as CardWrapper } from '../../components/Card/CardWrapper.vue'
+export { default as BtnShowAnswer } from '../../components/Toolbar/BtnShowAnswer.vue'
+export { default as BtnSpeaker } from '../../components/Toolbar/BtnSpeaker.vue'
 
-export const LazyConfigCards = import('../../components/ConfigCards.vue' /* webpackChunkName: "components/ConfigCards" */).then(c => c.default || c)
-export const LazyConfigForm = import('../../components/ConfigForm.vue' /* webpackChunkName: "components/ConfigForm" */).then(c => c.default || c)
-export const LazyDailyReview = import('../../components/DailyReview.vue' /* webpackChunkName: "components/DailyReview" */).then(c => c.default || c)
-export const LazyLayoutCenter = import('../../components/LayoutCenter.vue' /* webpackChunkName: "components/LayoutCenter" */).then(c => c.default || c)
-export const LazyQuestionAnswer = import('../../components/Question/QuestionAnswer.vue' /* webpackChunkName: "components/Question/QuestionAnswer" */).then(c => c.default || c)
-export const LazyQuestionCard = import('../../components/Question/QuestionCard.vue' /* webpackChunkName: "components/Question/QuestionCard" */).then(c => c.default || c)
-export const LazyQuestionFavourite = import('../../components/Question/QuestionFavourite.vue' /* webpackChunkName: "components/Question/QuestionFavourite" */).then(c => c.default || c)
-export const LazyQuestionList = import('../../components/Question/QuestionList.vue' /* webpackChunkName: "components/Question/QuestionList" */).then(c => c.default || c)
-export const LazyQuestionMark = import('../../components/Question/QuestionMark.vue' /* webpackChunkName: "components/Question/QuestionMark" */).then(c => c.default || c)
-export const LazyQuestionNavigation = import('../../components/Question/QuestionNavigation.vue' /* webpackChunkName: "components/Question/QuestionNavigation" */).then(c => c.default || c)
-export const LazyQuestionReply = import('../../components/Question/QuestionReply.vue' /* webpackChunkName: "components/Question/QuestionReply" */).then(c => c.default || c)
-export const LazyQuestionResult = import('../../components/Question/QuestionResult.vue' /* webpackChunkName: "components/Question/QuestionResult" */).then(c => c.default || c)
-export const LazyQuestionSpeaker = import('../../components/Question/QuestionSpeaker.vue' /* webpackChunkName: "components/Question/QuestionSpeaker" */).then(c => c.default || c)
-export const LazyQuestionToolbar = import('../../components/Question/QuestionToolbar.vue' /* webpackChunkName: "components/Question/QuestionToolbar" */).then(c => c.default || c)
-export const LazyQuestionWording = import('../../components/Question/QuestionWording.vue' /* webpackChunkName: "components/Question/QuestionWording" */).then(c => c.default || c)
+export const LazyBackButton = import('../../components/BackButton.vue' /* webpackChunkName: "components/BackButton" */).then(c => c.default || c)
+export const LazyCardConfig = import('../../components/CardConfig.vue' /* webpackChunkName: "components/CardConfig" */).then(c => c.default || c)
+export const LazyCardPage = import('../../components/CardPage.vue' /* webpackChunkName: "components/CardPage" */).then(c => c.default || c)
+export const LazyCardBody = import('../../components/Card/CardBody.vue' /* webpackChunkName: "components/Card/CardBody" */).then(c => c.default || c)
+export const LazyCardNavigation = import('../../components/Card/CardNavigation.vue' /* webpackChunkName: "components/Card/CardNavigation" */).then(c => c.default || c)
+export const LazyCardResult = import('../../components/Card/CardResult.vue' /* webpackChunkName: "components/Card/CardResult" */).then(c => c.default || c)
+export const LazyCardSide = import('../../components/Card/CardSide.vue' /* webpackChunkName: "components/Card/CardSide" */).then(c => c.default || c)
+export const LazyCardToolbar = import('../../components/Card/CardToolbar.vue' /* webpackChunkName: "components/Card/CardToolbar" */).then(c => c.default || c)
+export const LazyCardWrapper = import('../../components/Card/CardWrapper.vue' /* webpackChunkName: "components/Card/CardWrapper" */).then(c => c.default || c)
+export const LazyBtnShowAnswer = import('../../components/Toolbar/BtnShowAnswer.vue' /* webpackChunkName: "components/Toolbar/BtnShowAnswer" */).then(c => c.default || c)
+export const LazyBtnSpeaker = import('../../components/Toolbar/BtnSpeaker.vue' /* webpackChunkName: "components/Toolbar/BtnSpeaker" */).then(c => c.default || c)

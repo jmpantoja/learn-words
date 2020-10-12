@@ -2,7 +2,7 @@
 
 namespace spec\LearnWords\Infrastructure\Domain\Dictionary\Importer\Reader;
 
-use LearnWords\Domain\Dictionary\Importer\Reader\EntriesReaderInterface;
+use LearnWords\Domain\Dictionary\Importer\Reader\ReaderInterface;
 use LearnWords\Infrastructure\Domain\Dictionary\Importer\Reader\EntriesCSVReader;
 use org\bovigo\vfs\vfsStream;
 use PhpSpec\ObjectBehavior;
@@ -33,7 +33,7 @@ class EntriesCSVReaderSpec extends ObjectBehavior
     public function it_is_initializable()
     {
         $this->shouldHaveType(EntriesCSVReader::class);
-        $this->shouldHaveType(EntriesReaderInterface::class);
+        $this->shouldHaveType(ReaderInterface::class);
     }
 
     public function it_iterate_correctly(SplFileInfo $fileInfo)

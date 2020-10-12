@@ -1813,8 +1813,6 @@ take off,,b2
 take out,,b2
 take place,,b2
 take sb up on,,b2
-take some to court,,b2
-take sth for granted,,b2
 take the blame for,,b2
 take turns,,b2
 take your mind off something,,b2
@@ -2056,3 +2054,14 @@ yacht,,b2
 yawn,,b2
 yoghurt,,b2
 youngster,,b2
+feasible,,b2
+meaningful,,b2
+bonds,,b2
+sincere,,b2
+tend,,b2
+intake,,b2
+balanced,,b2
+refuse,,b2
+give up,,b2
+cut out,,b2
+starving,,b2

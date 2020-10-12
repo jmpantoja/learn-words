@@ -12,10 +12,11 @@
         </discriminator-map>
 
         <id name="id" column="id" type="QuestionId"/>
-        <many-to-one field="entry" target-entity="LearnWords\Domain\Dictionary\Entry"/>
-
-        <embedded name="wording" class="LearnWords\Domain\Dictionary\Wording" use-column-prefix="false"/>
-
+        <many-to-one field="entry" target-entity="LearnWords\Domain\Dictionary\Entry">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </many-to-one>
         <field name="random" type="integer" nullable="true"/>
     </entity>
 </doctrine-mapping>

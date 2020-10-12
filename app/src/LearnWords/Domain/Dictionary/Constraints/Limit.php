@@ -26,8 +26,8 @@ final class Limit extends Composite
     {
         return [
             new Range([
-                'min' => 10,
-                'max' => 1000
+                'min' => 1,
+                'max' => 100
             ])
         ];
     }

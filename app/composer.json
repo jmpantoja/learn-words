@@ -8,6 +8,7 @@
         "cocur/slugify": "^4.0",
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "laminas/laminas-filter": "^2.9",
+        "lavary/crunz": "^2.2",
         "league/tactician-bundle": "^1.2",
         "league/tactician-doctrine": "^1.1",
         "msgphp/domain": "^0.15.1",

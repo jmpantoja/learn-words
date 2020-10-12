@@ -47,13 +47,20 @@ final class UpdateAnswerUseCase implements UseCaseInterface
         if (is_null($user) || is_null($question)) {
             return false;
         }
-        $status = $command->getStatus();
+        $response = $command->getResponse();
 
         $answer = $this->answerRepository->createIfNotExists($user, $question);
-        $answer->resolve($status);
 
+        if ($command->isDryRun()) {
+            $answer->dryRun($response);
+            $this->answerRepository->persist($answer);
+            return true;
+        }
+
+        $answer->resolve($response);
         $this->answerRepository->persist($answer);
         return true;
+
     }
 
     protected function findUser(UpdateAnswer $command): ?User

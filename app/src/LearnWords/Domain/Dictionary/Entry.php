@@ -110,13 +110,11 @@ class Entry
 
     public function updateQuestion($key, array $data): self
     {
-
         $question = $this->questions->get($key);
 
         if (is_null($question)) {
             return $this->addQuestion($data);
         }
-
 
         $question->update($data['wording'], $data['relevance'], $data['example']);
         return $this;
@@ -127,4 +125,5 @@ class Entry
         $this->questions->removeElement($question);
         return $this;
     }
+
 }

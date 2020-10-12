@@ -1,0 +1,11 @@
+query($userId: String!, $type:String!, $limit:Int){
+  exam(userId: $userId, type: $type, limit: $limit){
+    id
+    word
+    wording
+    description
+    sample
+    translation
+    sound
+  }
+}

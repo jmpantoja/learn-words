@@ -16,6 +16,7 @@ namespace LearnWords\Domain\Dictionary;
 
 class Vocabulary extends Question
 {
+    private Wording $wording;
     private ?Example $example;
     private Relevance $relevance;
 
@@ -23,7 +24,8 @@ class Vocabulary extends Question
     {
         $this->example = $example;
         $this->relevance = $relevance;
-        parent::__construct($entry, $wording);
+        $this->wording = $wording;
+        parent::__construct($entry);
     }
 
     public function update(Wording $wording, Relevance $relevance, ?Example $example): self
@@ -33,6 +35,14 @@ class Vocabulary extends Question
         $this->relevance = $relevance;
 
         return $this;
+    }
+
+    /**
+     * @return Wording
+     */
+    public function getWording(): Wording
+    {
+        return $this->wording;
     }
 
     public function getExample(): Example

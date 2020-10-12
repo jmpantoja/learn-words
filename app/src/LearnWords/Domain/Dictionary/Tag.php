@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace LearnWords\Domain\Dictionary;
 
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use LearnWords\Domain\Dictionary\TagPersistence\TagHasBeenCreated;
 use LearnWords\Domain\Dictionary\TagPersistence\TagHasBeenUpdated;
 use PlanB\Edge\Domain\Entity\Traits\NotifyEvents;
@@ -24,11 +26,13 @@ class Tag
 
     private TagId $id;
     private string $tag;
+    private Collection $entries;
 
     public function __construct(string $tag)
     {
         $this->id = new TagId();
         $this->tag = trim($tag);
+        $this->entries = new ArrayCollection();
 
         $this->notify(new TagHasBeenCreated($this));
     }

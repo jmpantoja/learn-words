@@ -1,92 +1,68 @@
 {
-  "ConfigCards": {
-    "description": "Auto imported from components/ConfigCards.vue"
+  "BackButton": {
+    "description": "Auto imported from components/BackButton.vue"
   },
-  "LazyConfigCards": {
-    "description": "Auto imported from components/ConfigCards.vue"
+  "LazyBackButton": {
+    "description": "Auto imported from components/BackButton.vue"
   },
-  "ConfigForm": {
-    "description": "Auto imported from components/ConfigForm.vue"
+  "CardConfig": {
+    "description": "Auto imported from components/CardConfig.vue"
   },
-  "LazyConfigForm": {
-    "description": "Auto imported from components/ConfigForm.vue"
+  "LazyCardConfig": {
+    "description": "Auto imported from components/CardConfig.vue"
   },
-  "DailyReview": {
-    "description": "Auto imported from components/DailyReview.vue"
+  "CardPage": {
+    "description": "Auto imported from components/CardPage.vue"
   },
-  "LazyDailyReview": {
-    "description": "Auto imported from components/DailyReview.vue"
+  "LazyCardPage": {
+    "description": "Auto imported from components/CardPage.vue"
   },
-  "LayoutCenter": {
-    "description": "Auto imported from components/LayoutCenter.vue"
+  "CardBody": {
+    "description": "Auto imported from components/Card/CardBody.vue"
   },
-  "LazyLayoutCenter": {
-    "description": "Auto imported from components/LayoutCenter.vue"
+  "LazyCardBody": {
+    "description": "Auto imported from components/Card/CardBody.vue"
   },
-  "QuestionAnswer": {
-    "description": "Auto imported from components/Question/QuestionAnswer.vue"
+  "CardNavigation": {
+    "description": "Auto imported from components/Card/CardNavigation.vue"
   },
-  "LazyQuestionAnswer": {
-    "description": "Auto imported from components/Question/QuestionAnswer.vue"
+  "LazyCardNavigation": {
+    "description": "Auto imported from components/Card/CardNavigation.vue"
   },
-  "QuestionCard": {
-    "description": "Auto imported from components/Question/QuestionCard.vue"
+  "CardResult": {
+    "description": "Auto imported from components/Card/CardResult.vue"
   },
-  "LazyQuestionCard": {
-    "description": "Auto imported from components/Question/QuestionCard.vue"
+  "LazyCardResult": {
+    "description": "Auto imported from components/Card/CardResult.vue"
   },
-  "QuestionFavourite": {
-    "description": "Auto imported from components/Question/QuestionFavourite.vue"
+  "CardSide": {
+    "description": "Auto imported from components/Card/CardSide.vue"
   },
-  "LazyQuestionFavourite": {
-    "description": "Auto imported from components/Question/QuestionFavourite.vue"
+  "LazyCardSide": {
+    "description": "Auto imported from components/Card/CardSide.vue"
   },
-  "QuestionList": {
-    "description": "Auto imported from components/Question/QuestionList.vue"
+  "CardToolbar": {
+    "description": "Auto imported from components/Card/CardToolbar.vue"
   },
-  "LazyQuestionList": {
-    "description": "Auto imported from components/Question/QuestionList.vue"
+  "LazyCardToolbar": {
+    "description": "Auto imported from components/Card/CardToolbar.vue"
   },
-  "QuestionMark": {
-    "description": "Auto imported from components/Question/QuestionMark.vue"
+  "CardWrapper": {
+    "description": "Auto imported from components/Card/CardWrapper.vue"
   },
-  "LazyQuestionMark": {
-    "description": "Auto imported from components/Question/QuestionMark.vue"
+  "LazyCardWrapper": {
+    "description": "Auto imported from components/Card/CardWrapper.vue"
   },
-  "QuestionNavigation": {
-    "description": "Auto imported from components/Question/QuestionNavigation.vue"
+  "BtnShowAnswer": {
+    "description": "Auto imported from components/Toolbar/BtnShowAnswer.vue"
   },
-  "LazyQuestionNavigation": {
-    "description": "Auto imported from components/Question/QuestionNavigation.vue"
+  "LazyBtnShowAnswer": {
+    "description": "Auto imported from components/Toolbar/BtnShowAnswer.vue"
   },
-  "QuestionReply": {
-    "description": "Auto imported from components/Question/QuestionReply.vue"
+  "BtnSpeaker": {
+    "description": "Auto imported from components/Toolbar/BtnSpeaker.vue"
   },
-  "LazyQuestionReply": {
-    "description": "Auto imported from components/Question/QuestionReply.vue"
-  },
-  "QuestionResult": {
-    "description": "Auto imported from components/Question/QuestionResult.vue"
-  },
-  "LazyQuestionResult": {
-    "description": "Auto imported from components/Question/QuestionResult.vue"
-  },
-  "QuestionSpeaker": {
-    "description": "Auto imported from components/Question/QuestionSpeaker.vue"
-  },
-  "LazyQuestionSpeaker": {
-    "description": "Auto imported from components/Question/QuestionSpeaker.vue"
-  },
-  "QuestionToolbar": {
-    "description": "Auto imported from components/Question/QuestionToolbar.vue"
-  },
-  "LazyQuestionToolbar": {
-    "description": "Auto imported from components/Question/QuestionToolbar.vue"
-  },
-  "QuestionWording": {
-    "description": "Auto imported from components/Question/QuestionWording.vue"
-  },
-  "LazyQuestionWording": {
-    "description": "Auto imported from components/Question/QuestionWording.vue"
+  "LazyBtnSpeaker": {
+    "description": "Auto imported from components/Toolbar/BtnSpeaker.vue"
   }
 }

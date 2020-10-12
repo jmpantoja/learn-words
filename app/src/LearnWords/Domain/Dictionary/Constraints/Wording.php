@@ -37,7 +37,6 @@ final class Wording extends Collection
                 ])
             ],
             'description' => [
-//                new NotBlank(),
                 new Length([
                     'min' => 2
                 ])

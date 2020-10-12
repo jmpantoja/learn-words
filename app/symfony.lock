@@ -126,11 +126,11 @@
     "doctrine/persistence": {
         "version": "1.3.8"
     },
-    "doctrine/reflection": {
-        "version": "1.2.1"
-    },
     "doctrine/sql-formatter": {
         "version": "1.1.1"
+    },
+    "dragonmantank/cron-expression": {
+        "version": "v2.3.1"
     },
     "egulias/email-validator": {
         "version": "2.1.22"
@@ -170,6 +170,9 @@
     },
     "laminas/laminas-zendframework-bridge": {
         "version": "1.1.1"
+    },
+    "lavary/crunz": {
+        "version": "v2.2.2"
     },
     "league/tactician": {
         "version": "v1.0.3"
@@ -227,6 +230,9 @@
     },
     "ocramius/proxy-manager": {
         "version": "2.8.0"
+    },
+    "opis/closure": {
+        "version": "3.6.0"
     },
     "overblog/graphql-bundle": {
         "version": "0.12",
@@ -382,6 +388,9 @@
     "sonata-project/twig-extensions": {
         "version": "1.4.1"
     },
+    "swiftmailer/swiftmailer": {
+        "version": "v6.2.3"
+    },
     "symfony/asset": {
         "version": "v4.4.14"
     },
@@ -430,6 +439,9 @@
     },
     "symfony/dependency-injection": {
         "version": "v4.4.14"
+    },
+    "symfony/deprecation-contracts": {
+        "version": "v2.2.0"
     },
     "symfony/doctrine-bridge": {
         "version": "v4.4.14"
@@ -510,6 +522,9 @@
     },
     "symfony/intl": {
         "version": "v4.4.14"
+    },
+    "symfony/lock": {
+        "version": "v4.4.15"
     },
     "symfony/mailer": {
         "version": "4.3",

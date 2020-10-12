@@ -14,18 +14,18 @@ declare(strict_types=1);
 namespace LearnWords\Domain\Dictionary;
 
 
+use LearnWords\Domain\User\GivenText;
+
 abstract class Question
 {
     protected QuestionId $id;
     protected Entry $entry;
-    protected Wording $wording;
     protected int $random;
 
-    public function __construct(Entry $entry, Wording $wording)
+    public function __construct(Entry $entry)
     {
         $this->id = new QuestionId();
         $this->entry = $entry;
-        $this->wording = $wording;
         $this->random = random_int(1, 100000);
     }
 
@@ -42,8 +42,14 @@ abstract class Question
         return $this->entry;
     }
 
-    public function getWording(): Wording
+    public function getWord(): Word
     {
-        return $this->wording;
+        return $this->getEntry()->getWord();
+    }
+
+    public function match(GivenText $response): bool
+    {
+        $word = $this->getWord();
+        return $response->match((string)$word);
     }
 }

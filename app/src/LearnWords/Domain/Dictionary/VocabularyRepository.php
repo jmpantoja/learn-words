@@ -19,6 +19,8 @@ interface VocabularyRepository
 {
     public function getVocabularyByCriteria(VocabularyCriteria $criteria): VocabularyList;
 
+    public function getExamByCriteria(ExamCriteria $criteria): VocabularyList;
+
     public function getDailyReview(User $user): VocabularyList;
 
     public function getDailyReviewCount(User $user): int;

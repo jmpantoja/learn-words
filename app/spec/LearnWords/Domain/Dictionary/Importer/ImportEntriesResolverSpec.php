@@ -6,9 +6,9 @@ use ArrayIterator;
 use Generator;
 use LearnWords\Domain\Dictionary\EntryRepository;
 use LearnWords\Domain\Dictionary\Example;
-use LearnWords\Domain\Dictionary\Importer\ImportEntriesResolver;
+use LearnWords\Domain\Dictionary\Importer\ImportResolver;
 use LearnWords\Domain\Dictionary\Importer\Provider\QuestionProviderInterface;
-use LearnWords\Domain\Dictionary\Importer\Reader\EntriesReaderInterface;
+use LearnWords\Domain\Dictionary\Importer\Reader\ReaderInterface;
 use LearnWords\Domain\Dictionary\Lang;
 use LearnWords\Domain\Dictionary\Tag;
 use LearnWords\Domain\Dictionary\TagList;
@@ -42,10 +42,10 @@ class ImportEntriesResolverSpec extends ObjectBehavior
 
     public function it_is_initializable()
     {
-        $this->shouldHaveType(ImportEntriesResolver::class);
+        $this->shouldHaveType(ImportResolver::class);
     }
 
-    public function it_is_able_to_create_an_entry_from_a_reader(EntriesReaderInterface $reader, TagRepository $tagRepository)
+    public function it_is_able_to_create_an_entry_from_a_reader(ReaderInterface $reader, TagRepository $tagRepository)
     {
         $reader->getIterator()->willReturn(new ArrayIterator([
             [

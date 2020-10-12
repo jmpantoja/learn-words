@@ -1,9 +1,16 @@
 import Vue from 'vue'
 
+const _ = require('underscore')
+
 Vue.mixin({
-  methods: {
-    is_empty_string(value) {
-      return value === null || !/\S/.test(value)
-    },
+  data() {
+    return {
+      pepe: 'hola',
+      required_rule: [
+        function (value) {
+          return !_.isEmpty(value) || "This field can't be empty"
+        },
+      ],
+    }
   },
 })

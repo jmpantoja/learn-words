@@ -34,7 +34,10 @@ final class TagQuery implements ResolverInterface, AliasedInterface
         $tagList = $this->repository->getAll();
 
         return array_map(function (Tag $tag) {
-            return ['tag' => $tag->getTag()];
+            return [
+                'id' => $tag->getId(),
+                'tag' => $tag->getTag()
+            ];
         }, $tagList->toArray());
     }
 

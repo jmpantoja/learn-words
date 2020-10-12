@@ -86,7 +86,6 @@ services:
     volumes:
       - ./data/mysql:/var/lib/mysql
 
-
   proxy:
     image: steveltn/https-portal:1
     depends_on:

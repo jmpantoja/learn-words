@@ -3,8 +3,10 @@ SolveQuestion:
     config:
         fields:
             user:
-                type: "String"
+                type: "String!"
             question:
-                type: "String"
-            successful:
+                type: "String!"
+            response:
+                type: "String"                
+            dryRun:
                 type: "Boolean"                

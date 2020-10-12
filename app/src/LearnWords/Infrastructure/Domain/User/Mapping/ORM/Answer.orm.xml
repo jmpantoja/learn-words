@@ -10,6 +10,7 @@
         <field name="leitner" type="Leitner"/>
         <field name="totalFailures" type="integer"/>
         <field name="totalSuccess" type="integer"/>
+        <field name="average" type="float" />
         <field name="lastDate" type="date_immutable" nullable="true"/>
         <field name="nextDate" type="date_immutable"/>
         <field name="next" type="integer"/>

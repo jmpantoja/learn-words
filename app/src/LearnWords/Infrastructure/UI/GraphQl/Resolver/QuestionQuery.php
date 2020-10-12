@@ -14,12 +14,15 @@ declare(strict_types=1);
 namespace LearnWords\Infrastructure\UI\GraphQl\Resolver;
 
 
+use LearnWords\Domain\Dictionary\ExamCriteria;
+use LearnWords\Domain\Dictionary\ExamType;
 use LearnWords\Domain\Dictionary\Limit;
 use LearnWords\Domain\Dictionary\Question;
+use LearnWords\Domain\Dictionary\Relevance;
 use LearnWords\Domain\Dictionary\VocabularyCriteria;
 use LearnWords\Domain\Dictionary\VocabularyList;
 use LearnWords\Domain\Dictionary\VocabularyRepository;
-use LearnWords\Domain\Dictionary\Relevance;
+use LearnWords\Domain\User\Answer;
 use LearnWords\Domain\User\UserRepository;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
@@ -37,9 +40,24 @@ final class QuestionQuery implements ResolverInterface, AliasedInterface
         $this->questionRepository = $questionRepository;
     }
 
+    public function getExam(string $userId, string $type, ?int $limit = null): array
+    {
+        $user = $this->userRepository->findOneById($userId);
+
+
+        $type = ExamType::byKey($type);
+        $limit = !is_null($limit) ? new Limit($limit): null;
+
+        $criteria = new ExamCriteria($user, $type, $limit);
+
+        $questions = $this->questionRepository->getExamByCriteria($criteria);
+
+        return $this->listToOutput($questions);
+    }
+
+
     public function findQuestionsByTag(string $userId, int $limit, int $level, array $tags): array
     {
-
         $user = $this->userRepository->findOneById($userId);
 
         $relevance = new Relevance($level);
@@ -72,6 +90,7 @@ final class QuestionQuery implements ResolverInterface, AliasedInterface
      */
     private function listToOutput(VocabularyList $questions): array
     {
+
         $output = [];
         /** @var Question $question */
         foreach ($questions as $question) {
@@ -95,6 +114,7 @@ final class QuestionQuery implements ResolverInterface, AliasedInterface
     {
         return [
             'findQuestionsByTag' => 'questions_by_tag',
+            'getExam' => 'exam',
             'getDailyReview' => 'daily_review',
             'getDailyReviewCount' => 'daily_review_count',
         ];

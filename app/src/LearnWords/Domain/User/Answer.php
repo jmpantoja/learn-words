@@ -27,6 +27,7 @@ final class Answer
     private Leitner $leitner;
     private int $totalFailures;
     private int $totalSuccess;
+    private float $average;
     private ?CarbonImmutable $lastDate;
     private CarbonImmutable $nextDate;
     private int $next;
@@ -37,15 +38,14 @@ final class Answer
         $this->user = $user;
         $this->question = $question;
         $this->initial();
-
-        $this->leitner = Leitner::INITIAL();
     }
 
     private function initial()
     {
-        $this->leitner = Leitner::INITIAL();
+        $this->leitner = Leitner::TODAY();
         $this->totalFailures = 0;
         $this->totalSuccess = 0;
+        $this->average = 0;
 
         $this->lastDate = null;
         $this->setNextDate(CarbonImmutable::today());
@@ -79,6 +79,16 @@ final class Answer
         return $this->totalSuccess;
     }
 
+    public function getTotal(): int
+    {
+        return $this->totalSuccess + $this->totalFailures;
+    }
+
+    public function getAverage(): float
+    {
+        return $this->average;
+    }
+
     public function getLastDate(): ?CarbonImmutable
     {
         return $this->lastDate;
@@ -102,21 +112,53 @@ final class Answer
     }
 
 
-    public function resolve(AnswerStatus $status): self
+    public function dryRun(GivenText $response): self
+    {
+        if ($this->question->match($response)) {
+            $this->totalSuccess++;
+            $this->lastDate = CarbonImmutable::today();
+            $this->calculeAverage();
+            return $this;
+        }
+
+        $this->totalFailures++;
+        $this->calculeAverage();
+        return $this;
+    }
+
+    public function resolve(GivenText $response): self
     {
         $this->lastDate = CarbonImmutable::today();
-        if ($status->isWrong()) {
-            return $this->beWrong();
-        }
-        return $this->beRight();
 
+        if ($response->isEmpty()) {
+            return $this->beSeen();
+        }
+
+        if ($this->question->match($response)) {
+            return $this->beRight();
+        }
+        return $this->beWrong();
+    }
+
+    private function beSeen(): self
+    {
+        if (!$this->leitner->is(Leitner::TODAY())) {
+            return $this;
+        }
+
+        $this->initial();
+
+        return $this;
     }
 
     private function beWrong(): self
     {
         $this->leitner = Leitner::INITIAL();
-        $this->setNextDate(CarbonImmutable::today());
+
         $this->totalFailures++;
+        $this->calculeAverage();
+
+        $this->setNextDate(CarbonImmutable::today());
 
         return $this;
     }
@@ -126,9 +168,26 @@ final class Answer
         $this->leitner = $this->leitner->next();
         $newDate = $this->leitner->getDateWithIncrement();
 
-        $this->setNextDate($newDate);
         $this->totalSuccess++;
+        $this->calculeAverage();
+
+        $this->setNextDate($newDate);
 
         return $this;
     }
+
+    private function calculeAverage(): self
+    {
+        $total = $this->getTotal();
+        if ($total <= 0) {
+            $this->average = 0;
+            return $this;
+        }
+
+        $difference = $this->totalSuccess - $this->totalFailures;
+        $this->average = round($difference / $total, 2);
+        return $this;
+    }
+
+
 }

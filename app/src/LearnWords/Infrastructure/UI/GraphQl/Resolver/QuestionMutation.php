@@ -31,18 +31,14 @@ final class QuestionMutation implements MutationInterface, AliasedInterface
         $this->commandBus = $commandBus;
     }
 
-    //Argument $argument
-    public function solveQuestion(string $user, string $question, bool $successful)
+    public function solveQuestion(string $user, string $question, ?string $response = null, ?bool $dryRun = null)
     {
         $userId = new UserId($user);
         $questionId = new QuestionId($question);
 
-        $status = $successful ? AnswerStatus::RIGHT() : AnswerStatus::WRONG();
-
-        $command = new UpdateAnswer($userId, $questionId, $status);
+        $command = new UpdateAnswer($userId, $questionId, $response, $dryRun);
 
         return $this->commandBus->handle($command);
-
     }
 
     public static function getAliases(): array

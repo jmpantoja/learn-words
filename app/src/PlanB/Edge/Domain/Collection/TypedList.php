@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace PlanB\Edge\Domain\Collection;
 
 
+use Closure;
 use Doctrine\Common\Collections\AbstractLazyCollection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;

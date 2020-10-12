@@ -1,24 +1,31 @@
 [
   {
-    "name": "exam",
-    "path": "/exam",
-    "component": "/srv/client/pages/exam.vue",
-    "chunkName": "pages/exam",
-    "_name": "_156494f5"
+    "name": "stats",
+    "path": "/stats",
+    "component": "/srv/client/pages/stats.vue",
+    "chunkName": "pages/stats",
+    "_name": "_2304f5b9"
   },
   {
-    "name": "review",
-    "path": "/review",
-    "component": "/srv/client/pages/review.vue",
-    "chunkName": "pages/review",
-    "_name": "_763bcfa4"
+    "name": "exam-type",
+    "path": "/exam/:type",
+    "component": "/srv/client/pages/exam/_type/index.vue",
+    "chunkName": "pages/exam/_type/index",
+    "_name": "_77019ec2"
   },
   {
-    "name": "study",
-    "path": "/study",
-    "component": "/srv/client/pages/study.vue",
-    "chunkName": "pages/study",
-    "_name": "_2a0899e3"
+    "name": "exam-type-size",
+    "path": "/exam/:type?/:size",
+    "component": "/srv/client/pages/exam/_type/_size/index.vue",
+    "chunkName": "pages/exam/_type/_size/index",
+    "_name": "_4df87b5a"
+  },
+  {
+    "name": "cards-mode-category-level-size",
+    "path": "/cards/:mode?/:category?/:level?/:size",
+    "component": "/srv/client/pages/cards/_mode/_category/_level/_size/index.vue",
+    "chunkName": "pages/cards/_mode/_category/_level/_size/index",
+    "_name": "_708a4d3a"
   },
   {
     "name": "index",
