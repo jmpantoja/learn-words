@@ -36,5 +36,7 @@ RootQuery:
                         type: "String"                        
                     limit:
                         type: "Int"
-                
-                resolve: "@=resolver('exam', [args['userId'], args['type'], args['limit']])"
+                    tags:
+                        type: '[String]'
+
+                resolve: "@=resolver('exam', [args['userId'], args['type'], args['limit'], args['tags']])"

@@ -6,6 +6,7 @@ export const state = () => ({
 
 export const mutations = {
   load(state, tags) {
+ //   state.all = ['all']
     tags.forEach(function (tag) {
       state.all.push(tag.tag)
     })

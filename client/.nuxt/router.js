@@ -6,6 +6,7 @@ import scrollBehavior from './router.scrollBehavior.js'
 const _2304f5b9 = () => interopDefault(import('../pages/stats.vue' /* webpackChunkName: "pages/stats" */))
 const _77019ec2 = () => interopDefault(import('../pages/exam/_type/index.vue' /* webpackChunkName: "pages/exam/_type/index" */))
 const _4df87b5a = () => interopDefault(import('../pages/exam/_type/_size/index.vue' /* webpackChunkName: "pages/exam/_type/_size/index" */))
+const _30cea444 = () => interopDefault(import('../pages/exam/_type/_size/_category.vue' /* webpackChunkName: "pages/exam/_type/_size/_category" */))
 const _708a4d3a = () => interopDefault(import('../pages/cards/_mode/_category/_level/_size/index.vue' /* webpackChunkName: "pages/cards/_mode/_category/_level/_size/index" */))
 const _6e72086c = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
 
@@ -37,6 +38,10 @@ export const routerOptions = {
     path: "/exam/:type?/:size",
     component: _4df87b5a,
     name: "exam-type-size"
+  }, {
+    path: "/exam/:type?/:size/:category",
+    component: _30cea444,
+    name: "exam-type-size-category"
   }, {
     path: "/cards/:mode?/:category?/:level?/:size",
     component: _708a4d3a,

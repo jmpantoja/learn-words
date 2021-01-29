@@ -40,15 +40,16 @@ final class QuestionQuery implements ResolverInterface, AliasedInterface
         $this->questionRepository = $questionRepository;
     }
 
-    public function getExam(string $userId, string $type, ?int $limit = null): array
+    public function getExam(string $userId, string $type, ?int $limit = null, ?array $tags = []): array
     {
-        $user = $this->userRepository->findOneById($userId);
+        $tags = $tags ?? [];
 
+        $user = $this->userRepository->findOneById($userId);
 
         $type = ExamType::byKey($type);
         $limit = !is_null($limit) ? new Limit($limit): null;
 
-        $criteria = new ExamCriteria($user, $type, $limit);
+        $criteria = new ExamCriteria($user, $type, $limit, ...$tags);
 
         $questions = $this->questionRepository->getExamByCriteria($criteria);
 

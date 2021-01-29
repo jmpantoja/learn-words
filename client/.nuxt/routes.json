@@ -21,6 +21,13 @@
     "_name": "_4df87b5a"
   },
   {
+    "name": "exam-type-size-category",
+    "path": "/exam/:type?/:size/:category",
+    "component": "/srv/client/pages/exam/_type/_size/_category.vue",
+    "chunkName": "pages/exam/_type/_size/_category",
+    "_name": "_30cea444"
+  },
+  {
     "name": "cards-mode-category-level-size",
     "path": "/cards/:mode?/:category?/:level?/:size",
     "component": "/srv/client/pages/cards/_mode/_category/_level/_size/index.vue",

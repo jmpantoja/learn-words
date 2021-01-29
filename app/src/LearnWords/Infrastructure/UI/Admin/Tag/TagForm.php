@@ -16,7 +16,6 @@ namespace LearnWords\Infrastructure\UI\Admin\Tag;
 
 use LearnWords\Domain\Dictionary\Tag;
 use LearnWords\Infrastructure\Domain\Dictionary\Dto\TagDto;
-use LearnWords\Infrastructure\UI\Web\Form\RelevanceType;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfigurator;
 use PlanB\Edge\Infrastructure\Symfony\Form\FormInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -24,7 +23,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 final class TagForm extends FormConfigurator
 {
-    public function attachTo(): string
+    static public function attachTo(): string
     {
         return TagAdmin::class;
     }

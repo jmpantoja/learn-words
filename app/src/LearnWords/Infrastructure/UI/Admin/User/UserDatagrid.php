@@ -19,7 +19,7 @@ use PlanB\Edge\Infrastructure\Sonata\Configurator\DatagridConfigurator;
 final class UserDatagrid extends DatagridConfigurator
 {
 
-    public function attachTo(): string
+   static public function attachTo(): string
     {
         return UserAdmin::class;
     }

@@ -139,17 +139,30 @@ final class VocabularyDoctrineRepository extends ServiceEntityRepository impleme
                 ->setParameter('next', $next);
         }
 
-        if ($criteria->isMostFailed()) {
+        if ($criteria->isMostFailed() and empty($criteria->getTags())) {
             $today = CarbonImmutable::today()->format('Ymd');
-
             $builder
                 ->where('A.leitner != :leitner')
                 ->andWhere('A.lastDate != :today')
                 ->orderBy('A.average', 'ASC')
                 ->setParameter('leitner', Leitner::TODAY())
-                ->setParameter('today', $today)
-            ;
+                ->setParameter('today', $today);
         }
+
+        if ($criteria->isMostFailed() and !empty($criteria->getTags())) {
+            $today = CarbonImmutable::today()->format('Ymd');
+            $builder
+                ->innerJoin('V.entry', 'E')
+                ->innerJoin('E.tags', 'T',)
+                ->where('A.leitner != :leitner')
+                ->andWhere('A.lastDate != :today')
+                ->andWhere('T.tag IN (:tags)')
+                ->orderBy('A.average', 'ASC')
+                ->setParameter('leitner', Leitner::TODAY())
+                ->setParameter('today', $today)
+                ->setParameter('tags', $criteria->getTags());
+        }
+
 
         $query = $builder->getQuery();
         $questions = array_map(function (array $item) {

@@ -1,5 +1,5 @@
-query($userId: String!, $type:String!, $limit:Int){
-  exam(userId: $userId, type: $type, limit: $limit){
+query($userId: String!, $type:String!, $limit:Int, $tags:[String]){
+  exam(userId: $userId, type: $type, limit: $limit, tags:$tags){
     id
     word
     wording

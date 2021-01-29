@@ -16,8 +16,8 @@ namespace LearnWords\Infrastructure\UI\Admin\Entry;
 
 use LearnWords\Domain\Dictionary\Entry;
 use LearnWords\Infrastructure\Domain\Dictionary\Dto\EntryDto;
-use LearnWords\Infrastructure\UI\Web\Form\TagListType;
 use LearnWords\Infrastructure\UI\Web\Form\QuestionListType;
+use LearnWords\Infrastructure\UI\Web\Form\TagListType;
 use LearnWords\Infrastructure\UI\Web\Form\WordType;
 use PlanB\Edge\Infrastructure\Sonata\Configurator\FormConfigurator;
 use PlanB\Edge\Infrastructure\Symfony\Form\FormInterface;
@@ -25,7 +25,7 @@ use PlanB\Edge\Infrastructure\Symfony\Form\FormInterface;
 
 final class EntryForm extends FormConfigurator
 {
-    public function attachTo(): string
+    static public function attachTo(): string
     {
         return EntryAdmin::class;
     }

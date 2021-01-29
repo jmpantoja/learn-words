@@ -38,8 +38,8 @@
             :items="tags"
             :rules="required_rule"
           />
-          <v-select v-model="size" label="Num. Questions" :items="sizes" />
-          <v-select v-model="level" label="Level" :items="levels" />
+          <v-select v-model="size" label="Num. Questions" :items="sizes"/>
+          <v-select v-model="level" label="Level" :items="levels"/>
         </template>
         <template v-if="['failed'].includes(mode)">
           <v-select
@@ -48,16 +48,16 @@
             :items="tags"
             :rules="required_rule"
           />
-          <v-select v-model="size" label="Num. Questions" :items="sizes" />
+          <v-select v-model="size" label="Num. Questions" :items="sizes"/>
         </template>
         <template v-if="['recent', 'irregular'].includes(mode)">
-          <v-select v-model="size" label="Num. Questions" :items="sizes" />
+          <v-select v-model="size" label="Num. Questions" :items="sizes"/>
         </template>
       </div>
     </v-form>
 
     <v-footer absolute min-height="60px">
-      <v-spacer />
+      <v-spacer/>
       <v-btn color="primary" @click="submit">Let's go!</v-btn>
     </v-footer>
   </v-card>
@@ -101,6 +101,7 @@ function isStudy() {
 }
 
 function url() {
+
   if (this.isStudy) {
     return this.studyUrl()
   }
@@ -124,6 +125,9 @@ function examUrl() {
 
   if (['failed'].includes(this.mode)) {
     route = 'exam-type-size'
+    if (this.tag !== 'all') {
+      route = 'exam-type-size-category'
+    }
   }
 
   return this.$router.resolve({
@@ -131,6 +135,7 @@ function examUrl() {
     params: {
       type: this.mode,
       size: this.size,
+      category: this.tag,
     },
   }).href
 }
@@ -148,14 +153,14 @@ export default {
     return {
       modes: {
         study: {
-          study: { label: 'Learn new words', group: 'study' },
-          hidden: { label: 'Self-test', group: 'study' },
+          study: {label: 'Learn new words', group: 'study'},
+          hidden: {label: 'Self-test', group: 'study'},
         },
         exam: {
-          today: { label: 'Test new words', group: 'exam' },
-          daily: { label: 'Daily review', group: 'exam' },
-          failed: { label: 'The hardest', group: 'exam' },
-          irregular: { label: 'Irregular verbs', group: 'exam' },
+          today: {label: 'Test new words', group: 'exam'},
+          daily: {label: 'Daily review', group: 'exam'},
+          failed: {label: 'The hardest', group: 'exam'},
+          irregular: {label: 'Irregular verbs', group: 'exam'},
         },
       },
       mode: this.nextMode(),

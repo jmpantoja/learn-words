@@ -119,7 +119,7 @@ export const actions = {
         context.commit('exam', null)
       })
   },
-  exam(context, { type, size }) {
+  exam(context, { type, size, category }) {
     const client = this.app.apolloProvider.defaultClient
     context.commit('clear')
     client
@@ -129,6 +129,7 @@ export const actions = {
           userId: '28408286-0245-11eb-98fa-0242ac130007',
           limit: size,
           type,
+          tags: category,
         },
       })
       .then(({ data }) => {

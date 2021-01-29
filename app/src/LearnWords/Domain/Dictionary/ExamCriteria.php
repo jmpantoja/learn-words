@@ -24,11 +24,14 @@ final class ExamCriteria
 
     private ?Limit $limit;
 
-    public function __construct(User $user, ExamType $type, ?Limit $limit)
+    private $tags = [];
+
+    public function __construct(User $user, ExamType $type, ?Limit $limit, string ...$tags)
     {
         $this->user = $user;
         $this->type = $type;
         $this->limit = $limit;
+        $this->tags = array_filter($tags, fn(string $tag) => $tag !== 'all');
     }
 
     /**
@@ -54,6 +57,15 @@ final class ExamCriteria
     {
         return $this->limit;
     }
+
+    /**
+     * @return string[]
+     */
+    public function getTags(): array
+    {
+        return $this->tags;
+    }
+
     public function isToday(): bool
     {
         return $this->type->is(ExamType::TODAY());

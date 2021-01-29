@@ -38,7 +38,7 @@ final class VocabularyCriteria
         $this->user = $user;
         $this->relevance = $relevance;
         $this->limit = $limit;
-        $this->tags = $tags;
+        $this->tags = array_filter($tags, fn(string $tag) => $tag !== 'all');
     }
 
     /**
